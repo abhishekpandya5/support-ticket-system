@@ -1,0 +1,58 @@
+---
+description: Append major task summaries to docs/prompt-history.md
+alwaysApply: true
+---
+
+# Prompt History Logging
+
+For every **major task** completed in this project, append a new entry to `docs/prompt-history.md` before sending your final response.
+
+## Major task criteria
+
+Append an entry when the work includes any of:
+
+- New feature or capability
+- Bug fix or defect resolution
+- Multi-file implementation or refactor
+- Project setup, configuration, or tooling changes
+- Architectural or design decisions
+- Substantial documentation additions
+
+Skip logging for: simple questions, one-line fixes, clarifications, or read-only exploration with no deliverable.
+
+## Required fields
+
+Each entry must include:
+
+- **Date** — `YYYY-MM-DD` (local date when the task completed)
+- **Phase** — one of: Planning, Setup, Backend, Frontend, Auth, Testing, DevOps, Documentation, Refactor, Bugfix
+- **Objective** — one-line goal of the task
+- **Prompt Summary** — concise summary of what the user asked for
+- **AI Output Summary** — concise summary of what was delivered or changed
+
+## Append-only rules
+
+1. **Never overwrite** previous entries or rewrite the file from scratch.
+2. **Always append** new entries at the end of the file.
+3. Read `docs/prompt-history.md` first, then append using StrReplace (add before EOF) or Write with full prior content plus the new entry.
+4. Include the generation marker on its own line: `<!-- gen:<generation_id> -->` (use the current `generation_id` when known; otherwise omit).
+
+## Entry template
+
+```markdown
+---
+
+## YYYY-MM-DD — Phase
+
+**Objective:** ...
+
+**Prompt Summary:** ...
+
+**AI Output Summary:** ...
+
+<!-- gen:GENERATION_ID -->
+```
+
+## File references
+
+When summarizing output, list modified file paths. Keep summaries concise (2–4 sentences each).
