@@ -66,3 +66,13 @@ Use the phase that best matches the work:
 **Prompt Summary:** In the Technical Stack section, specify that the frontend is a React single-page application consuming a REST API, the backend is Node.js, and the database is MongoDB.
 
 **AI Output Summary:** Updated `docs/requirements-analysis.md` (v1.1) to replace generic stack options with the selected stack: React SPA, Node.js REST API, and MongoDB. Aligned related sections — entities (ObjectId references), validation, API, database (collections, indexes, `MONGODB_URI`), NFRs, assumptions (A-09), open question Q-06 (resolved), and acceptance criteria — for consistency with the MongoDB + Node.js + React architecture.
+
+---
+
+## 2026-07-10 — Documentation
+
+**Objective:** Create a reusable project-context document for persistent AI and team reference throughout the project.
+
+**Prompt Summary:** As Senior Software Architect, create `project-context.md` covering project overview, business objective, tech stack, functional scope, non-functional requirements, coding standards, architecture principles, folder structure philosophy, AI usage guidelines, testing strategy, and documentation strategy.
+
+**AI Output Summary:** Authored `docs/tool-specific/cursor-workflow/project-context.md` — a comprehensive, reusable context document derived from `docs/requirements-analysis.md`. Includes state machine rules, API surface, monorepo folder structure, layered backend principles, AI do/don't guidelines, mandatory test matrix, documentation hierarchy, and quick-reference enums. Designed to be @-mentioned in Cursor sessions for spec-driven development.
