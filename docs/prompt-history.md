@@ -116,3 +116,13 @@ Use the phase that best matches the work:
 **Prompt Summary:** Create Mermaid diagrams for system architecture, backend layers, database ERD, ticket status state machine, and request flow. Save in `docs/architecture.md` without generating images.
 
 **AI Output Summary:** Authored `docs/architecture.md` with 9 Mermaid diagrams: (1) three-tier system architecture flowchart, (2) backend layered architecture flowchart, (3) MongoDB ERD with users/tickets/comments, (4) stateDiagram-v2 for ticket lifecycle, (5) five sequence diagrams for create ticket, change status, list/search, add comment, and error response flows. Includes supporting tables, diagram index, and links to spec/requirements docs.
+
+---
+
+## 2026-07-11 — Planning
+
+**Objective:** Design the complete REST API contract for the Support Ticket Management System.
+
+**Prompt Summary:** Design REST APIs for each endpoint with method, URL, description, request/response bodies, status codes, validation rules, and error responses. Save as `docs/api-design.md` without implementing code.
+
+**AI Output Summary:** Authored `docs/api-design.md` — full REST API design covering 8 endpoints (tickets CRUD, status change, comments, users). Each endpoint documents method, URL, description, request/response JSON schemas, status codes, validation rules, and example error responses. Includes shared schemas (UserSummary, Ticket, Comment), error model catalog, state machine transition matrix, quick reference table, and requirement traceability to FR/AC IDs.
