@@ -136,3 +136,13 @@ Use the phase that best matches the work:
 **Prompt Summary:** Design MongoDB schema using Mongoose covering collections, document structure, ObjectId relationships, required fields, indexes, validation rules, seed data strategy, and connection strategy. Save as `docs/database-design.md`.
 
 **AI Output Summary:** Authored `docs/database-design.md` — complete database design for three collections (`users`, `tickets`, `comments`) with field-level tables (BSON/Mongoose types), ERD diagram, ObjectId reference map, index definitions, two-layer validation model (Mongoose + service), query patterns, seed data tables (users/tickets/comments), idempotent seed strategy, connection lifecycle diagram, test DB strategy with mongodb-memory-server, and stretch considerations.
+
+---
+
+## 2026-07-12 — Planning
+
+**Objective:** Design frontend screens with components, flows, and UX patterns for all Core user journeys.
+
+**Prompt Summary:** Design frontend screens for Dashboard, Ticket List, Ticket Detail, Create Ticket, and Edit Ticket. Describe components, user flow, validation, error handling, loading states, and empty states. Save as `docs/ui-design.md` without code.
+
+**AI Output Summary:** Authored `docs/ui-design.md` — UI design for 5 screens with ASCII wireframes, component inventories, Mermaid user-flow diagrams, validation rules, error/loading/empty state tables per screen, shared component library (badges, forms, banners), global layout with Acting-as selector, routing map, cross-screen patterns, and acceptance criteria traceability. Edit Ticket designed as inline mode on Detail page per spec.
