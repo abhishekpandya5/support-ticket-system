@@ -106,3 +106,13 @@ Use the phase that best matches the work:
 **Prompt Summary:** Create `tool-specific/cursor-workflow/acceptance-criteria.md` with measurable acceptance criteria for backend, frontend, database, validation, state machine, testing, documentation, and performance.
 
 **AI Output Summary:** Authored `docs/tool-specific/cursor-workflow/acceptance-criteria.md` with 100+ measurable criteria organized into 8 sections (BE, FE, DB, VAL, SM, TEST, DOC, PERF). Each criterion includes ID, priority (Must/Should), pass condition, verification method (Manual/Automated/Both), and requirement traceability. Includes exercise AC-01–AC-17 cross-reference, pre-submission gate checklist, strong-submission checklist, and sign-off template.
+
+---
+
+## 2026-07-11 — Documentation
+
+**Objective:** Create visual architecture documentation using Mermaid diagrams for system design reference.
+
+**Prompt Summary:** Create Mermaid diagrams for system architecture, backend layers, database ERD, ticket status state machine, and request flow. Save in `docs/architecture.md` without generating images.
+
+**AI Output Summary:** Authored `docs/architecture.md` with 9 Mermaid diagrams: (1) three-tier system architecture flowchart, (2) backend layered architecture flowchart, (3) MongoDB ERD with users/tickets/comments, (4) stateDiagram-v2 for ticket lifecycle, (5) five sequence diagrams for create ticket, change status, list/search, add comment, and error response flows. Includes supporting tables, diagram index, and links to spec/requirements docs.
