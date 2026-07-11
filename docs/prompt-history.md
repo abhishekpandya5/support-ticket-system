@@ -218,3 +218,33 @@ Use the phase that best matches the work:
 **Prompt Summary:** Generate Mongoose models for User, Ticket, and Comment (TypeScript interfaces, schema validation, timestamps, required fields, ObjectId refs, indexes). No controllers or services.
 
 **AI Output Summary:** Created `backend/src/models/{User,Ticket,Comment}.ts` with `InferSchemaType`/`HydratedDocument` typing, enum validation via shared constants, trim/minlength/maxlength rules, ObjectId references (`createdBy`, `assignedTo`, `ticketId`), `timestamps: true`, explicit collection names, and named indexes per database design (`email_1` unique; `status_1`, `assignedTo_1` sparse, `updatedAt_-1`; `ticketId_1_createdAt_1`). Hot-reload-safe model registration and barrel exports in `backend/src/models/index.ts`.
+
+---
+
+## 2026-07-12 — Backend
+
+**Objective:** Provide an idempotent MongoDB seed script for development users only.
+
+**Prompt Summary:** Create a seed script using Mongoose for Admin, John Doe, and Alice Smith. Insert users only if they do not already exist. Idempotent. Do not seed tickets or comments yet.
+
+**AI Output Summary:** Implemented `backend/src/scripts/seedUsers.ts` (`USER_SEEDS`, `seedUsers()` with email-based existence check) and `backend/src/scripts/seed.ts` (connect, seed, disconnect CLI). Added `npm run seed` to `backend/package.json`. Users: Admin (`admin@example.com`, admin), John Doe (`john.doe@example.com`, agent), Alice Smith (`alice.smith@example.com`, viewer). Fixed Mongoose ESM imports in model files (`mongoose.models` via default import). Verified two consecutive runs (insert then skip).
+
+---
+
+## 2026-07-12 — Backend
+
+**Objective:** Implement a pure, reusable ticket status state machine for lifecycle transition enforcement.
+
+**Prompt Summary:** Design a reusable `TicketStateMachine` class with allowed transitions (open→in_progress, in_progress→resolved, resolved→closed, open→cancelled, in_progress→cancelled). SRP, meaningful errors, unit-testable. No Express APIs.
+
+**AI Output Summary:** Created `backend/src/stateMachine/{transitions,InvalidTransitionError,TicketStateMachine}.ts` with authoritative `TICKET_TRANSITIONS` map, `InvalidTransitionError` (includes `toDetails()` for API envelope), and injectable `TicketStateMachine` class. Public API: `isTransitionAllowed()`, `changeStatus()`, `getAllowedTransitions()`, plus `isTerminal()` helpers. Same-status transitions rejected. Pure module — no Mongoose, Express, or persistence. Exported `ticketStateMachine` singleton and barrel from `stateMachine/index.ts`.
+
+---
+
+## 2026-07-12 — Backend
+
+**Objective:** Add Mongoose repository classes as a data-access layer over domain models.
+
+**Prompt Summary:** Generate repository classes for MongoDB using Mongoose (`TicketRepository`, `UserRepository`, `CommentRepository`). Data access only — no business rules, validation, or Express.
+
+**AI Output Summary:** Created `backend/src/repositories/{UserRepository,TicketRepository,CommentRepository}.ts` with injectable model constructors and default singleton instances. `UserRepository`: findAll, findById, findByEmail, existsById, create. `TicketRepository`: findById, findByIdPopulated, findMany (QueryFilter pass-through, optional populate), create, updateFieldsById, updateFieldsByIdPopulated, save. `CommentRepository`: findById, findByTicketId (sorted, populated), create, createPopulated. Typed input DTOs and barrel exports in `repositories/index.ts`.
