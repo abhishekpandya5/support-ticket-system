@@ -24,18 +24,20 @@ Each entry uses this structure:
 
 Use the phase that best matches the work:
 
-| Phase | When to use |
-|-------|-------------|
-| Planning | Architecture, requirements, design decisions |
-| Setup | Project scaffolding, tooling, configuration |
-| Backend | API, services, database, server logic |
-| Frontend | UI, components, client-side logic |
-| Auth | Authentication and authorization |
-| Testing | Tests, CI, quality assurance |
-| DevOps | Deployment, infrastructure, monitoring |
-| Documentation | Docs, READMEs, guides |
-| Refactor | Code cleanup without behavior change |
-| Bugfix | Defect fixes |
+
+| Phase         | When to use                                  |
+| ------------- | -------------------------------------------- |
+| Planning      | Architecture, requirements, design decisions |
+| Setup         | Project scaffolding, tooling, configuration  |
+| Backend       | API, services, database, server logic        |
+| Frontend      | UI, components, client-side logic            |
+| Auth          | Authentication and authorization             |
+| Testing       | Tests, CI, quality assurance                 |
+| DevOps        | Deployment, infrastructure, monitoring       |
+| Documentation | Docs, READMEs, guides                        |
+| Refactor      | Code cleanup without behavior change         |
+| Bugfix        | Defect fixes                                 |
+
 
 ---
 
@@ -186,3 +188,33 @@ Use the phase that best matches the work:
 **Prompt Summary:** Generate a production-ready Express server (TypeScript, CORS, JSON middleware, environment variables, `/health` endpoint, global error middleware, not-found middleware). Do not implement APIs — bootstrap only.
 
 **AI Output Summary:** Implemented `backend/src/app.ts` (`createApp()` with CORS, `express.json()`, health route, 404 and error handlers), `backend/src/index.ts` (env load, DB connect, HTTP listen, graceful shutdown closing server then disconnecting MongoDB), `backend/src/routes/health.ts` (`GET /health` with database readiness; 503 when disconnected), `backend/src/middleware/{cors,notFoundHandler,errorHandler}.ts`, `backend/src/utils/AppError.ts`, and `backend/src/constants/errorCodes.ts`. Extended env with `PORT` default `3001` and optional `CORS_ORIGINS`. Added `build`, `start`, and `dev` npm scripts. API routes not mounted.
+
+---
+
+## 2026-07-12 — Bugfix
+
+**Objective:** Fix the backend `npm run dev` script so the development server starts reliably.
+
+**Prompt Summary:** `npm run dev` in the backend folder is not running.
+
+**AI Output Summary:** Diagnosed `ts-node-dev --esm` swallowing the entry file (`no script to run provided`) and incompatibility with TypeScript 7. Replaced dev runner with `tsx watch src/index.ts`, added `tsx` as a devDependency, and set `"engines": { "node": ">=18" }` in `backend/package.json`. Verified server starts and connects to MongoDB on Node 24.
+
+---
+
+## 2026-07-12 — Backend
+
+**Objective:** Define canonical domain enumerations for tickets and users as reusable TypeScript constants.
+
+**Prompt Summary:** Create enums/constants for `TicketStatus`, `TicketPriority`, and `UserRole` (TypeScript, reusable types, enterprise standards). No business logic.
+
+**AI Output Summary:** Implemented `backend/src/constants/enums.ts` with `as const` objects (`TICKET_STATUS`, `TICKET_PRIORITY`, `USER_ROLE`), union types (`TicketStatus`, `TicketPriority`, `UserRole`), and readonly value arrays for validators. Updated `backend/src/constants/index.ts` barrel to re-export enums alongside `errorCodes`. Values aligned with `docs/api-design.md` and `docs/database-design.md`.
+
+---
+
+## 2026-07-12 — Backend
+
+**Objective:** Implement Mongoose schemas and models for the three Core collections.
+
+**Prompt Summary:** Generate Mongoose models for User, Ticket, and Comment (TypeScript interfaces, schema validation, timestamps, required fields, ObjectId refs, indexes). No controllers or services.
+
+**AI Output Summary:** Created `backend/src/models/{User,Ticket,Comment}.ts` with `InferSchemaType`/`HydratedDocument` typing, enum validation via shared constants, trim/minlength/maxlength rules, ObjectId references (`createdBy`, `assignedTo`, `ticketId`), `timestamps: true`, explicit collection names, and named indexes per database design (`email_1` unique; `status_1`, `assignedTo_1` sparse, `updatedAt_-1`; `ticketId_1_createdAt_1`). Hot-reload-safe model registration and barrel exports in `backend/src/models/index.ts`.
