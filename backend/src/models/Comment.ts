@@ -1,7 +1,5 @@
-import {
+import mongoose, {
   Schema,
-  model,
-  models,
   type HydratedDocument,
   type InferSchemaType,
   type Model,
@@ -43,5 +41,5 @@ export type CommentDocument = HydratedDocument<IComment>;
 export type CommentModel = Model<IComment>;
 
 export const Comment: CommentModel =
-  (models.Comment as CommentModel | undefined) ??
-  model<IComment>('Comment', commentSchema);
+  (mongoose.models.Comment as CommentModel | undefined) ??
+  mongoose.model<IComment>('Comment', commentSchema);

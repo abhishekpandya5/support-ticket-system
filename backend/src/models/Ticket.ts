@@ -1,7 +1,5 @@
-import {
+import mongoose, {
   Schema,
-  model,
-  models,
   type HydratedDocument,
   type InferSchemaType,
   type Model,
@@ -72,5 +70,5 @@ export type TicketDocument = HydratedDocument<ITicket>;
 export type TicketModel = Model<ITicket>;
 
 export const Ticket: TicketModel =
-  (models.Ticket as TicketModel | undefined) ??
-  model<ITicket>('Ticket', ticketSchema);
+  (mongoose.models.Ticket as TicketModel | undefined) ??
+  mongoose.model<ITicket>('Ticket', ticketSchema);
