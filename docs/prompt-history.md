@@ -86,3 +86,13 @@ Use the phase that best matches the work:
 **Prompt Summary:** Using `docs/requirements-analysis.md` and `project-context.md`, produce a technical spec (no code) covering high-level architecture, component responsibilities, frontend/backend architecture, API communication flow, error handling, validation, database interaction, state machine responsibilities, and testing approach. Save as `tool-specific/cursor-workflow/spec.md`.
 
 **AI Output Summary:** Authored `docs/tool-specific/cursor-workflow/spec.md` — full technical design document with system context diagrams, component responsibility matrix, React SPA structure (routing, state, acting-as pattern), layered Node.js backend design, detailed API flows, error envelope catalog, multi-layer validation strategy, MongoDB schemas/indexes/query patterns, state machine module API and bypass prevention, and mandatory integration test matrix. Resolved open design decisions (dedicated status endpoint, acting-as selector, terminal ticket behavior, case-insensitive search).
+
+---
+
+## 2026-07-10 — Planning
+
+**Objective:** Break the project into phased implementation tasks with dependencies, complexity, and acceptance criteria.
+
+**Prompt Summary:** Using the technical specification, create `tool-specific/cursor-workflow/tasks.md` organizing implementation into phases. Each task must include ID, description, dependencies, estimated complexity, and acceptance criteria.
+
+**AI Output Summary:** Authored `docs/tool-specific/cursor-workflow/tasks.md` with 44 Core tasks across 8 phases (Setup → Database → Backend Foundation → Backend Domain & API → Backend Testing → Frontend Foundation → Frontend Features → Documentation & Verification). Includes critical-path dependency graph, optional Stretch task list, and progress tracker. Tasks trace to spec sections and requirements acceptance criteria (AC-01–AC-17).
