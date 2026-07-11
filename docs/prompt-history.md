@@ -96,3 +96,13 @@ Use the phase that best matches the work:
 **Prompt Summary:** Using the technical specification, create `tool-specific/cursor-workflow/tasks.md` organizing implementation into phases. Each task must include ID, description, dependencies, estimated complexity, and acceptance criteria.
 
 **AI Output Summary:** Authored `docs/tool-specific/cursor-workflow/tasks.md` with 44 Core tasks across 8 phases (Setup → Database → Backend Foundation → Backend Domain & API → Backend Testing → Frontend Foundation → Frontend Features → Documentation & Verification). Includes critical-path dependency graph, optional Stretch task list, and progress tracker. Tasks trace to spec sections and requirements acceptance criteria (AC-01–AC-17).
+
+---
+
+## 2026-07-11 — Documentation
+
+**Objective:** Create a detailed, measurable acceptance criteria document for Core verification across all system layers.
+
+**Prompt Summary:** Create `tool-specific/cursor-workflow/acceptance-criteria.md` with measurable acceptance criteria for backend, frontend, database, validation, state machine, testing, documentation, and performance.
+
+**AI Output Summary:** Authored `docs/tool-specific/cursor-workflow/acceptance-criteria.md` with 100+ measurable criteria organized into 8 sections (BE, FE, DB, VAL, SM, TEST, DOC, PERF). Each criterion includes ID, priority (Must/Should), pass condition, verification method (Manual/Automated/Both), and requirement traceability. Includes exercise AC-01–AC-17 cross-reference, pre-submission gate checklist, strong-submission checklist, and sign-off template.
