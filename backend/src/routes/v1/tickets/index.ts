@@ -1,0 +1,5 @@
+/**
+ * Ticket route definitions.
+ */
+
+export {};

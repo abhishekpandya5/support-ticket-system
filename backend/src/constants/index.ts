@@ -1,0 +1,5 @@
+/**
+ * Application constants barrel.
+ */
+
+export {};

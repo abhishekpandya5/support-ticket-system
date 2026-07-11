@@ -146,3 +146,43 @@ Use the phase that best matches the work:
 **Prompt Summary:** Design frontend screens for Dashboard, Ticket List, Ticket Detail, Create Ticket, and Edit Ticket. Describe components, user flow, validation, error handling, loading states, and empty states. Save as `docs/ui-design.md` without code.
 
 **AI Output Summary:** Authored `docs/ui-design.md` — UI design for 5 screens with ASCII wireframes, component inventories, Mermaid user-flow diagrams, validation rules, error/loading/empty state tables per screen, shared component library (badges, forms, banners), global layout with Acting-as selector, routing map, cross-screen patterns, and acceptance criteria traceability. Edit Ticket designed as inline mode on Detail page per spec.
+
+---
+
+## 2026-07-12 — Setup
+
+**Objective:** Scaffold scalable layered backend folder structure for Express + TypeScript + MongoDB.
+
+**Prompt Summary:** Create enterprise-grade backend folder structure with layered architecture (config, routes, controllers, services, repositories, models, middleware, validators, utils, constants, stateMachine, tests). Placeholder index files only — no business logic.
+
+**AI Output Summary:** Created `backend/src/` layered tree under Express + TypeScript project: entry points (`index.ts`, `app.ts`), config/constants barrels, versioned routes (`routes/v1/{tickets,comments,users}`), domain-scoped controllers/services/repositories/validators, plus models, middleware, utils, stateMachine, and `tests/{integration,unit,helpers}`. All files are placeholder modules with JSDoc purpose comments only.
+
+---
+
+## 2026-07-12 — Setup
+
+**Objective:** Scaffold scalable React + TypeScript frontend folder structure for enterprise layered architecture.
+
+**Prompt Summary:** Create folder structure only (no components) for React + TypeScript app including components, pages, hooks, services, api, routes, layouts, context, utils, types, constants, assets.
+
+**AI Output Summary:** Created `frontend/src/` directory tree with domain-scoped subfolders: `api/{client,tickets,comments,users}`, `components/{common,layout,tickets,comments}`, `pages/{dashboard,tickets/{list,detail,create}}`, plus hooks, services, routes, layouts, context, utils, types, constants, and `assets/{icons,images}`. Empty directories tracked via `.gitkeep`; existing `main.tsx`/`App.tsx` untouched.
+
+---
+
+## 2026-07-12 — Backend
+
+**Objective:** Implement a reusable, production-ready Mongoose MongoDB connection module with environment-driven configuration.
+
+**Prompt Summary:** Create a reusable MongoDB connection module using Mongoose (TypeScript, environment variables, error handling, graceful shutdown, logging, production-ready). Do not generate application logic.
+
+**AI Output Summary:** Implemented `backend/src/config/env.ts` (Zod-validated `MONGODB_URI`, `NODE_ENV`, `PORT`, `LOG_LEVEL`), `backend/src/config/database.ts` (idempotent `connectDatabase()`, `disconnectDatabase()`, signal-based shutdown helpers, pool tuning, Mongoose event listeners, connection state helpers), `backend/src/utils/logger.ts` (structured JSON logging), and `backend/src/config/index.ts` barrel. Added `backend/.env.example`. Updated `backend/tsconfig.json` (`rootDir`, `include`/`exclude`, ESM settings) and `backend/package.json` (`"type": "module"`). No routes, models, or business logic.
+
+---
+
+## 2026-07-12 — Backend
+
+**Objective:** Bootstrap a production-ready Express HTTP server with core middleware and health checks only.
+
+**Prompt Summary:** Generate a production-ready Express server (TypeScript, CORS, JSON middleware, environment variables, `/health` endpoint, global error middleware, not-found middleware). Do not implement APIs — bootstrap only.
+
+**AI Output Summary:** Implemented `backend/src/app.ts` (`createApp()` with CORS, `express.json()`, health route, 404 and error handlers), `backend/src/index.ts` (env load, DB connect, HTTP listen, graceful shutdown closing server then disconnecting MongoDB), `backend/src/routes/health.ts` (`GET /health` with database readiness; 503 when disconnected), `backend/src/middleware/{cors,notFoundHandler,errorHandler}.ts`, `backend/src/utils/AppError.ts`, and `backend/src/constants/errorCodes.ts`. Extended env with `PORT` default `3001` and optional `CORS_ORIGINS`. Added `build`, `start`, and `dev` npm scripts. API routes not mounted.

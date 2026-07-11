@@ -1,0 +1,5 @@
+/**
+ * Comment persistence operations.
+ */
+
+export {};
