@@ -126,3 +126,13 @@ Use the phase that best matches the work:
 **Prompt Summary:** Design REST APIs for each endpoint with method, URL, description, request/response bodies, status codes, validation rules, and error responses. Save as `docs/api-design.md` without implementing code.
 
 **AI Output Summary:** Authored `docs/api-design.md` — full REST API design covering 8 endpoints (tickets CRUD, status change, comments, users). Each endpoint documents method, URL, description, request/response JSON schemas, status codes, validation rules, and example error responses. Includes shared schemas (UserSummary, Ticket, Comment), error model catalog, state machine transition matrix, quick reference table, and requirement traceability to FR/AC IDs.
+
+---
+
+## 2026-07-11 — Planning
+
+**Objective:** Design the MongoDB database schema and Mongoose data layer without implementation code.
+
+**Prompt Summary:** Design MongoDB schema using Mongoose covering collections, document structure, ObjectId relationships, required fields, indexes, validation rules, seed data strategy, and connection strategy. Save as `docs/database-design.md`.
+
+**AI Output Summary:** Authored `docs/database-design.md` — complete database design for three collections (`users`, `tickets`, `comments`) with field-level tables (BSON/Mongoose types), ERD diagram, ObjectId reference map, index definitions, two-layer validation model (Mongoose + service), query patterns, seed data tables (users/tickets/comments), idempotent seed strategy, connection lifecycle diagram, test DB strategy with mongodb-memory-server, and stretch considerations.
