@@ -248,3 +248,34 @@ Use the phase that best matches the work:
 **Prompt Summary:** Generate repository classes for MongoDB using Mongoose (`TicketRepository`, `UserRepository`, `CommentRepository`). Data access only — no business rules, validation, or Express.
 
 **AI Output Summary:** Created `backend/src/repositories/{UserRepository,TicketRepository,CommentRepository}.ts` with injectable model constructors and default singleton instances. `UserRepository`: findAll, findById, findByEmail, existsById, create. `TicketRepository`: findById, findByIdPopulated, findMany (QueryFilter pass-through, optional populate), create, updateFieldsById, updateFieldsByIdPopulated, save. `CommentRepository`: findById, findByTicketId (sorted, populated), create, createPopulated. Typed input DTOs and barrel exports in `repositories/index.ts`.
+
+---
+
+## 2026-07-12 — Backend
+
+**Objective:** Implement the business logic service layer on top of repositories and the state machine.
+
+**Prompt Summary:** Implement service layer using repositories — business validation, ticket workflow, status transition validation, comment creation, assignment. No controllers.
+
+**AI Output Summary:** Created `backend/src/services/{UserService,TicketService,CommentService}.ts` with injectable dependencies and singleton instances. `UserService`: listUsers, getUserById, assertUserExists. `TicketService`: listTickets (status filter, escaped regex search), getTicketById (ticket + comments), createTicket (always `open`, user ref checks), updateTicket (rejects status field, assignment), changeStatus (state machine + persist). `CommentService`: getCommentsByTicketId, addComment. Added `utils/{objectId,regex,errors}.ts` for ObjectId validation, search escaping, and `AppError` factories. Services throw `AppError`; map `InvalidTransitionError` to API envelope. Barrel exports in `services/index.ts`. No controllers.
+
+---
+
+## 2026-07-12 — Refactor
+
+**Objective:** Align `TicketStateMachine` public method names with the intended service-layer API.
+
+**Prompt Summary:** State machine should expose `isTransitionAllowed()`, `changeStatus()`, and `getAllowedTransitions()`.
+
+**AI Output Summary:** Refactored `backend/src/stateMachine/TicketStateMachine.ts` to replace `canTransition()`, `assertTransition()`, and `validateTransition()` with `isTransitionAllowed()`, `changeStatus()`, and `getAllowedTransitions()`. Simplified `stateMachine/index.ts` barrel (removed transition result types). Transition rules and `InvalidTransitionError` behavior unchanged.
+
+---
+
+## 2026-07-13 — Backend
+
+**Objective:** Implement thin HTTP controllers that delegate to the service layer and return API-shaped responses.
+
+**Prompt Summary:** Generate controllers for User, Ticket, and Comment (Express + TypeScript). Parse request, call services, return HTTP response only — no database logic or business rules. Proper status codes and async error handling. Clean Architecture.
+
+**AI Output Summary:** Created `backend/src/controllers/{UserController,TicketController,CommentController}.ts` with injectable service dependencies and singleton instances. `UserController`: list (200), getById (200/404). `TicketController`: list, getById, create (201), update (200), changeStatus (200). `CommentController`: create (201). Added `middleware/asyncHandler.ts` for async error forwarding to global handler and `utils/serializers.ts` for API JSON mapping (`id`, `UserSummary`, ISO timestamps). Updated `controllers/index.ts` and middleware/utils barrels. Routes not wired.
+

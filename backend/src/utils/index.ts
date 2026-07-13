@@ -11,3 +11,13 @@ export {
 } from './errors.js';
 export { isValidObjectId, toObjectId } from './objectId.js';
 export { escapeRegex } from './regex.js';
+export {
+  serializeComment,
+  serializeTicket,
+  serializeUser,
+  serializeUserSummary,
+  type CommentJson,
+  type TicketJson,
+  type UserJson,
+  type UserSummaryJson,
+} from './serializers.js';
