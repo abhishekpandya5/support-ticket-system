@@ -1,5 +1,8 @@
-/**
- * User route definitions (read-only in Core).
- */
+import { Router } from 'express';
 
-export {};
+import { userController } from '../../../controllers/UserController.js';
+
+export const userRouter = Router();
+
+userRouter.get('/', userController.list);
+userRouter.get('/:id', userController.getById);

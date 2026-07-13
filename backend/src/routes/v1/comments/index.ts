@@ -1,5 +1,7 @@
-/**
- * Comment route definitions (nested under tickets).
- */
+import { Router } from 'express';
 
-export {};
+import { commentController } from '../../../controllers/CommentController.js';
+
+export const commentRouter = Router({ mergeParams: true });
+
+commentRouter.post('/', commentController.create);

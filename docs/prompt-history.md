@@ -279,3 +279,13 @@ Use the phase that best matches the work:
 
 **AI Output Summary:** Created `backend/src/controllers/{UserController,TicketController,CommentController}.ts` with injectable service dependencies and singleton instances. `UserController`: list (200), getById (200/404). `TicketController`: list, getById, create (201), update (200), changeStatus (200). `CommentController`: create (201). Added `middleware/asyncHandler.ts` for async error forwarding to global handler and `utils/serializers.ts` for API JSON mapping (`id`, `UserSummary`, ISO timestamps). Updated `controllers/index.ts` and middleware/utils barrels. Routes not wired.
 
+---
+
+## 2026-07-13 — Backend
+
+**Objective:** Wire RESTful Express routes to controllers with a modular router hierarchy.
+
+**Prompt Summary:** Generate Express routes (RESTful, controllers only, no direct service calls, modular routes, index router for mounting, no business logic).
+
+**AI Output Summary:** Implemented modular routers: `routes/v1/users/index.ts` (`GET /`, `GET /:id`), `routes/v1/tickets/index.ts` (list, create, get, update, status change, nested comments), `routes/v1/comments/index.ts` (`POST /` with `mergeParams`), `routes/v1/index.ts` (aggregates tickets + users), and `routes/index.ts` (`apiRouter`). Mounted `apiRouter` at `/api` in `app.ts` — endpoints at `/api/tickets`, `/api/users`, `/api/tickets/:id/status`, `/api/tickets/:id/comments`. Controllers only; no service imports in route files.
+
