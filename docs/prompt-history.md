@@ -289,3 +289,23 @@ Use the phase that best matches the work:
 
 **AI Output Summary:** Implemented modular routers: `routes/v1/users/index.ts` (`GET /`, `GET /:id`), `routes/v1/tickets/index.ts` (list, create, get, update, status change, nested comments), `routes/v1/comments/index.ts` (`POST /` with `mergeParams`), `routes/v1/index.ts` (aggregates tickets + users), and `routes/index.ts` (`apiRouter`). Mounted `apiRouter` at `/api` in `app.ts` — endpoints at `/api/tickets`, `/api/users`, `/api/tickets/:id/status`, `/api/tickets/:id/comments`. Controllers only; no service imports in route files.
 
+---
+
+## 2026-07-13 — Backend
+
+**Objective:** Define Zod request validation schemas for ticket and comment mutations, separate from controllers.
+
+**Prompt Summary:** Create Zod validation schemas for Create Ticket, Update Ticket, Update Status, and Add Comment. Return detailed validation errors. Keep schemas separate from controllers. Use reusable validation middleware. No business logic.
+
+**AI Output Summary:** Added `validators/shared.ts` (ObjectId, trimmed string helpers, `formatZodFieldErrors`), `validators/tickets/schemas.ts` (`createTicketSchema`, `updateTicketSchema` with at-least-one-field refine, `updateStatusSchema`), and `validators/comments/schemas.ts` (`addCommentSchema`). Implemented initial `middleware/validate.ts` with `validateBody` mapping Zod failures to `VALIDATION_ERROR` (`details.fields`) and `forbiddenFields` support (`status` on update → `STATUS_UPDATE_NOT_ALLOWED`). Wired schemas into ticket, comment, and user routes. Barrel exports in `validators/{tickets,comments,common,index}.ts`. No business logic in validators.
+
+---
+
+## 2026-07-13 — Backend
+
+**Objective:** Extend validation middleware to cover body, params, and query with consistent API error responses.
+
+**Prompt Summary:** Generate reusable validation middleware that works with Zod. Validate body, params, and query. Return consistent API errors. TypeScript only.
+
+**AI Output Summary:** Enhanced `middleware/validate.ts` with `validateBody`, `validateParams`, `validateQuery`, generic `validate()`, and `validateRequest({ body, params, query })`. Zod failures map to `400 VALIDATION_ERROR` with `details.fields`; single-field ObjectId format errors on params/body map to `400 INVALID_OBJECT_ID`. Added `idParamSchema` and `listTicketsQuerySchema` in `validators/shared.ts`. Routes updated: `validateParams` on `:id` routes, `validateQuery` on ticket list, `validateBody` on mutations. Parsed values replace `req.body` / `req.params` / `req.query` on success. TypeScript check passes.
+
