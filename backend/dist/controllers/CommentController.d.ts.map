@@ -1,0 +1,1 @@
+{"version":3,"file":"CommentController.d.ts","sourceRoot":"","sources":["../../src/controllers/CommentController.ts"],"names":[],"mappings":"AAGA,OAAO,EAGL,KAAK,cAAc,EACpB,MAAM,+BAA+B,CAAC;AAGvC,qBAAa,iBAAiB;IAChB,OAAO,CAAC,QAAQ,CAAC,QAAQ;IAArC,YAA6B,QAAQ,GAAE,cAA+B,EAAI;IAE1E,MAAM,+IASH;CACJ;AAED,eAAO,MAAM,iBAAiB,mBAA0B,CAAC"}

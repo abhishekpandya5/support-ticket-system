@@ -1,5 +1,5 @@
 /**
  * Ticket request validation schemas.
  */
-export {};
+export { createTicketSchema, updateStatusSchema, updateTicketSchema, } from './schemas.js';
 //# sourceMappingURL=index.js.map

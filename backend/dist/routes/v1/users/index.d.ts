@@ -1,5 +1,2 @@
-/**
- * User route definitions (read-only in Core).
- */
-export {};
+export declare const userRouter: import("express-serve-static-core").Router;
 //# sourceMappingURL=index.d.ts.map

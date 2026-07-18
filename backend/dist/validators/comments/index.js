@@ -1,5 +1,5 @@
 /**
  * Comment request validation schemas.
  */
-export {};
+export { addCommentSchema, } from './schemas.js';
 //# sourceMappingURL=index.js.map

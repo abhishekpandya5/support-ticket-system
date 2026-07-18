@@ -9,7 +9,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-HISTORY_FILE = Path("docs/prompt-history.md")
+HISTORY_FILE = Path("ai-prompts/implementation.md")
 MAJOR_TOOL_MARKERS = (
     "Write",
     "StrReplace",

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/routes/v1/comments/index.ts"],"names":[],"mappings":"AAAA;;GAEG;AAEH,OAAO,EAAE,CAAC"}
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/routes/v1/comments/index.ts"],"names":[],"mappings":"AAOA,eAAO,MAAM,aAAa,4CAAgC,CAAC"}
