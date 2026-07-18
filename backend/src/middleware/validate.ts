@@ -85,6 +85,28 @@ function parseTarget<TSchema extends ZodType>(
   return result.data;
 }
 
+function applyParsedTarget(
+  req: Request,
+  target: ValidationTarget,
+  parsed: unknown,
+): void {
+  if (target === 'query') {
+    const query = req.query as Record<string, unknown>;
+    const parsedQuery = parsed as Record<string, unknown>;
+
+    for (const key of Object.keys(query)) {
+      if (!(key in parsedQuery)) {
+        delete query[key];
+      }
+    }
+
+    Object.assign(query, parsedQuery);
+    return;
+  }
+
+  req[target] = parsed as Request[typeof target];
+}
+
 /**
  * Validates a single request property against a Zod schema and replaces it with parsed data.
  */
@@ -99,7 +121,7 @@ export function validate<TSchema extends ZodType>(
         assertForbiddenFields(req.body, options?.forbiddenFields);
       }
 
-      req[target] = parseTarget(target, schema, req[target]) as Request[typeof target];
+      applyParsedTarget(req, target, parseTarget(target, schema, req[target]));
       next();
     } catch (error: unknown) {
       next(error);
@@ -144,11 +166,11 @@ export function validateRequest(
       }
 
       if (schemas.query) {
-        req.query = parseTarget(
+        applyParsedTarget(
+          req,
           'query',
-          schemas.query,
-          req.query,
-        ) as Request['query'];
+          parseTarget('query', schemas.query, req.query),
+        );
       }
 
       if (schemas.body) {
