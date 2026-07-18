@@ -4,6 +4,15 @@
 
 export { AppError } from './AppError.js';
 export {
+  buildErrorResponseBody,
+  isUnexpectedError,
+  mapErrorToResponse,
+  sendErrorResponse,
+  type ApiErrorEnvelope,
+  type ApiErrorResponseBody,
+  type MappedError,
+} from './errorResponse.js';
+export {
   invalidObjectIdError,
   notFoundError,
   statusUpdateNotAllowedError,
