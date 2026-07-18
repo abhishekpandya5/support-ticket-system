@@ -275,3 +275,62 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **Reason:** TODO
 
+---
+
+## 2026-07-19 — Frontend
+
+**Objective:** Configure React Router with shared layout, lazy pages, and Not Found route.
+
+**Prompt:** Configure React Router: route-based code organization, MainLayout as shared layout, lazy-load pages where appropriate, include Not Found page. Do not implement page content.
+
+**AI Response Summary:** Renamed layout shell to `MainLayout` with `<Outlet />`. Added `routes/` (`paths.ts`, `router.tsx`, `lazyRoute.tsx`), stub pages under `pages/` (dashboard, tickets list/create/detail, NotFound), and `RouteFallback` spinner. Navigation uses `NavLink` + `ROUTES` constants. All feature pages lazy-loaded with `React.lazy` + `Suspense`. `App.tsx` renders `RouterProvider`. Build passes with per-page chunks.
+
+**Accepted:** TODO
+
+**Modified:** TODO
+
+**Rejected:** TODO
+
+**Reason:** TODO
+
+---
+
+## 2026-07-19 — Frontend
+
+**Objective:** Create a reusable typed Axios API layer (no React).
+
+**Prompt:** Create a reusable API layer using Axios: shared instance, environment-based base URL, request/response interceptors, typed API functions. No React code.
+
+**AI Response Summary:** Added `frontend/src/api/` with `client.ts` (shared Axios + interceptors), `env.ts` (`VITE_API_BASE_URL`), `errors.ts` (`ApiError`, `isApiError`), `types.ts` (domain + request/response types), `tickets.ts` and `users.ts` (typed functions for all 8 Core endpoints). Request interceptor adds `x-request-id`; response interceptor maps API error envelope to `ApiError`. Added `frontend/.env.example` and `vite-env.d.ts`. Build passes.
+
+**Accepted:** TODO
+
+**Modified:** TODO
+
+**Rejected:** TODO
+
+**Reason:** TODO
+
+---
+
+**Rejected:** TODO
+
+**Reason:** TODO
+
+---
+
+## 2026-07-19 — Frontend
+
+**Objective:** Generate TypeScript interfaces for frontend types aligned with backend API contracts.
+
+**Prompt:** Generate TypeScript interfaces for the frontend based on the existing backend API contracts. Include Ticket, User, Comment, API response types, and request payloads. Reuse existing backend contracts. Do not invent new fields.
+
+**AI Response Summary:** Replaced monolithic `frontend/src/api/types.ts` with `frontend/src/api/types/` modules: `enums.ts`, `entities.ts` (interfaces for `UserSummary`, `User`, `Ticket`, `Comment`), `requests.ts`, `responses.ts`, and `errors.ts` (`ApiErrorCode` aligned to `backend/src/constants/errorCodes.ts`). Fields mirror `api-contract.md` and backend serializers/validators. Removed invented `CONFLICT` error code. Existing imports via `./types` unchanged. Build passes.
+
+**Accepted:** TODO
+
+**Modified:** TODO
+
+**Rejected:** TODO
+
+**Reason:** TODO

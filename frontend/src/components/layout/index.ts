@@ -1,5 +1,4 @@
-export { AppLayout } from './AppLayout';
+export { MainLayout } from './MainLayout';
 export { AppHeader } from './AppHeader';
-export { AppNavigation, PLACEHOLDER_NAV_ITEMS } from './AppNavigation';
-export type { NavItem } from './AppNavigation';
+export { AppNavigation } from './AppNavigation';
 export { MainContent } from './MainContent';

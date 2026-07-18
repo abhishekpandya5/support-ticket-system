@@ -1,37 +1,37 @@
-export type NavItem = {
-  label: string;
-  href: string;
-};
+import { NavLink } from 'react-router-dom';
 
-export const PLACEHOLDER_NAV_ITEMS: readonly NavItem[] = [
-  { label: 'Dashboard', href: '#' },
-  { label: 'Tickets', href: '#' },
-  { label: 'Create Ticket', href: '#' },
-] as const;
+import { NAV_ITEMS } from '../../routes/paths';
 
 type AppNavigationProps = {
-  items?: readonly NavItem[];
   onNavigate?: () => void;
   className?: string;
 };
 
+const linkClassName = ({ isActive }: { isActive: boolean }) =>
+  [
+    'block rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400',
+    isActive
+      ? 'bg-slate-100 text-slate-900'
+      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+  ].join(' ');
+
 export function AppNavigation({
-  items = PLACEHOLDER_NAV_ITEMS,
   onNavigate,
   className = '',
 }: AppNavigationProps) {
   return (
     <nav aria-label="Main navigation" className={className}>
       <ul className="flex flex-col gap-1 md:flex-row md:items-center md:gap-1">
-        {items.map((item) => (
-          <li key={item.label}>
-            <a
-              href={item.href}
+        {NAV_ITEMS.map((item) => (
+          <li key={item.to}>
+            <NavLink
+              to={item.to}
+              className={linkClassName}
               onClick={onNavigate}
-              className="block rounded-md px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400"
+              end={item.to === '/'}
             >
               {item.label}
-            </a>
+            </NavLink>
           </li>
         ))}
       </ul>
