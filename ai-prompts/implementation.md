@@ -257,3 +257,21 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **Reason:** TODO
 
+---
+
+## 2026-07-19 — Frontend
+
+**Objective:** Create a reusable React application layout shell with Tailwind CSS.
+
+**Prompt:** Create a reusable React application layout using React + TypeScript + Tailwind CSS: responsive header, main content area, placeholder navigation, clean separation of layout and page content, no business logic, functional components. Do not implement any pages.
+
+**AI Response Summary:** Installed `tailwindcss` + `@tailwindcss/vite`; configured `vite.config.ts` and `index.css`. Added `frontend/src/components/layout/` with `AppLayout`, `AppHeader` (responsive mobile menu), `AppNavigation` (placeholder links), and `MainContent`. Barrel export at `components/layout/index.ts`. `App.tsx` renders `<AppLayout />` only — pages compose via `children` later. Removed Vite starter `App.css`. Build passes.
+
+**Accepted:** TODO
+
+**Modified:** TODO
+
+**Rejected:** TODO
+
+**Reason:** TODO
+
