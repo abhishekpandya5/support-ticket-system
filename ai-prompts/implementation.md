@@ -489,3 +489,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Hardcoded ticket metrics; cancelled status as a separate dashboard stat card.
 
 **Reason:** Matches the project data strategy in `ui-flow.md` and reuses existing React Query hooks and ticket types.
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Implement the Create Ticket page with validated form, user dropdown, and mutation-driven submit.
+
+**Prompt:** Create ticket page with React Hook Form + Zod (title 5–100, description min 10, required priority and assigned user); fetch users via React Query; submit via `useCreateTicket`; loading/errors/reset/redirect; reusable form components under `components/ticket`; accessibility and layered architecture.
+
+**AI Response Summary:** Added `CreateTicketPage`, `useCreateTicketForm` hook, `createTicketFormSchema`, and reusable `components/ticket` form pieces (`CreateTicketForm`, `PrioritySelect`, `AssignedUserSelect`, `FormField`). Submit maps form values to `CreateTicketRequest` with acting-as `createdBy`, resets on success, and redirects to `/tickets`.
+
+**Accepted:** Create ticket form, validation, mutation submit flow, and redirect to ticket list on success.
+
+**Modified:** Router import path to `pages/Tickets/CreateTicketPage.tsx`; kept edit flow on existing `components/tickets/TicketForm`.
+
+**Rejected:** Axios calls inside the page; optional assigned user on create.
+
+**Reason:** Requirements mandate required assignee and hook-only API access; edit and create forms have different validation rules.

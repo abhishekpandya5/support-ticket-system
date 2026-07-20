@@ -7,7 +7,7 @@ import { ROUTES } from './paths';
 const DashboardPage = lazyPage(() => import('../pages/DashboardPage'));
 const TicketListPage = lazyPage(() => import('../pages/tickets/TicketListPage'));
 const TicketCreatePage = lazyPage(
-  () => import('../pages/tickets/TicketCreatePage'),
+  () => import('../pages/Tickets/CreateTicketPage'),
 );
 const TicketDetailPage = lazyPage(
   () => import('../pages/tickets/TicketDetailPage'),
