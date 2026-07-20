@@ -12,6 +12,9 @@ const TicketCreatePage = lazyPage(
 const TicketDetailPage = lazyPage(
   () => import('../pages/tickets/TicketDetailPage'),
 );
+const EditTicketPage = lazyPage(
+  () => import('../pages/tickets/EditTicketPage'),
+);
 const NotFoundPage = lazyPage(() => import('../pages/NotFoundPage'));
 
 export const router = createBrowserRouter([
@@ -29,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.ticketCreate,
         Component: withSuspense(TicketCreatePage),
+      },
+      {
+        path: '/tickets/:id/edit',
+        Component: withSuspense(EditTicketPage),
       },
       {
         path: '/tickets/:id',

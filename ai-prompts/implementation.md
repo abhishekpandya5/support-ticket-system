@@ -417,3 +417,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Direct Axios calls; acting-as selector deferred.
 
 **Reason:** Reuses existing mutation and invalidation; `createdBy` passed from page until acting-as is built.
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Implement Edit Ticket page with shared TicketForm.
+
+**Prompt:** Implement Edit Ticket: `EditTicketPage`, pre-populated form, reuse `TicketForm`, update title/description/priority/assignee, RHF + Zod, redirect to detail on success, Tailwind.
+
+**AI Response Summary:** Added `TicketForm`, `EditTicketPage`, `ticketFormSchema`, `ticketForm` utils, and `useUsers` hook. Route `/tickets/:id/edit`, `useTicket` + `useUpdateTicket`, assignee dropdown from users API. Edit link on detail page. Build passes.
+
+**Accepted:** Shared form, validation, pre-population, and redirect after save.
+
+**Modified:** Used `pages/tickets/EditTicketPage.tsx` per existing conventions.
+
+**Rejected:** Editing status or createdBy; inline edit mode on detail page.
+
+**Reason:** Status changes use a separate endpoint; dedicated edit route matches the prompt.

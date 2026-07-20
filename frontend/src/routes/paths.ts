@@ -7,13 +7,15 @@ export const ROUTES = {
   tickets: '/tickets',
   ticketCreate: '/tickets/new',
   ticketDetail: (id: string) => `/tickets/${id}`,
+  ticketEdit: (id: string) => `/tickets/${id}/edit`,
 } as const;
 
 export type AppRoutePath =
   | typeof ROUTES.dashboard
   | typeof ROUTES.tickets
   | typeof ROUTES.ticketCreate
-  | `/tickets/${string}`;
+  | `/tickets/${string}`
+  | `/tickets/${string}/edit`;
 
 export const NAV_ITEMS = [
   { label: 'Dashboard', to: ROUTES.dashboard },

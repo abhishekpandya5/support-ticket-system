@@ -21,12 +21,22 @@ export default function TicketDetailPage() {
       <PageHeader
         title="Ticket Details"
         action={
-          <Link
-            to={ROUTES.tickets}
-            className="text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline"
-          >
-            Back to tickets
-          </Link>
+          <div className="flex items-center gap-4">
+            {ticket ? (
+              <Link
+                to={ROUTES.ticketEdit(ticket.id)}
+                className="text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline"
+              >
+                Edit
+              </Link>
+            ) : null}
+            <Link
+              to={ROUTES.tickets}
+              className="text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline"
+            >
+              Back to tickets
+            </Link>
+          </div>
         }
       />
 
