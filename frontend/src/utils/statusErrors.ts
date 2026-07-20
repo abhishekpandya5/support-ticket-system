@@ -1,13 +1,6 @@
 import type { ApiError } from '../api/errors';
 import type { TicketStatus } from '../api/types';
-
-const TICKET_STATUSES: TicketStatus[] = [
-  'open',
-  'in_progress',
-  'resolved',
-  'closed',
-  'cancelled',
-];
+import { TICKET_STATUSES } from './ticketListFilters';
 
 function isTicketStatus(value: unknown): value is TicketStatus {
   return typeof value === 'string' && TICKET_STATUSES.includes(value as TicketStatus);

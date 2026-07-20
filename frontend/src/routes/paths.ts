@@ -10,6 +10,12 @@ export const ROUTES = {
   ticketEdit: (id: string) => `/tickets/${id}/edit`,
 } as const;
 
+/** React Router path patterns for dynamic segments. */
+export const ROUTE_PATTERNS = {
+  ticketDetail: ROUTES.ticketDetail(':id'),
+  ticketEdit: ROUTES.ticketEdit(':id'),
+} as const;
+
 export type AppRoutePath =
   | typeof ROUTES.dashboard
   | typeof ROUTES.tickets

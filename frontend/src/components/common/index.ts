@@ -12,6 +12,7 @@ export {
 } from './FormField';
 export { LoadingSpinner } from './LoadingSpinner';
 export { PageHeader } from './PageHeader';
+export { RouteErrorBoundary } from './RouteErrorBoundary';
 export { RouteFallback } from './RouteFallback';
 export { SkeletonContainer, SkeletonLoader } from './SkeletonLoader';
 export { SkipLink } from './SkipLink';

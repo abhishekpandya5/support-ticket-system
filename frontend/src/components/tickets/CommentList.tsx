@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import type { Comment } from '../../api/types';
 import { Card } from '../common/Card';
 import { EmptyState } from '../common';
@@ -9,7 +11,10 @@ type CommentListProps = {
 };
 
 export function CommentList({ comments }: CommentListProps) {
-  const sortedComments = sortCommentsChronologically(comments);
+  const sortedComments = useMemo(
+    () => sortCommentsChronologically(comments),
+    [comments],
+  );
 
   if (sortedComments.length === 0) {
     return (

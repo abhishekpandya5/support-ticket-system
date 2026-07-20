@@ -1,4 +1,4 @@
-import type { StatusFeedback } from '../../hooks/tickets/useTicketStatusWorkflow';
+import type { StatusFeedback } from '../../hooks/tickets';
 
 type StatusFeedbackBannerProps = {
   feedback: StatusFeedback | null;

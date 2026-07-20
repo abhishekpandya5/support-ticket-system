@@ -21,3 +21,13 @@ export function getActingAsUser(users: UserSummary[]): UserSummary | null {
 
   return users.find((user) => user.id === userId) ?? null;
 }
+
+/**
+ * Resolves the user ID for new comments.
+ * Uses the ticket creator until an acting-as selector UI is available.
+ */
+export function getCommentAuthorId(ticket: {
+  createdBy: { id: string };
+}): string {
+  return ticket.createdBy.id;
+}

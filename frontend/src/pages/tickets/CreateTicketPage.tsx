@@ -1,6 +1,6 @@
 import { LoadingSpinner, PageHeader, TextLink } from '../../components/common';
-import { CreateTicketForm } from '../../components/ticket';
-import { useCreateTicketForm } from '../../hooks/tickets/useCreateTicketForm';
+import { CreateTicketForm } from '../../components/tickets';
+import { useCreateTicketForm } from '../../hooks/tickets';
 import { ROUTES } from '../../routes/paths';
 
 export default function CreateTicketPage() {

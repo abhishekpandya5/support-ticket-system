@@ -579,3 +579,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** TODO
 
 **Reason:** TODO
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Refactor frontend for maintainability; fix critical/major review findings without changing behavior.
+
+**Prompt:** Improve duplicate logic, component size, naming, custom hooks, utilities; fix critical and major findings; no behavior change; no unnecessary abstractions; summarize improvements.
+
+**AI Response Summary:** Fixed mutation `onSuccess` chaining; normalized `pages/tickets/CreateTicketPage`; added `ROUTE_PATTERNS`, route error boundary, `keepPreviousData`, `useQueryPageState`; consolidated forms under `components/tickets/forms/` with shared `PriorityField`, `AssignedUserField`, `FormActions`, `FormApiError`; extracted `schemas/ticketFields.ts`, `useActingAsUser`, `userKeys`, filter select parsers; enabled TypeScript `strict`; removed `TicketList` passthrough and `components/ticket/` folder; added Vitest unit tests for filters, schemas, acting-as.
+
+**Accepted:** Maintainability refactor and review finding fixes.
+
+**Modified:** Validation rules unchanged per form (create still stricter than edit); comment author still uses ticket creator via `getCommentAuthorId`.
+
+**Rejected:** Backend dashboard aggregation endpoint; optimistic updates.
+
+**Reason:** Out of scope for no-behavior-change frontend refactor.

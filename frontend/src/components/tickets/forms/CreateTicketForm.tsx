@@ -1,18 +1,18 @@
 import type { UseFormReturn } from 'react-hook-form';
 
-import type { ApiError } from '../../api/errors';
-import type { UserSummary } from '../../api/types';
-import type { CreateTicketFormValues } from '../../schemas/createTicketFormSchema';
-import { Button } from '../common/Button';
-import { Card } from '../common/Card';
+import type { ApiError } from '../../../api/errors';
+import type { UserSummary } from '../../../api/types';
+import type { CreateTicketFormValues } from '../../../schemas/createTicketFormSchema';
+import { Card } from '../../common/Card';
 import {
   FormField,
   formInputClassName,
   getFieldErrorProps,
-} from '../common/FormField';
-import { LoadingSpinner } from '../common/LoadingSpinner';
-import { AssignedUserSelect } from './AssignedUserSelect';
-import { PrioritySelect } from './PrioritySelect';
+} from '../../common/FormField';
+import { AssignedUserField } from './AssignedUserField';
+import { FormActions } from './FormActions';
+import { FormApiError } from './FormApiError';
+import { PriorityField } from './PriorityField';
 
 type CreateTicketFormProps = {
   form: UseFormReturn<CreateTicketFormValues>;
@@ -24,6 +24,11 @@ type CreateTicketFormProps = {
   actingAsWarning?: string | null;
   onCancel?: () => void;
 };
+
+const TITLE_ID = 'create-ticket-title';
+const DESCRIPTION_ID = 'create-ticket-description';
+const PRIORITY_ID = 'create-ticket-priority';
+const ASSIGNED_TO_ID = 'create-ticket-assigned-to';
 
 export function CreateTicketForm({
   form,
@@ -43,8 +48,6 @@ export function CreateTicketForm({
 
   const fieldErrors = apiError?.fieldErrors;
   const isDisabled = isSubmitting || usersLoading || Boolean(actingAsWarning);
-  const titleId = 'create-ticket-title';
-  const descriptionId = 'create-ticket-description';
 
   return (
     <Card
@@ -64,18 +67,18 @@ export function CreateTicketForm({
 
       <FormField
         label="Title"
-        htmlFor={titleId}
+        htmlFor={TITLE_ID}
         required
         error={errors.title?.message ?? fieldErrors?.title}
       >
         <input
-          id={titleId}
+          id={TITLE_ID}
           type="text"
           disabled={isDisabled}
           className={formInputClassName}
           {...register('title')}
           {...getFieldErrorProps(
-            titleId,
+            TITLE_ID,
             errors.title?.message ?? fieldErrors?.title,
             true,
           )}
@@ -84,78 +87,55 @@ export function CreateTicketForm({
 
       <FormField
         label="Description"
-        htmlFor={descriptionId}
+        htmlFor={DESCRIPTION_ID}
         required
         error={errors.description?.message ?? fieldErrors?.description}
       >
         <textarea
-          id={descriptionId}
+          id={DESCRIPTION_ID}
           rows={6}
           disabled={isDisabled}
           className={formInputClassName}
           {...register('description')}
           {...getFieldErrorProps(
-            descriptionId,
+            DESCRIPTION_ID,
             errors.description?.message ?? fieldErrors?.description,
             true,
           )}
         />
       </FormField>
 
-      <PrioritySelect
+      <PriorityField
         register={register}
+        name="priority"
+        fieldId={PRIORITY_ID}
         error={errors.priority?.message ?? fieldErrors?.priority}
+        required
         disabled={isDisabled}
       />
 
-      <AssignedUserSelect
+      <AssignedUserField
         register={register}
+        name="assignedTo"
+        fieldId={ASSIGNED_TO_ID}
         users={users}
         error={errors.assignedTo?.message ?? fieldErrors?.assignedTo}
+        required
         disabled={isDisabled}
         isLoading={usersLoading}
+        emptyOptionLabel="Select a user"
       />
 
-      {apiError &&
-      (!fieldErrors || Object.keys(fieldErrors).length === 0) ? (
-        <p className="text-sm text-red-600" role="alert">
-          {apiError.message}
-        </p>
-      ) : null}
+      <FormApiError error={apiError} fieldErrors={fieldErrors} />
 
-      <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-        {onCancel ? (
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={onCancel}
-            disabled={isSubmitting}
-            className="w-full sm:w-auto"
-          >
-            Cancel
-          </Button>
-        ) : null}
-        <Button
-          type="submit"
-          disabled={isDisabled}
-          aria-busy={isSubmitting}
-          className="w-full sm:w-auto"
-        >
-          {isSubmitting ? (
-            <>
-              <LoadingSpinner
-                size="sm"
-                tone="inverted"
-                label="Creating ticket"
-                decorative
-              />
-              Creating...
-            </>
-          ) : (
-            'Create Ticket'
-          )}
-        </Button>
-      </div>
+      <FormActions
+        submitLabel="Create Ticket"
+        pendingLabel="Creating..."
+        pendingSpinnerLabel="Creating ticket"
+        isSubmitting={isSubmitting}
+        isDisabled={isDisabled}
+        onCancel={onCancel}
+      />
     </Card>
   );
 }

@@ -1,5 +1,6 @@
 import type { TicketStatus } from '../../api/types';
 import { filterLabelClassName, formInputClassName } from '../common/FormField';
+import { parseStatusFilterValue } from '../../utils/filterSelect';
 import { TICKET_STATUSES } from '../../utils/ticketListFilters';
 import { formatTicketStatus } from '../../utils/ticketDisplay';
 
@@ -25,7 +26,7 @@ export function StatusFilter({
         id={STATUS_FILTER_ID}
         value={value}
         onChange={(event) =>
-          onChange(event.target.value as TicketStatus | '')
+          onChange(parseStatusFilterValue(event.target.value))
         }
         disabled={disabled}
         className={formInputClassName}

@@ -2,22 +2,28 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
 import type { ApiError } from '../../api/errors';
-import type { TicketPriority, UserSummary } from '../../api/types';
-import { Button } from '../common/Button';
+import type { UserSummary } from '../../api/types';
+import {
+  ticketFormSchema,
+  type TicketFormValues,
+} from '../../schemas/ticketFormSchema';
 import { Card } from '../common/Card';
 import {
   FormField,
   formInputClassName,
   getFieldErrorProps,
 } from '../common/FormField';
-import { LoadingSpinner } from '../common/LoadingSpinner';
 import {
-  ticketFormSchema,
-  type TicketFormValues,
-} from '../../schemas/ticketFormSchema';
-import { formatTicketPriority } from '../../utils/ticketDisplay';
+  AssignedUserField,
+  FormActions,
+  FormApiError,
+  PriorityField,
+} from './forms';
 
-const PRIORITIES: TicketPriority[] = ['low', 'medium', 'high', 'critical'];
+const TITLE_ID = 'ticket-title';
+const DESCRIPTION_ID = 'ticket-description';
+const PRIORITY_ID = 'ticket-priority';
+const ASSIGNED_TO_ID = 'ticket-assigned-to';
 
 type TicketFormProps = {
   defaultValues: TicketFormValues;
@@ -64,17 +70,17 @@ export function TicketForm({
     >
       <FormField
         label="Title"
-        htmlFor="ticket-title"
+        htmlFor={TITLE_ID}
         error={errors.title?.message ?? fieldErrors?.title}
       >
         <input
-          id="ticket-title"
+          id={TITLE_ID}
           type="text"
           disabled={isDisabled}
           className={formInputClassName}
           {...register('title')}
           {...getFieldErrorProps(
-            'ticket-title',
+            TITLE_ID,
             errors.title?.message ?? fieldErrors?.title,
           )}
         />
@@ -82,109 +88,53 @@ export function TicketForm({
 
       <FormField
         label="Description"
-        htmlFor="ticket-description"
+        htmlFor={DESCRIPTION_ID}
         error={errors.description?.message ?? fieldErrors?.description}
       >
         <textarea
-          id="ticket-description"
+          id={DESCRIPTION_ID}
           rows={6}
           disabled={isDisabled}
           className={formInputClassName}
           {...register('description')}
           {...getFieldErrorProps(
-            'ticket-description',
+            DESCRIPTION_ID,
             errors.description?.message ?? fieldErrors?.description,
           )}
         />
       </FormField>
 
-      <FormField
-        label="Priority"
-        htmlFor="ticket-priority"
+      <PriorityField
+        register={register}
+        name="priority"
+        fieldId={PRIORITY_ID}
         error={errors.priority?.message ?? fieldErrors?.priority}
-      >
-        <select
-          id="ticket-priority"
-          disabled={isDisabled}
-          className={formInputClassName}
-          {...register('priority')}
-          {...getFieldErrorProps(
-            'ticket-priority',
-            errors.priority?.message ?? fieldErrors?.priority,
-          )}
-        >
-          {PRIORITIES.map((priority) => (
-            <option key={priority} value={priority}>
-              {formatTicketPriority(priority)}
-            </option>
-          ))}
-        </select>
-      </FormField>
+        disabled={isDisabled}
+      />
 
-      <FormField
-        label="Assigned To"
-        htmlFor="ticket-assigned-to"
+      <AssignedUserField
+        register={register}
+        name="assignedTo"
+        fieldId={ASSIGNED_TO_ID}
+        users={users}
         error={errors.assignedTo?.message ?? fieldErrors?.assignedTo}
-      >
-        <select
-          id="ticket-assigned-to"
-          disabled={isDisabled}
-          className={formInputClassName}
-          {...register('assignedTo')}
-          {...getFieldErrorProps(
-            'ticket-assigned-to',
-            errors.assignedTo?.message ?? fieldErrors?.assignedTo,
-          )}
-        >
-          <option value="">Unassigned</option>
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </select>
-      </FormField>
+        disabled={isDisabled}
+        isLoading={usersLoading}
+        label="Assigned To"
+        emptyOptionLabel="Unassigned"
+      />
 
-      {apiError &&
-      (!fieldErrors || Object.keys(fieldErrors).length === 0) ? (
-        <p className="text-sm text-red-600" role="alert">
-          {apiError.message}
-        </p>
-      ) : null}
+      <FormApiError error={apiError} fieldErrors={fieldErrors} />
 
-      <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-        {onCancel ? (
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={onCancel}
-            disabled={isSubmitting}
-            className="w-full sm:w-auto"
-          >
-            {cancelLabel}
-          </Button>
-        ) : null}
-        <Button
-          type="submit"
-          disabled={isDisabled}
-          aria-busy={isSubmitting}
-          className="w-full sm:w-auto"
-        >
-          {isSubmitting ? (
-            <>
-              <LoadingSpinner
-                size="sm"
-                tone="inverted"
-                label="Saving ticket"
-                decorative
-              />
-              Saving...
-            </>
-          ) : (
-            submitLabel
-          )}
-        </Button>
-      </div>
+      <FormActions
+        submitLabel={submitLabel}
+        pendingLabel="Saving..."
+        pendingSpinnerLabel="Saving ticket"
+        isSubmitting={isSubmitting}
+        isDisabled={isDisabled}
+        onCancel={onCancel}
+        cancelLabel={cancelLabel}
+      />
     </Card>
   );
 }

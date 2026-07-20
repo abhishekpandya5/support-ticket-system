@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
+import type { AppRoutePath } from '../../routes/paths';
+
 type TextLinkProps = {
-  to: string;
+  to: AppRoutePath | string;
   children: ReactNode;
   className?: string;
 };

@@ -1,5 +1,6 @@
 import type { TicketPriority } from '../../api/types';
 import { filterLabelClassName, formInputClassName } from '../common/FormField';
+import { parsePriorityFilterValue } from '../../utils/filterSelect';
 import { TICKET_PRIORITIES } from '../../utils/ticketListFilters';
 import { formatTicketPriority } from '../../utils/ticketDisplay';
 
@@ -25,7 +26,7 @@ export function PriorityFilter({
         id={PRIORITY_FILTER_ID}
         value={value}
         onChange={(event) =>
-          onChange(event.target.value as TicketPriority | '')
+          onChange(parsePriorityFilterValue(event.target.value))
         }
         disabled={disabled}
         className={formInputClassName}

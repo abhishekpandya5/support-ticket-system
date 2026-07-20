@@ -8,15 +8,19 @@ import {
   type CreateTicketFormValues,
 } from '../../schemas/createTicketFormSchema';
 import { ROUTES } from '../../routes/paths';
-import { getActingAsUser, getActingAsUserId } from '../../utils/actingAs';
+import { getActingAsUserIdOrNull } from '../../utils/actingAsMessages';
 import { toCreateTicketRequest } from '../../utils/createTicket';
-import { useUsers } from '../users';
+import { useActingAsUser } from '../users';
 import { useCreateTicket } from './useTicketMutations';
 
 export function useCreateTicketForm() {
   const navigate = useNavigate();
-  const { data: usersData, isLoading: usersLoading } = useUsers();
-  const users = usersData?.users ?? [];
+  const {
+    users,
+    usersLoading,
+    actingAsUser,
+    actingAsWarning,
+  } = useActingAsUser();
 
   const form = useForm<CreateTicketFormValues>({
     resolver: zodResolver(createTicketFormSchema),
@@ -31,16 +35,8 @@ export function useCreateTicketForm() {
     },
   });
 
-  const actingAsUser = getActingAsUser(users);
-  const actingAsWarning =
-    !usersLoading && users.length > 0 && !actingAsUser
-      ? 'Unable to determine the acting user. Refresh the page and try again.'
-      : !usersLoading && users.length === 0
-        ? 'No users are available. Tickets cannot be created until users exist.'
-        : null;
-
   const handleSubmit = (values: CreateTicketFormValues) => {
-    const createdBy = getActingAsUserId(users);
+    const createdBy = getActingAsUserIdOrNull(users);
 
     if (!createdBy) {
       return;

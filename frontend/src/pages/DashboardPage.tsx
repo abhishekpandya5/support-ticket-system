@@ -9,6 +9,7 @@ import {
   ErrorState,
   PageHeader,
 } from '../components/common';
+import { useQueryPageState } from '../hooks/useQueryPageState';
 import { useTickets } from '../hooks/tickets';
 import { ROUTES } from '../routes/paths';
 import {
@@ -18,7 +19,7 @@ import {
 
 export default function DashboardPage() {
   const { tickets, queryState, refetch } = useTickets();
-  const isLoading = queryState.isLoading || queryState.isFetching;
+  const { isInitialLoading, error } = useQueryPageState(queryState);
 
   const counts = computeTicketStatusCounts(tickets ?? []);
   const recentTickets = getRecentTickets(tickets ?? []);
@@ -32,17 +33,17 @@ export default function DashboardPage() {
         }
       />
 
-      {isLoading ? <DashboardSkeleton /> : null}
+      {isInitialLoading ? <DashboardSkeleton /> : null}
 
-      {queryState.error ? (
+      {error ? (
         <ErrorState
-          error={queryState.error}
+          error={error}
           title="Unable to load dashboard data"
           onRetry={() => refetch()}
         />
       ) : null}
 
-      {!isLoading && !queryState.error && tickets?.length === 0 ? (
+      {!isInitialLoading && !error && tickets?.length === 0 ? (
         <EmptyState
           title="No tickets yet"
           message="Create your first support ticket to get started."
@@ -52,7 +53,7 @@ export default function DashboardPage() {
         />
       ) : null}
 
-      {!isLoading && !queryState.error && tickets && tickets.length > 0 ? (
+      {!isInitialLoading && !error && tickets && tickets.length > 0 ? (
         <>
           <TicketStatsGrid counts={counts} />
           <RecentTicketsList tickets={recentTickets} />

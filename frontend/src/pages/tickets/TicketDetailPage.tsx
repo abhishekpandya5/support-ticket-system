@@ -14,6 +14,7 @@ import {
 import { useTicket, useTicketStatusWorkflow } from '../../hooks/tickets';
 import { ROUTES } from '../../routes/paths';
 import { getAllowedTransitionsFromError } from '../../utils/statusErrors';
+import { getCommentAuthorId } from '../../utils/actingAs';
 import { getTicketErrorTitle, isNotFoundError } from '../../utils/ticketErrors';
 
 export default function TicketDetailPage() {
@@ -91,7 +92,7 @@ export default function TicketDetailPage() {
             </h3>
             <CommentForm
               ticketId={ticket.id}
-              createdById={ticket.createdBy.id}
+              createdById={getCommentAuthorId(ticket)}
             />
             <CommentList comments={comments ?? []} />
           </section>

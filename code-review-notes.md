@@ -260,3 +260,198 @@ Good documentation in JSDoc on key modules. Error envelope and enum centralizati
 ---
 
 *This review covers `backend/src` and `backend/tests` as of 2026-07-19. No application code was modified during this review.*
+
+---
+
+# Frontend Code Review Notes
+
+**Reviewer role:** Senior Staff Frontend Engineer (PR review)  
+**Scope:** Entire `frontend/src` implementation  
+**Date:** 2026-07-20  
+**Verdict:** **Request changes** — solid layered MVP with strong API/hook foundations and intentional a11y work; fix mutation cache invalidation and path casing before merge; address schema drift and loading UX immediately after.
+
+---
+
+## Executive Summary
+
+The frontend follows a clear **api → hooks → pages → components** architecture with lazy-loaded routes, a centralized Axios client, React Query wrappers, React Hook Form + Zod validation, and thoughtful shared primitives (`FormField`, `Button`, `Table`, `SkipLink`).
+
+Core flows (ticket list with URL-synced filters, dashboard, create/edit, detail with status workflow and comments) are implemented coherently. URL-synced filters with debounced search and shared error normalization (`ApiError`) are production-quality patterns.
+
+Main concerns: **mutation `onSuccess` composition likely breaks cache invalidation**, **create vs edit validation diverges from each other and the backend**, **inconsistent page folder casing**, **no frontend tests**, and **loading UI tied to `isFetching`** causing unnecessary skeleton flashes. Authentication/acting-as is half-implemented by design for Core tier but creates attribution risk for comments.
+
+---
+
+## Strengths
+
+| Area | Observation |
+|------|-------------|
+| **Architecture** | Clean bootstrap (`main.tsx` → `QueryProvider` → `App` → `RouterProvider`); thin pages; domain logic in `utils/`. |
+| **React Query** | Hierarchical query keys (`keys.ts`), dedicated invalidation helpers (`invalidation.ts`), smart retry in `queryClient.ts`. |
+| **Forms** | Zod schemas in `schemas/`; `FormField` + `getFieldErrorProps` wires a11y attributes; API field errors merged with Zod errors. |
+| **API layer** | Typed client, `ApiError` with `fieldErrors` extraction, thin resource modules. |
+| **Accessibility** | `SkipLink`, table captions/`scope`, decorative spinner mode, landmark structure, filter/form label associations. |
+| **Tailwind** | Cohesive slate palette, responsive layouts, shared class constants (`formInputClassName`, `getButtonClassName`). |
+| **Routing** | Route constants in `paths.ts`; lazy loading via `lazyRoute.tsx`. |
+
+---
+
+## Findings by Severity
+
+### Critical
+
+| ID | Area | Finding | Location / Evidence |
+|----|------|---------|---------------------|
+| F-C-01 | React Query | **Mutation `onSuccess` is overridden by consumer options.** All four mutation hooks define `onSuccess` with cache invalidation, then spread `...options` after it. When callers pass `onSuccess` (and they do), the spread replaces the hook's handler entirely. | `hooks/tickets/useTicketMutations.ts` (all 4 hooks); consumers: `useCreateTicketForm.ts`, `EditTicketPage.tsx`, `CommentForm.tsx`, `useTicketStatusWorkflow.ts` |
+| F-C-02 | Architecture | **Inconsistent page folder casing.** Create page lives under `pages/Tickets/` while other ticket pages use `pages/tickets/`. Router imports from capitalized path. | `routes/router.tsx:10`, `pages/Tickets/CreateTicketPage.tsx` vs `pages/tickets/*` |
+
+> **Verify F-C-01:** Create a ticket → navigate to list without refocusing window → confirm whether new ticket appears immediately (likely won't within 30s `staleTime` window).
+
+---
+
+### Major
+
+| ID | Area | Finding | Location / Evidence |
+|----|------|---------|---------------------|
+| F-M-01 | React Hook Form | **Create vs edit validation diverges from each other and backend.** Create: title max 100/min 5, description min 10, `assignedTo` required. Edit: title max 200/min 1, description max 5000, `assignedTo` optional. Backend create: title max 200, description max 5000, `assignedTo` optional. | `schemas/createTicketFormSchema.ts`, `schemas/ticketFormSchema.ts`, `backend/validators/tickets/schemas.ts` |
+| F-M-02 | React Query / Performance | **`isFetching` drives full loading UI.** `isLoading \|\| isFetching` shows skeletons and disables filters on background refetches. | `pages/tickets/TicketListPage.tsx:29`, `pages/DashboardPage.tsx:21` |
+| F-M-03 | React Query | **No `placeholderData` / `keepPreviousData` on filtered list.** Filter changes create new query keys; table disappears on every change. | `pages/tickets/TicketListPage.tsx`, `hooks/tickets/useTicketQueries.ts` |
+| F-M-04 | Architecture / Performance | **Dashboard aggregates client-side from full ticket list.** No server-side aggregation or pagination strategy. | `pages/DashboardPage.tsx`, `utils/dashboard.ts` |
+| F-M-05 | Component structure | **Duplicated form UIs with different contracts.** Create (`CreateTicketForm`, `PrioritySelect`, `AssignedUserSelect`) vs edit (`TicketForm`) duplicate fields with different schemas, IDs, and required semantics. | `components/ticket/`, `components/tickets/TicketForm.tsx` |
+| F-M-06 | Architecture | **Acting-as user is half-implemented and inconsistent.** Reads `localStorage` key `actingAsUserId` but nothing writes it; falls back to `users[0]`. Create uses `getActingAsUserId`; comment form uses `ticket.createdBy.id`. | `utils/actingAs.ts`, `useCreateTicketForm.ts`, `TicketDetailPage.tsx:94` |
+| F-M-07 | TypeScript | **`strict` mode not enabled.** No `strict`, `noImplicitAny`, or `strictNullChecks` in `tsconfig.app.json`. | `tsconfig.app.json` |
+| F-M-08 | Maintainability | **Zero frontend tests.** No test script in `package.json`; no `*.test.ts` or `*.spec.ts` files. High-risk areas (filter URL sync, schemas, mutation invalidation, `actingAs`) untested. | `frontend/package.json`, `frontend/src/` |
+| F-M-09 | Architecture | **No router error boundary.** No `errorElement` or React error boundary; unhandled render errors white-screen the app. | `routes/router.tsx`, `App.tsx` |
+| F-M-10 | Architecture / Naming | **Router bypasses `ROUTES` for dynamic paths.** Hardcoded `'/tickets/:id/edit'` and `'/tickets/:id'` instead of `ROUTES.ticketEdit(':id')` / `ROUTES.ticketDetail(':id')`. | `routes/router.tsx:37-41`, `routes/paths.ts` |
+
+---
+
+### Minor
+
+| ID | Area | Finding | Location / Evidence |
+|----|------|---------|---------------------|
+| F-N-01 | Naming | **`ticket` vs `tickets` component folders.** Singular holds create-only pieces; plural holds everything else. Intent not obvious from naming. | `components/ticket/`, `components/tickets/` |
+| F-N-02 | Component structure | **`TicketList` is a pass-through.** Only renders `TicketTable` with no added behavior. | `components/tickets/TicketList.tsx` |
+| F-N-03 | Maintainability | **Inconsistent import paths for hooks.** Some files deep-import instead of using barrel exports. | `pages/Tickets/CreateTicketPage.tsx`, `components/tickets/StatusFeedbackBanner.tsx` |
+| F-N-04 | Reusability / Naming | **Duplicated enum/constants.** `TICKET_STATUSES` and `PRIORITIES` defined in multiple places. | `utils/ticketListFilters.ts`, `utils/statusErrors.ts`, `schemas/*.ts`, `PrioritySelect.tsx`, `TicketForm.tsx` |
+| F-N-05 | TypeScript | **Unsafe select value casts in filters.** `event.target.value as TicketStatus \| ''` without runtime validation. | `StatusFilter.tsx`, `PriorityFilter.tsx` |
+| F-N-06 | TypeScript | **`TextLink` `to` prop is untyped `string`.** Loses route type safety from `AppRoutePath`. | `components/common/TextLink.tsx` |
+| F-N-07 | React Hook Form | **Inconsistent form ownership patterns.** Create lifts form into hook; edit and comment forms instantiate `useForm` inside components. | `useCreateTicketForm.ts` vs `TicketForm.tsx`, `CommentForm.tsx` |
+| F-N-08 | React Hook Form | **Redundant Zod constraint in create schema.** Title has `.min(1)` then `.min(5)` — first is dead code. | `schemas/createTicketFormSchema.ts` |
+| F-N-09 | React Query | **`userKeys` not colocated with tickets key pattern.** Lives inside `useUsers.ts` vs dedicated `keys.ts`. | `hooks/users/useUsers.ts` vs `hooks/tickets/keys.ts` |
+| F-N-10 | Tailwind | **Parallel color systems.** Tone maps in `ticketDisplay.ts`, `StatCard.tsx`, and inline in `StatusFeedbackBanner`. | Multiple files |
+| F-N-11 | Accessibility | **Mobile menu lacks focus trap and Escape handling.** Keyboard users can tab behind open menu. | `components/layout/AppHeader.tsx` |
+| F-N-12 | Accessibility | **Heading hierarchy skips levels on detail page.** `h1` → `h3` with no `h2`. | `pages/tickets/TicketDetailPage.tsx` |
+| F-N-13 | Accessibility | **`StatusFeedbackBanner` success state may not be announced.** `role="status"` without explicit `aria-live`. | `components/tickets/StatusFeedbackBanner.tsx` |
+| F-N-14 | Naming | **`MutationExtras` / `mutationState` naming overlap.** Duplicates `isPending` and `error` on mutation result. | `hooks/tickets/useTicketMutations.ts`, `hooks/tickets/state.ts` |
+| F-N-15 | Component structure | **`CommentForm` couples data fetching to presentation.** Calls `useAddComment` inside form vs page/hook layer. | `components/tickets/CommentForm.tsx` |
+| F-N-16 | Performance | **`sortCommentsChronologically` runs every render.** Unmemoized; fine for small lists. | `components/tickets/CommentList.tsx`, `utils/ticketComments.ts` |
+
+---
+
+### Suggestion
+
+| ID | Area | Finding | Location / Evidence |
+|----|------|---------|---------------------|
+| F-S-01 | Reusability | **Shared page loading boundary.** Dashboard, list, detail, and edit pages repeat `loading → skeleton → error → empty → content`. | All page components |
+| F-S-02 | Reusability | **Shared select primitives.** Priority dropdown in 3 places; user select in 3 variants (create, edit, filter). | `PrioritySelect`, `TicketForm`, `PriorityFilter`, `AssignedUserSelect`, `UserFilter` |
+| F-S-03 | React Query / Performance | **Optimistic updates for mutations.** Status changes, comments, and edits wait for round-trip. | Mutation hooks |
+| F-S-04 | Maintainability | **React Query Devtools in development.** Would aid cache debugging. | `providers/QueryProvider.tsx` |
+| F-S-05 | Performance | **Prefetch on navigation hover.** Lazy routes are good; prefetch ticket detail on row hover. | `lazyRoute.tsx`, `TicketTable.tsx` |
+| F-S-06 | Tailwind | **`clsx` / `cn` utility for class merging.** String templates work today; utility scales better. | Throughout |
+| F-S-07 | Tailwind | **Design tokens / theme layer.** Fine for internal tool; extract if branding changes. | N/A |
+| F-S-08 | Architecture | **Remove or implement `getUser()` API surface.** Dead API function with no hook. | `api/users.ts` |
+| F-S-09 | Accessibility | **Responsive table column hiding.** Hidden columns have no in-row alternative for sighted mobile users. | `components/tickets/TicketTable.tsx` |
+
+---
+
+## Review by Dimension
+
+### Architecture
+
+Layered SPA is appropriate for Core scope. Request flow:
+
+```
+Router (lazy pages) → page (hooks) → components → api/client → backend
+QueryProvider wraps entire app; no auth provider yet.
+```
+
+**Concerns:** `pages/Tickets/` vs `pages/tickets/` casing split; half-implemented acting-as; no error boundary.
+
+### Component Structure
+
+`components/common/` is a solid design-system-lite. Pages are thin orchestrators. **Concern:** `ticket` vs `tickets` folder split and duplicated create/edit form UIs.
+
+### React Query Usage
+
+Query key factory and invalidation helpers are architecturally correct. **Critical bug:** `onSuccess` composition in mutation hooks. **UX issue:** `isFetching` conflated with initial load; no `keepPreviousData` on filter changes.
+
+### React Hook Form Usage
+
+Zod resolvers and `getFieldErrorProps` are well-applied. **Concern:** create vs edit schema divergence; inconsistent form ownership (hook vs in-component); `CommentForm` hand-rolls error display.
+
+### TypeScript
+
+`verbatimModuleSyntax` and `noUnusedLocals` enabled. **Gap:** `strict` not on; unsafe filter casts; `TextLink` loses route typing.
+
+### Tailwind CSS
+
+Consistent slate palette, responsive breakpoints, shared class constants. Minor duplication of tone/color maps.
+
+### Naming
+
+Hooks prefixed `use*`; API functions verb-noun; components PascalCase. **Confusion:** `ticket`/`tickets` folders; `mutationState` vs mutation fields; `actingAs` implies UI that doesn't exist.
+
+### Reusability
+
+`FormField`, `Badge`, `Table`, `Button`/`ButtonLink` compose well. **Gap:** no shared priority/user select primitives; `TicketList` pass-through.
+
+### Performance
+
+Lazy routes good. **Concerns:** full-list dashboard aggregation; skeleton flash on refetch/filter; unmemoized comment sort.
+
+### Accessibility
+
+Strong intentional investment (`SkipLink`, `FormField`, table semantics, timeline ARIA). **Gaps:** mobile menu focus trap; heading hierarchy; success banner live region.
+
+### Maintainability
+
+Good inline API type docs. **Risks:** zero tests; validation drift; acting-as incomplete; no React Query Devtools.
+
+---
+
+## Summary Counts
+
+| Category | Count |
+|----------|-------|
+| Critical | 2 |
+| Major | 10 |
+| Minor | 16 |
+| Suggestion | 9 |
+
+---
+
+## Recommended Merge Blockers vs Follow-Ups
+
+**Before merge:**
+
+1. F-C-01 — Fix mutation `onSuccess` composition (cache invalidation)
+2. F-C-02 — Normalize `pages/Tickets/` → `pages/tickets/`
+
+**Immediately after merge:**
+
+3. F-M-01 — Align create/edit Zod schemas with backend
+4. F-M-02 / F-M-03 — Separate initial load from refetch; add `keepPreviousData`
+5. F-M-06 — Decide acting-as scope (complete or remove)
+6. F-M-08 — Add smoke tests for filters, schemas, invalidation
+
+**Acceptable for Core merge (document as known debt):**
+
+- F-M-04 (client-side dashboard aggregation)
+- F-M-07 (TypeScript strict — can be incremental)
+- F-N-01 through F-N-16 (hygiene and polish)
+- F-S-01 through F-S-09 (improvements)
+
+---
+
+*This review covers `frontend/src` as of 2026-07-20. No application code was modified during this review.*

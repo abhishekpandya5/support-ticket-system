@@ -1,13 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { RouteErrorBoundary } from '../components/common/RouteErrorBoundary';
 import { MainLayout } from '../components/layout/MainLayout';
 import { lazyPage, withSuspense } from './lazyRoute';
-import { ROUTES } from './paths';
+import { ROUTE_PATTERNS, ROUTES } from './paths';
 
 const DashboardPage = lazyPage(() => import('../pages/DashboardPage'));
 const TicketListPage = lazyPage(() => import('../pages/tickets/TicketListPage'));
 const TicketCreatePage = lazyPage(
-  () => import('../pages/Tickets/CreateTicketPage'),
+  () => import('../pages/tickets/CreateTicketPage'),
 );
 const TicketDetailPage = lazyPage(
   () => import('../pages/tickets/TicketDetailPage'),
@@ -20,6 +21,7 @@ const NotFoundPage = lazyPage(() => import('../pages/NotFoundPage'));
 export const router = createBrowserRouter([
   {
     element: <MainLayout />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         index: true,
@@ -34,11 +36,11 @@ export const router = createBrowserRouter([
         Component: withSuspense(TicketCreatePage),
       },
       {
-        path: '/tickets/:id/edit',
+        path: ROUTE_PATTERNS.ticketEdit,
         Component: withSuspense(EditTicketPage),
       },
       {
-        path: '/tickets/:id',
+        path: ROUTE_PATTERNS.ticketDetail,
         Component: withSuspense(TicketDetailPage),
       },
       {

@@ -6,9 +6,10 @@ import {
 } from '../../components/common';
 import {
   FilterPanel,
-  TicketList,
+  TicketTable,
   TicketTableSkeleton,
 } from '../../components/tickets';
+import { useQueryPageState } from '../../hooks/useQueryPageState';
 import { useTicketListFilters, useTickets } from '../../hooks/tickets';
 import { useUsers } from '../../hooks/users';
 import { ROUTES } from '../../routes/paths';
@@ -26,7 +27,7 @@ export default function TicketListPage() {
   } = useTicketListFilters();
   const { tickets, queryState, refetch } = useTickets(listParams);
   const { data: usersData, isLoading: usersLoading } = useUsers();
-  const isListLoading = queryState.isLoading || queryState.isFetching;
+  const { isInitialLoading, error } = useQueryPageState(queryState);
 
   return (
     <section className="min-w-0">
@@ -46,21 +47,21 @@ export default function TicketListPage() {
         onPriorityChange={setPriority}
         onAssignedToChange={setAssignedTo}
         onClearFilters={clearFilters}
-        disabled={isListLoading}
+        disabled={isInitialLoading}
         usersLoading={usersLoading}
       />
 
-      {isListLoading ? <TicketTableSkeleton /> : null}
+      {isInitialLoading ? <TicketTableSkeleton /> : null}
 
-      {queryState.error ? (
+      {error ? (
         <ErrorState
-          error={queryState.error}
+          error={error}
           title="Unable to load tickets"
           onRetry={() => refetch()}
         />
       ) : null}
 
-      {!isListLoading && !queryState.error && tickets?.length === 0 ? (
+      {!isInitialLoading && !error && tickets?.length === 0 ? (
         <EmptyState
           title={
             hasActiveFilters ? 'No matching tickets' : 'No tickets yet'
@@ -78,8 +79,8 @@ export default function TicketListPage() {
         />
       ) : null}
 
-      {!isListLoading && !queryState.error && tickets && tickets.length > 0 ? (
-        <TicketList tickets={tickets} />
+      {!isInitialLoading && !error && tickets && tickets.length > 0 ? (
+        <TicketTable tickets={tickets} />
       ) : null}
     </section>
   );

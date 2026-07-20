@@ -49,14 +49,15 @@ type UseCreateTicketOptions = Omit<
 
 export function useCreateTicket(options?: UseCreateTicketOptions) {
   const queryClient = useQueryClient();
+  const { onSuccess, ...mutationOptions } = options ?? {};
 
   const mutation = useMutation<CreateTicketResponse, ApiError, CreateTicketRequest>({
     mutationFn: createTicket,
+    ...mutationOptions,
     onSuccess: async (...args) => {
       await invalidateTicketLists(queryClient);
-      await options?.onSuccess?.(...args);
+      await onSuccess?.(...args);
     },
-    ...options,
   });
 
   return withMutationState(mutation);
@@ -74,6 +75,7 @@ type UseUpdateTicketOptions = Omit<
 
 export function useUpdateTicket(options?: UseUpdateTicketOptions) {
   const queryClient = useQueryClient();
+  const { onSuccess, ...mutationOptions } = options ?? {};
 
   const mutation = useMutation<
     UpdateTicketResponse,
@@ -81,11 +83,11 @@ export function useUpdateTicket(options?: UseUpdateTicketOptions) {
     UseUpdateTicketVariables
   >({
     mutationFn: ({ id, body }) => updateTicket(id, body),
+    ...mutationOptions,
     onSuccess: async (data, variables, ...rest) => {
       await invalidateTicketCaches(queryClient, variables.id);
-      await options?.onSuccess?.(data, variables, ...rest);
+      await onSuccess?.(data, variables, ...rest);
     },
-    ...options,
   });
 
   return withMutationState(mutation);
@@ -107,6 +109,7 @@ type UseChangeTicketStatusOptions = Omit<
 
 export function useChangeTicketStatus(options?: UseChangeTicketStatusOptions) {
   const queryClient = useQueryClient();
+  const { onSuccess, ...mutationOptions } = options ?? {};
 
   const mutation = useMutation<
     ChangeTicketStatusResponse,
@@ -114,11 +117,11 @@ export function useChangeTicketStatus(options?: UseChangeTicketStatusOptions) {
     UseChangeTicketStatusVariables
   >({
     mutationFn: ({ id, body }) => changeTicketStatus(id, body),
+    ...mutationOptions,
     onSuccess: async (data, variables, ...rest) => {
       await invalidateTicketCaches(queryClient, variables.id);
-      await options?.onSuccess?.(data, variables, ...rest);
+      await onSuccess?.(data, variables, ...rest);
     },
-    ...options,
   });
 
   return withMutationState(mutation);
@@ -136,6 +139,7 @@ type UseAddCommentOptions = Omit<
 
 export function useAddComment(options?: UseAddCommentOptions) {
   const queryClient = useQueryClient();
+  const { onSuccess, ...mutationOptions } = options ?? {};
 
   const mutation = useMutation<
     AddCommentResponse,
@@ -143,11 +147,11 @@ export function useAddComment(options?: UseAddCommentOptions) {
     UseAddCommentVariables
   >({
     mutationFn: ({ ticketId, body }) => addComment(ticketId, body),
+    ...mutationOptions,
     onSuccess: async (data, variables, ...rest) => {
       await invalidateTicketDetail(queryClient, variables.ticketId);
-      await options?.onSuccess?.(data, variables, ...rest);
+      await onSuccess?.(data, variables, ...rest);
     },
-    ...options,
   });
 
   return withMutationState(mutation);

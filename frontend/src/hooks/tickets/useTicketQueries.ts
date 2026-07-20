@@ -1,4 +1,5 @@
 import {
+  keepPreviousData,
   useQuery,
   type UseQueryOptions,
   type UseQueryResult,
@@ -34,6 +35,7 @@ export function useTickets(
   const query = useQuery<ListTicketsResponse, ApiError>({
     queryKey: ticketKeys.list(params),
     queryFn: () => listTickets(params),
+    placeholderData: keepPreviousData,
     ...options,
   });
 
