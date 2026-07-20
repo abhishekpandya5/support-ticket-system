@@ -319,13 +319,25 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 ---
 
-## 2026-07-19 — Frontend
+**Rejected:** TODO
 
-**Objective:** Generate TypeScript interfaces for frontend types aligned with backend API contracts.
+**Reason:** TODO
 
-**Prompt:** Generate TypeScript interfaces for the frontend based on the existing backend API contracts. Include Ticket, User, Comment, API response types, and request payloads. Reuse existing backend contracts. Do not invent new fields.
+---
 
-**AI Response Summary:** Replaced monolithic `frontend/src/api/types.ts` with `frontend/src/api/types/` modules: `enums.ts`, `entities.ts` (interfaces for `UserSummary`, `User`, `Ticket`, `Comment`), `requests.ts`, `responses.ts`, and `errors.ts` (`ApiErrorCode` aligned to `backend/src/constants/errorCodes.ts`). Fields mirror `api-contract.md` and backend serializers/validators. Removed invented `CONFLICT` error code. Existing imports via `./types` unchanged. Build passes.
+**Rejected:** TODO
+
+**Reason:** TODO
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Remove Material UI from the frontend and use Tailwind CSS only.
+
+**Prompt:** Use Tailwind CSS only for the frontend and remove Material UI wherever implemented. Replace it with appropriate Tailwind CSS classes.
+
+**AI Response Summary:** Replaced all MUI components with Tailwind-styled HTML/React: `PageHeader`, `EmptyState`, `ErrorState`, `TicketTable`, `TicketTableSkeleton`, and a new `Badge` component. Updated `ticketDisplay.ts` to return Tailwind class names instead of MUI chip colors. Removed `MuiProvider` and uninstalled `@mui/material`, `@emotion/react`, `@emotion/styled`. Build passes; ticket list bundle size reduced.
 
 **Accepted:** TODO
 

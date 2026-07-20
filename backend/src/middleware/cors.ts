@@ -19,6 +19,6 @@ export function configureCors() {
   return cors({
     origin: allowedOrigins.length > 0 ? allowedOrigins : false,
     methods: ['GET', 'POST', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type'],
+    allowedHeaders: ['Content-Type', 'x-request-id'],
   });
 }

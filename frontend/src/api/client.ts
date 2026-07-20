@@ -37,6 +37,14 @@ function toApiError(error: AxiosError): ApiError {
     return new ApiError(status, body.error, body.requestId);
   }
 
+  if (status === 502 && import.meta.env.DEV) {
+    return new ApiError(status, {
+      code: 'INTERNAL_ERROR',
+      message:
+        'API server unavailable. Start the backend (npm run dev in backend/) and ensure VITE_API_PROXY_TARGET in frontend/.env.local matches its port.',
+    });
+  }
+
   if (error.code === 'ECONNABORTED') {
     return new ApiError(
       status,
