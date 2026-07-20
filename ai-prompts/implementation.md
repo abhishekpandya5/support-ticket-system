@@ -453,3 +453,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Hardcoded transition rules on the frontend.
 
 **Reason:** Single source of truth in backend state machine; frontend only renders what the API provides.
+
+---
+
+## 2026-07-20 — Full Stack
+
+**Objective:** Implement ticket list search and filter (status, priority, assigned user) with URL sync and React Query.
+
+**Prompt:** Search by title; filters for status, priority, assigned user; React Query; URL query params; debounced search; preserve filters on refresh; reusable SearchBar, StatusFilter, PriorityFilter, UserFilter, FilterPanel; loading while fetching; no duplicated backend filtering logic; Tailwind; existing architecture.
+
+**AI Response Summary:** Extended backend `GET /api/tickets` with `priority` and `assignedTo` (`unassigned` sentinel) query params in validator, controller, and `TicketService.buildListFilter`; added integration tests. Frontend adds `useDebounce`, `useTicketListFilters` (react-router `useSearchParams`), filter components, and wires `TicketListPage` to `useTickets(listParams)` with skeleton on fetch and filter-aware empty state.
+
+**Accepted:** TODO
+
+**Modified:** TODO
+
+**Rejected:** TODO
+
+**Reason:** TODO

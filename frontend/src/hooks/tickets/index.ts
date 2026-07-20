@@ -16,6 +16,8 @@ export type {
 } from './state';
 export { useTicket, useTickets } from './useTicketQueries';
 export type { UseTicketResult, UseTicketsResult } from './useTicketQueries';
+export { useTicketListFilters } from './useTicketListFilters';
+export type { UseTicketListFiltersResult } from './useTicketListFilters';
 export { useTicketStatusWorkflow } from './useTicketStatusWorkflow';
 export type { StatusFeedback } from './useTicketStatusWorkflow';
 export {

@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 
 import { createApp } from '../../src/app.js';
 import { ERROR_CODES } from '../../src/constants/errorCodes.js';
-import { TICKET_STATUS } from '../../src/constants/enums.js';
+import { TICKET_PRIORITY, TICKET_STATUS } from '../../src/constants/enums.js';
 import { createTicket, seedUsers } from '../helpers/fixtures.js';
 
 const NON_EXISTENT_OBJECT_ID = '507f1f77bcf86cd799439011';
@@ -339,6 +339,123 @@ describe('Tickets API integration', () => {
         ),
       ).toBe(true);
     });
+
+    it('filters tickets by priority', async () => {
+      const { agent } = await seedUsers();
+
+      await createTicket({
+        title: 'High priority issue',
+        description: 'Needs attention',
+        createdBy: agent.id,
+        priority: TICKET_PRIORITY.HIGH,
+      });
+      await createTicket({
+        title: 'Low priority task',
+        description: 'Can wait',
+        createdBy: agent.id,
+        priority: TICKET_PRIORITY.LOW,
+      });
+      await createTicket({
+        title: 'Another high priority issue',
+        description: 'Also urgent',
+        createdBy: agent.id,
+        priority: TICKET_PRIORITY.HIGH,
+      });
+
+      const response = await request(app)
+        .get('/api/tickets')
+        .query({ priority: TICKET_PRIORITY.HIGH })
+        .expect(200);
+
+      expect(response.body.tickets).toHaveLength(2);
+      expect(
+        response.body.tickets.every(
+          (ticket: { priority: string }) =>
+            ticket.priority === TICKET_PRIORITY.HIGH,
+        ),
+      ).toBe(true);
+    });
+
+    it('filters tickets by assigned user', async () => {
+      const { agent, admin } = await seedUsers();
+
+      await createTicket({
+        title: 'Assigned to agent',
+        description: 'Agent workload',
+        createdBy: agent.id,
+        assignedTo: agent.id,
+      });
+      await createTicket({
+        title: 'Assigned to admin',
+        description: 'Admin workload',
+        createdBy: agent.id,
+        assignedTo: admin.id,
+      });
+      await createTicket({
+        title: 'Unassigned ticket',
+        description: 'In the queue',
+        createdBy: agent.id,
+        assignedTo: null,
+      });
+
+      const assignedResponse = await request(app)
+        .get('/api/tickets')
+        .query({ assignedTo: agent.id })
+        .expect(200);
+
+      expect(assignedResponse.body.tickets).toHaveLength(1);
+      expect(assignedResponse.body.tickets[0].title).toBe('Assigned to agent');
+
+      const unassignedResponse = await request(app)
+        .get('/api/tickets')
+        .query({ assignedTo: 'unassigned' })
+        .expect(200);
+
+      expect(unassignedResponse.body.tickets).toHaveLength(1);
+      expect(unassignedResponse.body.tickets[0].title).toBe('Unassigned ticket');
+    });
+
+    it('applies combined search and filters', async () => {
+      const { agent, admin } = await seedUsers();
+
+      await createTicket({
+        title: 'Login issue',
+        description: 'Cannot sign in',
+        createdBy: agent.id,
+        status: TICKET_STATUS.OPEN,
+        priority: TICKET_PRIORITY.HIGH,
+        assignedTo: agent.id,
+      });
+      await createTicket({
+        title: 'Login page styling',
+        description: 'Cosmetic login fix',
+        createdBy: agent.id,
+        status: TICKET_STATUS.CLOSED,
+        priority: TICKET_PRIORITY.HIGH,
+        assignedTo: agent.id,
+      });
+      await createTicket({
+        title: 'Email login alerts',
+        description: 'Unrelated',
+        createdBy: agent.id,
+        status: TICKET_STATUS.OPEN,
+        priority: TICKET_PRIORITY.LOW,
+        assignedTo: admin.id,
+      });
+
+      const response = await request(app)
+        .get('/api/tickets')
+        .query({
+          search: 'login',
+          status: TICKET_STATUS.OPEN,
+          priority: TICKET_PRIORITY.HIGH,
+          assignedTo: agent.id,
+        })
+        .expect(200);
+
+      expect(response.body.tickets).toHaveLength(1);
+      expect(response.body.tickets[0].title).toBe('Login issue');
+    });
   });
 
   describe('validation failures', () => {
@@ -371,6 +488,26 @@ describe('Tickets API integration', () => {
         .expect(400);
 
       expect(response.body.error.code).toBe(ERROR_CODES.INVALID_OBJECT_ID);
+    });
+
+    it('rejects invalid priority filter query values', async () => {
+      const response = await request(app)
+        .get('/api/tickets')
+        .query({ priority: 'urgent' })
+        .expect(400);
+
+      expect(response.body.error.code).toBe(ERROR_CODES.VALIDATION_ERROR);
+      expect(response.body.error.details.fields.priority).toBeDefined();
+    });
+
+    it('rejects invalid assignedTo filter query values', async () => {
+      const response = await request(app)
+        .get('/api/tickets')
+        .query({ assignedTo: 'not-a-valid-object-id' })
+        .expect(400);
+
+      expect(response.body.error.code).toBe(ERROR_CODES.VALIDATION_ERROR);
+      expect(response.body.error.details.fields.assignedTo).toBeDefined();
     });
 
     it('rejects invalid status filter query values', async () => {

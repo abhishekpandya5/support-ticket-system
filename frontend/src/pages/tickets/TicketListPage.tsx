@@ -6,14 +6,28 @@ import {
   PageHeader,
 } from '../../components/common';
 import {
+  FilterPanel,
   TicketList,
   TicketTableSkeleton,
 } from '../../components/tickets';
-import { useTickets } from '../../hooks/tickets';
+import { useTicketListFilters, useTickets } from '../../hooks/tickets';
+import { useUsers } from '../../hooks/users';
 import { ROUTES } from '../../routes/paths';
 
 export default function TicketListPage() {
-  const { tickets, queryState, refetch } = useTickets();
+  const {
+    filters,
+    listParams,
+    hasActiveFilters,
+    setSearch,
+    setStatus,
+    setPriority,
+    setAssignedTo,
+    clearFilters,
+  } = useTicketListFilters();
+  const { tickets, queryState, refetch } = useTickets(listParams);
+  const { data: usersData, isLoading: usersLoading } = useUsers();
+  const isListLoading = queryState.isLoading || queryState.isFetching;
 
   return (
     <section>
@@ -29,20 +43,39 @@ export default function TicketListPage() {
         }
       />
 
-      {queryState.isLoading ? <TicketTableSkeleton /> : null}
+      <FilterPanel
+        filters={filters}
+        users={usersData?.users ?? []}
+        hasActiveFilters={hasActiveFilters}
+        onSearchChange={setSearch}
+        onStatusChange={setStatus}
+        onPriorityChange={setPriority}
+        onAssignedToChange={setAssignedTo}
+        onClearFilters={clearFilters}
+        disabled={isListLoading}
+        usersLoading={usersLoading}
+      />
+
+      {isListLoading ? <TicketTableSkeleton /> : null}
 
       {queryState.error ? (
         <ErrorState error={queryState.error} onRetry={() => refetch()} />
       ) : null}
 
-      {!queryState.isLoading && !queryState.error && tickets?.length === 0 ? (
+      {!isListLoading && !queryState.error && tickets?.length === 0 ? (
         <EmptyState
-          title="No tickets yet"
-          message="Create a ticket to get started."
+          title={
+            hasActiveFilters ? 'No matching tickets' : 'No tickets yet'
+          }
+          message={
+            hasActiveFilters
+              ? 'Try adjusting your search or filters.'
+              : 'Create a ticket to get started.'
+          }
         />
       ) : null}
 
-      {!queryState.isLoading && !queryState.error && tickets && tickets.length > 0 ? (
+      {!isListLoading && !queryState.error && tickets && tickets.length > 0 ? (
         <TicketList tickets={tickets} />
       ) : null}
     </section>

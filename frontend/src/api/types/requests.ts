@@ -5,10 +5,14 @@
 
 import type { TicketPriority, TicketStatus } from './enums';
 
+export const ASSIGNED_TO_UNASSIGNED = 'unassigned' as const;
+
 /** `GET /api/tickets` — `listTicketsQuerySchema` */
 export interface ListTicketsParams {
   search?: string;
   status?: TicketStatus;
+  priority?: TicketPriority;
+  assignedTo?: string;
 }
 
 /** `POST /api/tickets` — `createTicketSchema` */

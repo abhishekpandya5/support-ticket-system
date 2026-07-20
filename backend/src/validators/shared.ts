@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import {
+  TICKET_PRIORITY_VALUES,
   TICKET_STATUS_VALUES,
 } from '../constants/enums.js';
 import { isValidObjectId } from '../utils/objectId.js';
@@ -43,12 +44,25 @@ export function idParamSchema(fieldLabel: string) {
   });
 }
 
+export const ASSIGNED_TO_UNASSIGNED = 'unassigned' as const;
+
 export const listTicketsQuerySchema = z.object({
   search: z.string().optional(),
   status: z
     .enum(TICKET_STATUS_VALUES, {
       error: `Status must be one of: ${TICKET_STATUS_VALUES.join(', ')}`,
     })
+    .optional(),
+  priority: z
+    .enum(TICKET_PRIORITY_VALUES, {
+      error: `Priority must be one of: ${TICKET_PRIORITY_VALUES.join(', ')}`,
+    })
+    .optional(),
+  assignedTo: z
+    .union([
+      objectIdField('assignee ID'),
+      z.literal(ASSIGNED_TO_UNASSIGNED),
+    ])
     .optional(),
 });
 

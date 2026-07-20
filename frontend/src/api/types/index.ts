@@ -10,6 +10,8 @@ export type {
   UpdateTicketRequest,
 } from './requests';
 
+export { ASSIGNED_TO_UNASSIGNED } from './requests';
+
 export type {
   AddCommentResponse,
   ChangeTicketStatusResponse,

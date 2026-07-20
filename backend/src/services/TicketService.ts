@@ -38,6 +38,8 @@ import { userService, type UserService } from './UserService.js';
 export type ListTicketsQuery = {
   search?: string;
   status?: string;
+  priority?: string;
+  assignedTo?: string;
 };
 
 export type CreateTicketInput = {
@@ -290,6 +292,32 @@ export class TicketService {
       }
 
       filter.status = query.status as TicketStatus;
+    }
+
+    if (query.priority !== undefined && query.priority !== '') {
+      if (
+        !(TICKET_PRIORITY_VALUES as readonly string[]).includes(query.priority)
+      ) {
+        throw validationError('Validation failed', {
+          priority: `Priority must be one of: ${TICKET_PRIORITY_VALUES.join(', ')}`,
+        });
+      }
+
+      filter.priority = query.priority as TicketPriority;
+    }
+
+    if (query.assignedTo !== undefined && query.assignedTo !== '') {
+      if (query.assignedTo === 'unassigned') {
+        filter.assignedTo = null;
+      } else {
+        if (!isValidObjectId(query.assignedTo)) {
+          throw validationError('Validation failed', {
+            assignedTo: 'Invalid assignee ID',
+          });
+        }
+
+        filter.assignedTo = toObjectId(query.assignedTo);
+      }
     }
 
     const search = query.search?.trim();

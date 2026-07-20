@@ -26,6 +26,8 @@ export class TicketController {
 
     const search = queryParam(req.query.search);
     const status = queryParam(req.query.status);
+    const priority = queryParam(req.query.priority);
+    const assignedTo = queryParam(req.query.assignedTo);
 
     if (search !== undefined) {
       query.search = search;
@@ -33,6 +35,14 @@ export class TicketController {
 
     if (status !== undefined) {
       query.status = status;
+    }
+
+    if (priority !== undefined) {
+      query.priority = priority;
+    }
+
+    if (assignedTo !== undefined) {
+      query.assignedTo = assignedTo;
     }
 
     const tickets = await this.tickets.listTickets(query);
