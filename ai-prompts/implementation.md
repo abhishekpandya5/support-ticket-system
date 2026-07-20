@@ -464,10 +464,28 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 
 **AI Response Summary:** Extended backend `GET /api/tickets` with `priority` and `assignedTo` (`unassigned` sentinel) query params in validator, controller, and `TicketService.buildListFilter`; added integration tests. Frontend adds `useDebounce`, `useTicketListFilters` (react-router `useSearchParams`), filter components, and wires `TicketListPage` to `useTickets(listParams)` with skeleton on fetch and filter-aware empty state.
 
-**Accepted:** TODO
+**Accepted:** Backend list filters, URL-synced filter panel, debounced search, and reusable filter components on the ticket list page.
 
-**Modified:** TODO
+**Modified:** Extended existing `GET /api/tickets` instead of adding a new endpoint; reused `useTickets`, `TicketTableSkeleton`, and existing Tailwind form styles.
 
-**Rejected:** TODO
+**Rejected:** Client-side filtering of ticket results; a dedicated filter API endpoint.
 
-**Reason:** TODO
+**Reason:** Keeps filtering logic on the backend and matches the existing React Query + react-router architecture.
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Implement the Dashboard page with ticket stats and recent activity.
+
+**Prompt:** Display total, open, in progress, resolved, and closed ticket counts; show recent tickets; use React Query; create reusable dashboard widgets; responsive Tailwind layout; no hardcoded data; follow existing architecture.
+
+**AI Response Summary:** Added `DashboardPage` wired to `useTickets()` with client-side `computeTicketStatusCounts` and `getRecentTickets` helpers. Created reusable dashboard widgets (`StatCard`, `TicketStatsGrid`, `RecentTicketItem`, `RecentTicketsList`, `DashboardSkeleton`) with loading, error, and empty states. Status cards link to filtered ticket list routes.
+
+**Accepted:** Dashboard stats grid, recent tickets list, loading skeleton, and navigation links to filtered ticket views.
+
+**Modified:** Derived counts and recent tickets from the existing list API instead of adding dashboard-specific endpoints.
+
+**Rejected:** Hardcoded ticket metrics; cancelled status as a separate dashboard stat card.
+
+**Reason:** Matches the project data strategy in `ui-flow.md` and reuses existing React Query hooks and ticket types.
