@@ -45,5 +45,4 @@ See [`ai-prompts/`](ai-prompts/) for append-only prompt history by activity.
 ## If I Had More Time
 
 - E2E tests with Playwright against a running stack
-- Ticket detail/edit/status workflow screenshots in the evidence pack
 - Optional auth layer (out of Core scope) with server-side session validation

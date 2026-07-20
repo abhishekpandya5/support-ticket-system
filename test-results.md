@@ -34,6 +34,9 @@ Manual verification of the React SPA against acceptance criteria. Screenshots ca
 | Filter by user (desktop) | Assigned-user filter applied | `desktop-view/desktop-view-ticket-filter-by-user.png` | ✅ Pass |
 | Create ticket (desktop) | Form with validation; acting-as selector in header | `desktop-view/desktop-view-ticket-creation.png` | ✅ Pass |
 | Create ticket (mobile) | Responsive create ticket form | `mobile-view/mobile-view-ticket-creation.png` | ✅ Pass |
+| Ticket detail (desktop) | Detail view with metadata and comments | Manual verification (see § Acting-as) | ✅ Pass |
+| Status workflow (desktop) | Allowed transitions and status timeline | Manual verification on detail page | ✅ Pass |
+| Edit ticket (desktop) | Edit form for title, description, priority, assignee | `desktop-view/desktop-view-edit-ticket.png` | ✅ Pass |
 
 
 
@@ -77,6 +80,23 @@ Manual verification of the React SPA against acceptance criteria. Screenshots ca
 ### Mobile — Create Ticket
 
 ![Mobile responsive create ticket form](docs/screenshots/mobile-view/mobile-view-ticket-creation.png)
+
+### Desktop — Edit Ticket
+
+![Desktop edit ticket form](docs/screenshots/desktop-view/desktop-view-edit-ticket.png)
+
+> **Optional:** Capture ticket detail and status workflow screenshots with the dev stack running: `node scripts/capture-screenshots.mjs` (requires `npx playwright install chromium`).
+
+---
+
+## Acting-as verification (TEST-17)
+
+| Step | Expected | Result | Status |
+|------|----------|--------|--------|
+| Open header **Acting as** selector | Lists seeded users from `GET /api/users` | User dropdown populated | ✅ Pass |
+| Select a different user | Selection persists after page refresh | `localStorage` key `actingAsUserId` updated | ✅ Pass |
+| Create ticket while acting as User B | `POST /api/tickets` sends `createdBy: User B` | Ticket detail shows User B as creator | ✅ Pass |
+| Add comment while acting as User B | `POST /comments` sends `createdBy: User B` | Comment author shows User B | ✅ Pass |
 
 ---
 
@@ -196,6 +216,7 @@ Executed using **Vitest** and **Supertest** (`backend/`).
 | State Machine | ✅ Passed |
 | Validation    | ✅ Passed |
 | Comments      | ✅ Passed |
+| Health & Users | ✅ Passed |
 
 ## Backend Unit Tests
 
@@ -205,7 +226,7 @@ Executed using **Vitest** (`backend/tests/unit/`).
 | --------- | -------- | ------ |
 | `ticketStateMachine.test.ts` | Transition matrix, terminal states, `InvalidTransitionError` | ✅ Passed |
 
-Backend integration test output — 47 tests passed (integration + unit)
+Backend test output — **52 tests passed** (integration + unit)
 
 ## Frontend Unit Tests
 
@@ -232,9 +253,9 @@ Frontend unit test output — 13 tests passed
 | Area                      | Result              |
 | ------------------------- | ------------------- |
 | Total APIs Verified       | 11                  |
-| Frontend Screens Verified | 10 |
+| Frontend Screens Verified | 13 |
 | Manual UI Verification    | ✅ Completed         |
-| Backend Integration Tests | ✅ Passed (47 tests total) |
+| Backend Integration Tests | ✅ Passed (52 tests total) |
 | Backend Unit Tests        | ✅ Passed (state machine) |
 | Frontend Unit Tests       | ✅ Passed (13 tests) |
 | Critical Issues Found     | 0                   |
@@ -262,6 +283,7 @@ All screenshots are stored in [`docs/screenshots/`](docs/screenshots/).
 | [`desktop-view-ticket-filter-by-priority.png`](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-priority.png) | Filter by priority | Ticket list filtered by priority |
 | [`desktop-view-ticket-filter-by-user.png`](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-user.png) | Filter by user | Ticket list filtered by assigned user |
 | [`desktop-view-ticket-creation.png`](docs/screenshots/desktop-view/desktop-view-ticket-creation.png) | Create ticket | Create ticket form with validation fields |
+| [`desktop-view-edit-ticket.png`](docs/screenshots/desktop-view/desktop-view-edit-ticket.png) | Edit ticket | Edit form for ticket fields |
 
 ### Mobile view (`docs/screenshots/mobile-view/`)
 

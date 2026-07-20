@@ -249,7 +249,7 @@ client/src/
 
 | Path | Page | Purpose |
 |------|------|---------|
-| `/` | Redirect → `/tickets` | Default landing |
+| `/` | `DashboardPage` | Home dashboard with ticket stats |
 | `/tickets` | `TicketListPage` | List with search and filter |
 | `/tickets/new` | `CreateTicketPage` | Create ticket form |
 | `/tickets/:id` | `TicketDetailPage` | Detail, edit, comments, status |

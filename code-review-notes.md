@@ -1,5 +1,7 @@
 # Code Review Notes
 
+> **Remediation note (2026-07-20):** Frontend findings F-C-01, F-C-02, and most F-M / F-N items were addressed. See [`review-fixes.md`](review-fixes.md). The frontend section below reflects the pre-remediation review snapshot.
+
 **Reviewer role:** Senior Staff Engineer (PR review)  
 **Scope:** Entire `backend/src` implementation + `backend/tests`  
 **Date:** 2026-07-19  

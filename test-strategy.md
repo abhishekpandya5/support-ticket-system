@@ -27,7 +27,7 @@ Core verification requires automated state-machine integration tests, recommende
                │  (Supertest + MongoDB)    │
                └─────────────┬─────────────┘
           ┌──────────────────┴──────────────────┐
-          │     State Machine Unit Tests          │  ← Stretch
+          │     State Machine Unit Tests          │  ← Implemented
           │     (pure function, no DB)            │
           └───────────────────────────────────────┘
 ```

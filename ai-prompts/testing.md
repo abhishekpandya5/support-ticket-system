@@ -21,3 +21,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Testing against live Atlas database.
 
 **Reason:** In-memory MongoDB keeps tests fast, isolated, and repeatable.
+
+---
+
+## 2026-07-20 — Testing
+
+**Objective:** Close assessment gaps for backend unit tests, health/user API coverage, and frontend Vitest.
+
+**Prompt:** Fix assessment deduction items for testing evidence and coverage.
+
+**AI Response Summary:** Added `backend/tests/unit/ticketStateMachine.test.ts` and `backend/tests/integration/health.users.integration.test.ts` (health + users endpoints). Documented acting-as manual verification (TEST-17) in `test-results.md`. Updated acceptance sign-off and test counts (52 backend, 13 frontend).
+
+**Accepted:** Expanded automated and manual test evidence.
+
+**Modified:** Screenshot capture script added at `scripts/capture-screenshots.mjs` for optional detail/status images.
+
+**Rejected:** Full E2E CI pipeline (Stretch scope).
+
+**Reason:** Closes TEST-17, M-12, and state machine unit test gaps from assessment review.

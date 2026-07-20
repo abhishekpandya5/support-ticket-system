@@ -7,12 +7,12 @@
 | Planning | `ai-prompts/planning.md` | 4 |
 | Design | `ai-prompts/design.md` | 3 |
 | Implementation | `ai-prompts/implementation.md` | 33 |
-| Testing | `ai-prompts/testing.md` | 1 |
+| Testing | `ai-prompts/testing.md` | 2 |
 | Debugging | `ai-prompts/debugging.md` | 2 |
 | Code review | `ai-prompts/code-review.md` | 3 |
 | Documentation | `ai-prompts/documentation.md` | 8 |
 
-**Total:** 54 major logged tasks in `ai-prompts/` (append-only history).
+**Total:** 55 major logged tasks in `ai-prompts/` (append-only history).
 
 ## Practices
 

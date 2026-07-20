@@ -615,3 +615,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Full E2E automation and new auth layer (out of Core scope).
 
 **Reason:** Closes high-priority assessment gaps without expanding scope beyond Core tier.
+
+---
+
+## 2026-07-20 — Submission (assessment remediation)
+
+**Objective:** Fix marks-deduction items from formal assessment review.
+
+**Prompt:** Based on evaluation, fix issues responsible for marks deduction.
+
+**AI Response Summary:** Added `scripts/db-init.js` and `backend/src/scripts/dbInit.ts`; health/users integration tests; acceptance-criteria sign-off and FE-04/spec alignment; README artifact index; stale doc updates (`review-fixes.md`, `tests/README.md`, `code-review-notes.md`); `seed-data/` and `schema-or-migrations/` README stubs; retired `docs/prompt-history.md`; untracked `backend/dist/`; TEST-17 acting-as verification in `test-results.md`.
+
+**Accepted:** Assessment remediation batch.
+
+**Modified:** `acceptance-criteria.md` FE-04 aligned with Dashboard-at-`/` implementation.
+
+**Rejected:** None.
+
+**Reason:** Addresses db-init, documentation consistency, test coverage, and submission gate sign-off from reviewer report.

@@ -11,7 +11,7 @@ Support Ticket Management System — full-stack Core implementation with REST AP
 - [x] Global error handler with request ID
 - [x] Frontend Core UI (list, detail, create, edit, status workflow, comments)
 - [x] Acting-as user selector in header (`localStorage` + `createdBy` on writes)
-- [x] Backend integration tests + state machine unit tests
+- [x] Backend integration tests + state machine unit tests + health/users tests
 - [x] Frontend unit tests (acting-as, filters, schemas)
 
 ## Technical Changes
@@ -21,6 +21,7 @@ Support Ticket Management System — full-stack Core implementation with REST AP
 | `backend/src/` | Layered Express API, `TicketStateMachine`, Mongoose models |
 | `frontend/src/` | React Router, React Query, RHF + Zod, Tailwind UI |
 | `docs/architecture.md` | System, layer, ERD, and state machine diagrams |
+| `scripts/db-init.js` | MongoDB index sync entry point |
 | Tests | `backend/tests/integration/`, `backend/tests/unit/`, `frontend/src/**/*.test.ts` |
 
 ## Database Changes

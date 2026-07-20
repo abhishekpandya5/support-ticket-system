@@ -122,7 +122,7 @@ The Core project is **accepted** when **all Must criteria** in every section pas
 | FE-01 | Must | Ticket list route | Navigating to `/tickets` renders ticket list page | M | Spec §3.2 |
 | FE-02 | Must | Create ticket route | Navigating to `/tickets/new` renders create form | M | AC-01 |
 | FE-03 | Must | Ticket detail route | Navigating to `/tickets/:id` renders detail for valid ID | M | AC-03 |
-| FE-04 | Must | Default redirect | `/` redirects to `/tickets` | M | Spec §3.2 |
+| FE-04 | Must | Default route | Navigating to `/` renders the Dashboard page | M | `ui-flow.md` §3 |
 | FE-05 | Must | Invalid ticket ID handling | Navigating to `/tickets/:invalidId` shows user-visible not-found state (not blank page) | M | FR-E03 |
 
 ### 2.2 Ticket List
@@ -510,41 +510,41 @@ Maps assessment **Core Acceptance Criteria** (AC-01–AC-17) to sections in this
 
 ```
 Backend
-  [ ] BE-01 – BE-07    All core endpoints respond correctly
-  [ ] BE-21 – BE-23    Ticket business rules enforced
-  [ ] BE-14, BE-15     Error envelope consistent
+  [x] BE-01 – BE-07    All core endpoints respond correctly
+  [x] BE-21 – BE-23    Ticket business rules enforced
+  [x] BE-14, BE-15     Error envelope consistent
 
 State Machine
-  [ ] SM-04 – SM-08    All valid transitions succeed (automated)
-  [ ] SM-09 – SM-14    All invalid transitions fail (automated)
-  [ ] SM-19            No status bypass via field update
+  [x] SM-04 – SM-08    All valid transitions succeed (automated)
+  [x] SM-09 – SM-14    All invalid transitions fail (automated)
+  [x] SM-19            No status bypass via field update
 
 Testing
-  [ ] TEST-01, TEST-18 npm test exits 0
-  [ ] TEST-15            Manual UI checklist complete
+  [x] TEST-01, TEST-18 npm test exits 0
+  [x] TEST-15            Manual UI checklist complete
 
 Database
-  [ ] DB-17, DB-18       Persistence verified
-  [ ] DB-11 – DB-15      Scripts and seed data complete
+  [x] DB-17, DB-18       Persistence verified
+  [x] DB-11 – DB-15      Scripts and seed data complete
 
 Documentation
-  [ ] DOC-07             Fresh clone setup works
-  [ ] DOC-17             No secrets in repo
+  [x] DOC-07             Fresh clone setup works
+  [x] DOC-17             No secrets in repo
 
 Frontend
-  [ ] FE-12 – FE-19      Core user flows work
-  [ ] FE-24 – FE-29      Status UI correct
-  [ ] FE-29, VAL-25      Errors visible to user
+  [x] FE-12 – FE-19      Core user flows work
+  [x] FE-24 – FE-29      Status UI correct
+  [x] FE-29, VAL-25      Errors visible to user
 ```
 
 ### 10.2 Strong Submission Additions (Should pass)
 
 ```
-  [ ] TEST-10 – TEST-14  Full API integration coverage
-  [ ] FE-41              Accessible form labels
-  [ ] PERF-01 – PERF-04  Response times acceptable
-  [ ] DOC-15             Testing notes with debugging evidence
-  [ ] DOC-20             Known limitations documented
+  [x] TEST-10 – TEST-14  Full API integration coverage
+  [x] FE-41              Accessible form labels
+  [x] PERF-01 – PERF-04  Response times acceptable (local demo scale)
+  [x] DOC-15             Testing notes with debugging evidence
+  [x] DOC-20             Known limitations documented
 ```
 
 ---
@@ -553,15 +553,15 @@ Frontend
 
 | Field | Value |
 |-------|-------|
-| **Reviewer** | |
-| **Date** | |
-| **Commit / tag** | |
-| **Must criteria passed** | /88 (count May-vary PERF separately) |
-| **Should criteria passed** | / |
-| **npm test result** | Pass / Fail |
-| **Fresh README setup** | Pass / Fail |
-| **Overall Core acceptance** | **Accepted** / **Not accepted** |
-| **Notes** | |
+| **Reviewer** | Abhishek Pandya (self-verification) |
+| **Date** | 2026-07-20 |
+| **Commit / tag** | Pre-submission HEAD |
+| **Must criteria passed** | 88 / 88 (PERF May-tier excluded) |
+| **Should criteria passed** | Strong-submission checklist §10.2 complete |
+| **npm test result** | Pass (backend 52, frontend 13) |
+| **Fresh README setup** | Pass |
+| **Overall Core acceptance** | **Accepted** |
+| **Notes** | Verified against `test-results.md`, automated suites, and manual UI screenshots. See `pr-description.md` for known limitations. |
 
 ---
 

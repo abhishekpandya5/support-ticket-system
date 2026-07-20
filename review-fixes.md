@@ -9,6 +9,7 @@ Tracked fixes from code review findings in `code-review-notes.md`.
 | ID | Finding | Fix | Status |
 |----|---------|-----|--------|
 | — | State machine method naming | Renamed public API methods (`isTransitionAllowed`, `changeStatus`, `getAllowedTransitions`) | Done |
+| M-12 | User and health endpoints untested | Added `health.users.integration.test.ts` | Done |
 
 ---
 
@@ -30,7 +31,7 @@ Tracked fixes from code review findings in `code-review-notes.md`.
 | F-M-03 | No `keepPreviousData` on filtered ticket list | `useTickets` uses `placeholderData: keepPreviousData` | Done |
 | F-M-04 | Dashboard aggregates client-side from full ticket list | — | Pending (requires backend aggregation endpoint) |
 | F-M-05 | Duplicated create/edit form UIs | Consolidated under `components/tickets/forms/` with shared `PriorityField`, `AssignedUserField`, `FormActions`, `FormApiError`; removed `components/ticket/` | Done |
-| F-M-06 | Acting-as half-implemented and inconsistent | Added `useActingAsUser` hook, `getActingAsWarning()`, `getCommentAuthorId()`; comment author policy documented (still uses ticket creator until acting-as UI exists) | Done (partial — acting-as UI still pending) |
+| F-M-06 | Acting-as half-implemented and inconsistent | Added `ActingAsSelector` in app header, `useActingAsUser` with `localStorage`, acting-as `createdBy` on creates/comments | Done |
 | F-M-07 | TypeScript `strict` mode not enabled | Enabled `strict: true` in `tsconfig.app.json` | Done |
 | F-M-08 | Zero frontend tests | Added Vitest, `vitest.config.ts`, `npm test` script; unit tests for `ticketListFilters`, `filterSelect`, `actingAs`, ticket schemas | Done |
 | F-M-09 | No router error boundary | Added `RouteErrorBoundary` and `errorElement` on router | Done |
