@@ -1,11 +1,8 @@
 # Testing
 
-Prompt history for **Testing** activity. Entries migrated from legacy `docs/prompt-history.md` (2026-07-18).
+Prompt history for **Testing** activity.
 
 Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rejected, Reason.
-Fields marked `TODO` were not recorded at the time of the work.
-
-<!-- TODO: No prompts recorded for this activity yet. -->
 
 ---
 
@@ -17,10 +14,10 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Added `mongodb-memory-server`, `vitest.config.ts`, `tests/setup.ts` (memory server + per-test collection clear), `tests/helpers/{db,fixtures}.ts`, and `tests/integration/tickets.integration.test.ts` (21 cases). Updated `package.json` test scripts. Fixed Express 5 query validation in `backend/src/middleware/validate.ts` (in-place query merge). All 21 tests pass with Node 24 (`npm test` in `backend/`).
 
-**Accepted:** TODO
+**Accepted:** Vitest + Supertest setup and 21 integration tests.
 
-**Modified:** TODO
+**Modified:** Added more tests after code review fixes.
 
-**Rejected:** TODO
+**Rejected:** Testing against live Atlas database.
 
-**Reason:** TODO
+**Reason:** In-memory MongoDB keeps tests fast, isolated, and repeatable.

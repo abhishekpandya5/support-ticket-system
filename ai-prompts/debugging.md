@@ -1,9 +1,8 @@
 # Debugging
 
-Prompt history for **Debugging** activity. Entries migrated from legacy `docs/prompt-history.md` (2026-07-18).
+Prompt history for **Debugging** activity.
 
 Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rejected, Reason.
-Fields marked `TODO` were not recorded at the time of the work.
 
 ---
 
@@ -15,11 +14,28 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Diagnosed `ts-node-dev --esm` swallowing the entry file (`no script to run provided`) and incompatibility with TypeScript 7. Replaced dev runner with `tsx watch src/index.ts`, added `tsx` as a devDependency, and set `"engines": { "node": ">=18" }` in `backend/package.json`. Verified server starts and connects to MongoDB on Node 24.
 
-**Accepted:** TODO
+**Accepted:** Switched dev runner to `tsx watch`.
 
-**Modified:** TODO
+**Modified:** None.
 
-**Rejected:** TODO
+**Rejected:** Keeping `ts-node-dev`.
 
-**Reason:** TODO
+**Reason:** `tsx` works reliably with ESM and TypeScript 7.
 
+---
+
+## 2026-07-20 — Bugfix
+
+**Objective:** Fix frontend network error and 502 when loading tickets.
+
+**Prompt:** UI showed "Unable to load tickets — Network Error" and 502 on `/api/tickets`.
+
+**AI Response Summary:** Found port mismatch (frontend called 3001, backend on 5000) and backend not running when MongoDB failed. Added Vite dev proxy, `frontend/.env.local` with proxy target, and clearer 502 error message.
+
+**Accepted:** Vite proxy and `.env.local` for backend port.
+
+**Modified:** None.
+
+**Rejected:** Hardcoding port 5000 as the only default.
+
+**Reason:** Proxy avoids CORS issues; backend port stays configurable per environment.

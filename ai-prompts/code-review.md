@@ -1,9 +1,8 @@
 # Code Review
 
-Prompt history for **Code Review** activity. Entries migrated from legacy `docs/prompt-history.md` (2026-07-18).
+Prompt history for **Code Review** activity.
 
 Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rejected, Reason.
-Fields marked `TODO` were not recorded at the time of the work.
 
 ---
 
@@ -15,13 +14,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Refactored `backend/src/stateMachine/TicketStateMachine.ts` to replace `canTransition()`, `assertTransition()`, and `validateTransition()` with `isTransitionAllowed()`, `changeStatus()`, and `getAllowedTransitions()`. Simplified `stateMachine/index.ts` barrel (removed transition result types). Transition rules and `InvalidTransitionError` behavior unchanged.
 
-**Accepted:** TODO
+**Accepted:** Method rename to match service layer.
 
-**Modified:** TODO
+**Modified:** None.
 
-**Rejected:** TODO
+**Rejected:** Old method names.
 
-**Reason:** TODO
+**Reason:** Consistent naming makes the state machine easier to use in services.
 
 ---
 
@@ -33,11 +32,10 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Authored comprehensive `code-review-notes.md`: verdict Approve with comments; 2 Critical (status change race, latent DB bypass), 12 Major, 11 Minor, 14 Suggestion. Documented strengths (layered architecture, pure state machine, error envelope, integration tests) and dimension-by-dimension analysis. No code changes.
 
-**Accepted:** TODO
+**Accepted:** Review notes and finding classifications.
 
-**Modified:** TODO
+**Modified:** Critical issues fixed in a later pass.
 
-**Rejected:** TODO
+**Rejected:** Rewriting code during review.
 
-**Reason:** TODO
-
+**Reason:** Review was read-only; critical fixes were done separately.

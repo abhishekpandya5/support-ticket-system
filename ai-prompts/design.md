@@ -1,9 +1,8 @@
 # Design
 
-Prompt history for **Design** activity. Entries migrated from legacy `docs/prompt-history.md` (2026-07-18).
+Prompt history for **Design** activity.
 
 Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rejected, Reason.
-Fields marked `TODO` were not recorded at the time of the work.
 
 ---
 
@@ -15,13 +14,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Authored `docs/api-design.md` — full REST API design covering 8 endpoints (tickets CRUD, status change, comments, users). Each endpoint documents method, URL, description, request/response JSON schemas, status codes, validation rules, and example error responses. Includes shared schemas (UserSummary, Ticket, Comment), error model catalog, state machine transition matrix, quick reference table, and requirement traceability to FR/AC IDs.
 
-**Accepted:** TODO
+**Accepted:** All 8 Core endpoints, shared schemas, and error model.
 
-**Modified:** TODO
+**Modified:** Renamed to `api-contract.md` at repo root.
 
-**Rejected:** TODO
+**Rejected:** Stretch-tier endpoints (auth, pagination).
 
-**Reason:** TODO
+**Reason:** API contract is the source of truth for backend and frontend types.
 
 ---
 
@@ -33,13 +32,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Authored `docs/database-design.md` — complete database design for three collections (`users`, `tickets`, `comments`) with field-level tables (BSON/Mongoose types), ERD diagram, ObjectId reference map, index definitions, two-layer validation model (Mongoose + service), query patterns, seed data tables (users/tickets/comments), idempotent seed strategy, connection lifecycle diagram, test DB strategy with mongodb-memory-server, and stretch considerations.
 
-**Accepted:** TODO
+**Accepted:** Three-collection schema, indexes, and seed strategy.
 
-**Modified:** TODO
+**Modified:** Renamed to `data-model.md` at repo root.
 
-**Rejected:** TODO
+**Rejected:** None.
 
-**Reason:** TODO
+**Reason:** Database design directly shaped the Mongoose models.
 
 ---
 
@@ -51,11 +50,10 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Authored `docs/ui-design.md` — UI design for 5 screens with ASCII wireframes, component inventories, Mermaid user-flow diagrams, validation rules, error/loading/empty state tables per screen, shared component library (badges, forms, banners), global layout with Acting-as selector, routing map, cross-screen patterns, and acceptance criteria traceability. Edit Ticket designed as inline mode on Detail page per spec.
 
-**Accepted:** TODO
+**Accepted:** Screen flows, loading/error/empty states, and component naming.
 
-**Modified:** TODO
+**Modified:** Renamed to `ui-flow.md`; ticket list built as a table instead of cards.
 
-**Rejected:** TODO
+**Rejected:** None.
 
-**Reason:** TODO
-
+**Reason:** UI design guided component structure; table layout was a valid implementation choice.

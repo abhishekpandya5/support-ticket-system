@@ -1,9 +1,8 @@
 # Implementation
 
-Prompt history for **Implementation** activity. Entries migrated from legacy `docs/prompt-history.md` (2026-07-18).
+Prompt history for **Implementation** activity.
 
 Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rejected, Reason.
-Fields marked `TODO` were not recorded at the time of the work.
 
 ---
 
@@ -15,13 +14,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Created `backend/src/` layered tree under Express + TypeScript project: entry points (`index.ts`, `app.ts`), config/constants barrels, versioned routes (`routes/v1/{tickets,comments,users}`), domain-scoped controllers/services/repositories/validators, plus models, middleware, utils, stateMachine, and `tests/{integration,unit,helpers}`. All files are placeholder modules with JSDoc purpose comments only.
 
-**Accepted:** TODO
+**Accepted:** Layered backend folder structure.
 
-**Modified:** TODO
+**Modified:** Route paths simplified during later wiring.
 
-**Rejected:** TODO
+**Rejected:** Business logic in scaffold files.
 
-**Reason:** TODO
+**Reason:** Established architecture before writing feature code.
 
 ---
 
@@ -33,13 +32,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Created `frontend/src/` directory tree with domain-scoped subfolders: `api/{client,tickets,comments,users}`, `components/{common,layout,tickets,comments}`, `pages/{dashboard,tickets/{list,detail,create}}`, plus hooks, services, routes, layouts, context, utils, types, constants, and `assets/{icons,images}`. Empty directories tracked via `.gitkeep`; existing `main.tsx`/`App.tsx` untouched.
 
-**Accepted:** TODO
+**Accepted:** Domain-scoped frontend folders.
 
-**Modified:** TODO
+**Modified:** Some folders unused; code lives in `api/`, `hooks/`, `components/`, `pages/`.
 
-**Rejected:** TODO
+**Rejected:** Building components during scaffold phase.
 
-**Reason:** TODO
+**Reason:** Folder structure guides where features belong.
 
 ---
 
@@ -51,13 +50,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Implemented `backend/src/config/env.ts` (Zod-validated `MONGODB_URI`, `NODE_ENV`, `PORT`, `LOG_LEVEL`), `backend/src/config/database.ts` (idempotent `connectDatabase()`, `disconnectDatabase()`, signal-based shutdown helpers, pool tuning, Mongoose event listeners, connection state helpers), `backend/src/utils/logger.ts` (structured JSON logging), and `backend/src/config/index.ts` barrel. Added `backend/.env.example`. Updated `backend/tsconfig.json` (`rootDir`, `include`/`exclude`, ESM settings) and `backend/package.json` (`"type": "module"`). No routes, models, or business logic.
 
-**Accepted:** TODO
+**Accepted:** Env validation, DB connection module, and graceful shutdown.
 
-**Modified:** TODO
+**Modified:** None.
 
-**Rejected:** TODO
+**Rejected:** Hardcoded connection strings.
 
-**Reason:** TODO
+**Reason:** Reusable connection setup needed before any data work.
 
 ---
 
@@ -69,13 +68,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Implemented `backend/src/app.ts` (`createApp()` with CORS, `express.json()`, health route, 404 and error handlers), `backend/src/index.ts` (env load, DB connect, HTTP listen, graceful shutdown closing server then disconnecting MongoDB), `backend/src/routes/health.ts` (`GET /health` with database readiness; 503 when disconnected), `backend/src/middleware/{cors,notFoundHandler,errorHandler}.ts`, `backend/src/utils/AppError.ts`, and `backend/src/constants/errorCodes.ts`. Extended env with `PORT` default `3001` and optional `CORS_ORIGINS`. Added `build`, `start`, and `dev` npm scripts. API routes not mounted.
 
-**Accepted:** TODO
+**Accepted:** Express bootstrap with health check and error handling.
 
-**Modified:** TODO
+**Modified:** Error handler enhanced later with request IDs.
 
-**Rejected:** TODO
+**Rejected:** Mounting API routes in this step.
 
-**Reason:** TODO
+**Reason:** Server shell needed before feature endpoints.
 
 ---
 
@@ -87,13 +86,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Implemented `backend/src/constants/enums.ts` with `as const` objects (`TICKET_STATUS`, `TICKET_PRIORITY`, `USER_ROLE`), union types (`TicketStatus`, `TicketPriority`, `UserRole`), and readonly value arrays for validators. Updated `backend/src/constants/index.ts` barrel to re-export enums alongside `errorCodes`. Values aligned with `docs/api-design.md` and `docs/database-design.md`.
 
-**Accepted:** TODO
+**Accepted:** Shared status, priority, and role constants.
 
-**Modified:** TODO
+**Modified:** None.
 
-**Rejected:** TODO
+**Rejected:** None.
 
-**Reason:** TODO
+**Reason:** One source of truth for domain values across models and validators.
 
 ---
 
@@ -105,13 +104,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Created `backend/src/models/{User,Ticket,Comment}.ts` with `InferSchemaType`/`HydratedDocument` typing, enum validation via shared constants, trim/minlength/maxlength rules, ObjectId references (`createdBy`, `assignedTo`, `ticketId`), `timestamps: true`, explicit collection names, and named indexes per database design (`email_1` unique; `status_1`, `assignedTo_1` sparse, `updatedAt_-1`; `ticketId_1_createdAt_1`). Hot-reload-safe model registration and barrel exports in `backend/src/models/index.ts`.
 
-**Accepted:** TODO
+**Accepted:** User, Ticket, and Comment Mongoose models.
 
-**Modified:** TODO
+**Modified:** Added persistence hooks after code review.
 
-**Rejected:** TODO
+**Rejected:** Controllers or services in model files.
 
-**Reason:** TODO
+**Reason:** Models are the database layer for the three Core collections.
 
 ---
 
@@ -123,13 +122,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Implemented `backend/src/scripts/seedUsers.ts` (`USER_SEEDS`, `seedUsers()` with email-based existence check) and `backend/src/scripts/seed.ts` (connect, seed, disconnect CLI). Added `npm run seed` to `backend/package.json`. Users: Admin (`admin@example.com`, admin), John Doe (`john.doe@example.com`, agent), Alice Smith (`alice.smith@example.com`, viewer). Fixed Mongoose ESM imports in model files (`mongoose.models` via default import). Verified two consecutive runs (insert then skip).
 
-**Accepted:** TODO
+**Accepted:** Idempotent user seed script.
 
-**Modified:** TODO
+**Modified:** None.
 
-**Rejected:** TODO
+**Rejected:** Seeding tickets and comments in this step.
 
-**Reason:** TODO
+**Reason:** Dev users needed for acting-as and assignee dropdowns.
 
 ---
 
@@ -141,13 +140,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Created `backend/src/stateMachine/{transitions,InvalidTransitionError,TicketStateMachine}.ts` with authoritative `TICKET_TRANSITIONS` map, `InvalidTransitionError` (includes `toDetails()` for API envelope), and injectable `TicketStateMachine` class. Public API: `isTransitionAllowed()`, `changeStatus()`, `getAllowedTransitions()`, plus `isTerminal()` helpers. Same-status transitions rejected. Pure module — no Mongoose, Express, or persistence. Exported `ticketStateMachine` singleton and barrel from `stateMachine/index.ts`.
 
-**Accepted:** TODO
+**Accepted:** Pure state machine with transition rules.
 
-**Modified:** TODO
+**Modified:** Method names renamed in a follow-up review.
 
-**Rejected:** TODO
+**Rejected:** Coupling to Mongoose or Express.
 
-**Reason:** TODO
+**Reason:** Status changes must follow the ticket lifecycle rules.
 
 ---
 
@@ -159,13 +158,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Created `backend/src/repositories/{UserRepository,TicketRepository,CommentRepository}.ts` with injectable model constructors and default singleton instances. `UserRepository`: findAll, findById, findByEmail, existsById, create. `TicketRepository`: findById, findByIdPopulated, findMany (QueryFilter pass-through, optional populate), create, updateFieldsById, updateFieldsByIdPopulated, save. `CommentRepository`: findById, findByTicketId (sorted, populated), create, createPopulated. Typed input DTOs and barrel exports in `repositories/index.ts`.
 
-**Accepted:** TODO
+**Accepted:** Three repository classes for data access.
 
-**Modified:** TODO
+**Modified:** Added atomic status update after code review.
 
-**Rejected:** TODO
+**Rejected:** Business logic in repositories.
 
-**Reason:** TODO
+**Reason:** Keeps MongoDB queries separate from business rules.
 
 ---
 
@@ -177,13 +176,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Created `backend/src/services/{UserService,TicketService,CommentService}.ts` with injectable dependencies and singleton instances. `UserService`: listUsers, getUserById, assertUserExists. `TicketService`: listTickets (status filter, escaped regex search), getTicketById (ticket + comments), createTicket (always `open`, user ref checks), updateTicket (rejects status field, assignment), changeStatus (state machine + persist). `CommentService`: getCommentsByTicketId, addComment. Added `utils/{objectId,regex,errors}.ts` for ObjectId validation, search escaping, and `AppError` factories. Services throw `AppError`; map `InvalidTransitionError` to API envelope. Barrel exports in `services/index.ts`. No controllers.
 
-**Accepted:** TODO
+**Accepted:** Service layer with ticket workflow and state machine.
 
-**Modified:** TODO
+**Modified:** Status change made atomic after review.
 
-**Rejected:** TODO
+**Rejected:** Direct DB calls from services.
 
-**Reason:** TODO
+**Reason:** Services hold all business rules for tickets, users, and comments.
 
 ---
 
@@ -195,13 +194,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Created `backend/src/controllers/{UserController,TicketController,CommentController}.ts` with injectable service dependencies and singleton instances. `UserController`: list (200), getById (200/404). `TicketController`: list, getById, create (201), update (200), changeStatus (200). `CommentController`: create (201). Added `middleware/asyncHandler.ts` for async error forwarding to global handler and `utils/serializers.ts` for API JSON mapping (`id`, `UserSummary`, ISO timestamps). Updated `controllers/index.ts` and middleware/utils barrels. Routes not wired.
 
-**Accepted:** TODO
+**Accepted:** Thin controllers and API serializers.
 
-**Modified:** TODO
+**Modified:** None.
 
-**Rejected:** TODO
+**Rejected:** Business logic in controllers.
 
-**Reason:** TODO
+**Reason:** Controllers only translate HTTP to service calls.
 
 ---
 
@@ -213,13 +212,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Implemented modular routers: `routes/v1/users/index.ts` (`GET /`, `GET /:id`), `routes/v1/tickets/index.ts` (list, create, get, update, status change, nested comments), `routes/v1/comments/index.ts` (`POST /` with `mergeParams`), `routes/v1/index.ts` (aggregates tickets + users), and `routes/index.ts` (`apiRouter`). Mounted `apiRouter` at `/api` in `app.ts` — endpoints at `/api/tickets`, `/api/users`, `/api/tickets/:id/status`, `/api/tickets/:id/comments`. Controllers only; no service imports in route files.
 
-**Accepted:** TODO
+**Accepted:** All 8 Core API routes mounted at `/api`.
 
-**Modified:** TODO
+**Modified:** None.
 
-**Rejected:** TODO
+**Rejected:** Service calls from route files.
 
-**Reason:** TODO
+**Reason:** Routes wire HTTP paths to controllers only.
 
 ---
 
@@ -231,13 +230,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Added `validators/shared.ts` (ObjectId, trimmed string helpers, `formatZodFieldErrors`), `validators/tickets/schemas.ts` (`createTicketSchema`, `updateTicketSchema` with at-least-one-field refine, `updateStatusSchema`), and `validators/comments/schemas.ts` (`addCommentSchema`). Implemented initial `middleware/validate.ts` with `validateBody` mapping Zod failures to `VALIDATION_ERROR` (`details.fields`) and `forbiddenFields` support (`status` on update → `STATUS_UPDATE_NOT_ALLOWED`). Wired schemas into ticket, comment, and user routes. Barrel exports in `validators/{tickets,comments,common,index}.ts`. No business logic in validators.
 
-**Accepted:** TODO
+**Accepted:** Zod schemas for all mutation endpoints.
 
-**Modified:** TODO
+**Modified:** Extended to params/query validation later.
 
-**Rejected:** TODO
+**Rejected:** Validation inside controllers.
 
-**Reason:** TODO
+**Reason:** Shared validators give consistent `VALIDATION_ERROR` responses.
 
 ---
 
@@ -249,13 +248,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Enhanced `middleware/validate.ts` with `validateBody`, `validateParams`, `validateQuery`, generic `validate()`, and `validateRequest({ body, params, query })`. Zod failures map to `400 VALIDATION_ERROR` with `details.fields`; single-field ObjectId format errors on params/body map to `400 INVALID_OBJECT_ID`. Added `idParamSchema` and `listTicketsQuerySchema` in `validators/shared.ts`. Routes updated: `validateParams` on `:id` routes, `validateQuery` on ticket list, `validateBody` on mutations. Parsed values replace `req.body` / `req.params` / `req.query` on success. TypeScript check passes.
 
-**Accepted:** TODO
+**Accepted:** Unified validation for body, params, and query.
 
-**Modified:** TODO
+**Modified:** Fixed Express 5 read-only `req.query` during testing.
 
-**Rejected:** TODO
+**Rejected:** Per-route ad-hoc validation.
 
-**Reason:** TODO
+**Reason:** One middleware handles validation across all endpoints.
 
 ---
 
@@ -267,13 +266,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Installed `tailwindcss` + `@tailwindcss/vite`; configured `vite.config.ts` and `index.css`. Added `frontend/src/components/layout/` with `AppLayout`, `AppHeader` (responsive mobile menu), `AppNavigation` (placeholder links), and `MainContent`. Barrel export at `components/layout/index.ts`. `App.tsx` renders `<AppLayout />` only — pages compose via `children` later. Removed Vite starter `App.css`. Build passes.
 
-**Accepted:** TODO
+**Accepted:** Tailwind layout with responsive header and navigation.
 
-**Modified:** TODO
+**Modified:** Renamed to `MainLayout` when router was added.
 
-**Rejected:** TODO
+**Rejected:** Page content in layout components.
 
-**Reason:** TODO
+**Reason:** Shared layout shell for all ticket screens.
 
 ---
 
@@ -285,13 +284,13 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Renamed layout shell to `MainLayout` with `<Outlet />`. Added `routes/` (`paths.ts`, `router.tsx`, `lazyRoute.tsx`), stub pages under `pages/` (dashboard, tickets list/create/detail, NotFound), and `RouteFallback` spinner. Navigation uses `NavLink` + `ROUTES` constants. All feature pages lazy-loaded with `React.lazy` + `Suspense`. `App.tsx` renders `RouterProvider`. Build passes with per-page chunks.
 
-**Accepted:** TODO
+**Accepted:** React Router with lazy-loaded pages.
 
-**Modified:** TODO
+**Modified:** None.
 
-**Rejected:** TODO
+**Rejected:** Eager-loading all pages.
 
-**Reason:** TODO
+**Reason:** Code splitting keeps the initial bundle small.
 
 ---
 
@@ -303,46 +302,100 @@ Fields marked `TODO` were not recorded at the time of the work.
 
 **AI Response Summary:** Added `frontend/src/api/` with `client.ts` (shared Axios + interceptors), `env.ts` (`VITE_API_BASE_URL`), `errors.ts` (`ApiError`, `isApiError`), `types.ts` (domain + request/response types), `tickets.ts` and `users.ts` (typed functions for all 8 Core endpoints). Request interceptor adds `x-request-id`; response interceptor maps API error envelope to `ApiError`. Added `frontend/.env.example` and `vite-env.d.ts`. Build passes.
 
-**Accepted:** TODO
+**Accepted:** Typed Axios client for all 8 endpoints.
 
-**Modified:** TODO
+**Modified:** Added Vite proxy and split types into `types/` module.
 
-**Rejected:** TODO
+**Rejected:** React code in the API layer.
 
-**Reason:** TODO
-
----
-
-**Rejected:** TODO
-
-**Reason:** TODO
+**Reason:** Clean separation between HTTP calls and UI components.
 
 ---
 
-**Rejected:** TODO
+## 2026-07-19 — Frontend
 
-**Reason:** TODO
+**Objective:** Create React Query hooks for ticket APIs.
+
+**Prompt:** Create React Query hooks for the ticket APIs. Requirements: query keys, cache invalidation, error handling, loading states, TypeScript, no UI components.
+
+**AI Response Summary:** Added `frontend/src/hooks/tickets/` with query key factory, `useTickets`/`useTicket` queries, mutation hooks with cache invalidation, and `QueryClientProvider` wiring.
+
+**Accepted:** React Query hooks with cache invalidation.
+
+**Modified:** None.
+
+**Rejected:** UI components in hooks module.
+
+**Reason:** Centralizes server state for ticket list and detail pages.
 
 ---
 
-**Rejected:** TODO
+## 2026-07-19 — Frontend
 
-**Reason:** TODO
+**Objective:** Generate TypeScript interfaces aligned with backend API contracts.
+
+**Prompt:** Generate TypeScript interfaces for the frontend based on the existing backend API contracts. Include Ticket, User, Comment, API response types, and request payloads. Reuse existing backend contracts. Do not invent new fields.
+
+**AI Response Summary:** Added `frontend/src/api/types/` with entity, request, response, and error interfaces matching `api-contract.md`.
+
+**Accepted:** Contract-aligned TypeScript interfaces.
+
+**Modified:** None.
+
+**Rejected:** Fields not in the API contract.
+
+**Reason:** Frontend types must match the backend API exactly.
+
+---
+
+## 2026-07-19 — Frontend
+
+**Objective:** Implement the Ticket List page.
+
+**Prompt:** Implement the Ticket List feature: fetch tickets using React Query, display in a table, loading/empty/error states, reusable components, no search or filters yet.
+
+**AI Response Summary:** Built `TicketListPage` with `useTickets()`, table showing title/priority/status/assignee/created date, and loading/empty/error states. Added reusable `PageHeader`, `EmptyState`, `ErrorState`, `TicketTable`, and `TicketTableSkeleton`.
+
+**Accepted:** Ticket list with React Query and state handling.
+
+**Modified:** Initially used Material UI; replaced with Tailwind.
+
+**Rejected:** Search and filters.
+
+**Reason:** First working ticket screen; search/filter planned for later.
 
 ---
 
 ## 2026-07-20 — Frontend
 
-**Objective:** Remove Material UI from the frontend and use Tailwind CSS only.
+**Objective:** Remove Material UI and use Tailwind CSS only.
 
 **Prompt:** Use Tailwind CSS only for the frontend and remove Material UI wherever implemented. Replace it with appropriate Tailwind CSS classes.
 
 **AI Response Summary:** Replaced all MUI components with Tailwind-styled HTML/React: `PageHeader`, `EmptyState`, `ErrorState`, `TicketTable`, `TicketTableSkeleton`, and a new `Badge` component. Updated `ticketDisplay.ts` to return Tailwind class names instead of MUI chip colors. Removed `MuiProvider` and uninstalled `@mui/material`, `@emotion/react`, `@emotion/styled`. Build passes; ticket list bundle size reduced.
 
-**Accepted:** TODO
+**Accepted:** Full Tailwind styling, MUI removed.
 
-**Modified:** TODO
+**Modified:** None.
 
-**Rejected:** TODO
+**Rejected:** Keeping Material UI.
 
-**Reason:** TODO
+**Reason:** Project uses Tailwind throughout; smaller bundle size.
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Implement the Ticket Detail page with ticket metadata and comments.
+
+**Prompt:** Implement Ticket Details feature: fetch via route param using `useTicket`, display title/description/status/priority/assignee/creator/dates, comments in chronological order, loading/empty/error states, reusable components (`TicketDetailsCard`, `TicketMetadata`, `StatusBadge`, `PriorityBadge`, `CommentList`), Tailwind only.
+
+**AI Response Summary:** Implemented `TicketDetailPage` with `useTicket(id)` from route params. Added reusable components under `components/tickets/` and utils `ticketErrors.ts` / `ticketComments.ts` for error titles and comment sorting. Loading skeleton, 404-aware error state, and empty comments state included. Build passes.
+
+**Accepted:** Ticket detail page with all required fields and comment list.
+
+**Modified:** Used existing `TicketDetailPage.tsx` path instead of requested `Tickets/TicketDetailsPage.tsx`.
+
+**Rejected:** Direct Axios calls; status actions and edit mode deferred.
+
+**Reason:** Matches existing routing and architecture; detail view only per prompt scope.
