@@ -28,7 +28,7 @@ const HIDDEN_LG = 'hidden lg:table-cell';
 
 export function TicketTable({ tickets }: TicketTableProps) {
   return (
-    <Table>
+    <Table caption="Support tickets">
       <TableHeader>
         <TableRow>
           <TableHead>Title</TableHead>
@@ -44,7 +44,7 @@ export function TicketTable({ tickets }: TicketTableProps) {
             <TableCell className="max-w-[10rem] sm:max-w-xs lg:max-w-md">
               <Link
                 to={ROUTES.ticketDetail(ticket.id)}
-                className="block truncate font-medium text-slate-900 hover:text-slate-700 hover:underline"
+                className="block truncate font-medium text-slate-900 hover:text-slate-700 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
                 title={ticket.title}
               >
                 {ticket.title}

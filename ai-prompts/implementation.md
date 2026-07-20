@@ -561,3 +561,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Separate mobile card list for tickets (would change presentation scope).
 
 **Reason:** Progressive column hiding plus contained table scroll preserves functionality while improving mobile usability.
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Perform an accessibility review and fix issues without changing functionality.
+
+**Prompt:** Check labels, keyboard navigation, focus states, color contrast, ARIA attributes, and semantic HTML; fix issues; provide accessibility summary.
+
+**AI Response Summary:** Added skip-to-main link and `main` landmark; associated form/filter labels via `htmlFor`/`id`; strengthened focus rings on inputs, links, and buttons; table captions and `scope="col"` headers; `aria-required`, `aria-invalid`, `aria-describedby` on forms; decorative spinners inside buttons; section `aria-labelledby`; stat card and recent ticket link labels; status timeline `aria-current` on list items and improved low-contrast text; filter label contrast bump (`text-slate-600`).
+
+**Accepted:** Accessibility fixes across layout, forms, filters, tables, dashboard, and ticket detail.
+
+**Modified:** TODO
+
+**Rejected:** TODO
+
+**Reason:** TODO

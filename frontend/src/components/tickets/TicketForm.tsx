@@ -172,7 +172,12 @@ export function TicketForm({
         >
           {isSubmitting ? (
             <>
-              <LoadingSpinner size="sm" tone="inverted" label="Saving ticket" />
+              <LoadingSpinner
+                size="sm"
+                tone="inverted"
+                label="Saving ticket"
+                decorative
+              />
               Saving...
             </>
           ) : (

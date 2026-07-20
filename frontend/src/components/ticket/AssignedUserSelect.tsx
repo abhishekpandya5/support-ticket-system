@@ -38,7 +38,7 @@ export function AssignedUserSelect({
         disabled={isDisabled}
         className={formInputClassName}
         {...register('assignedTo')}
-        {...getFieldErrorProps(fieldId, error)}
+        {...getFieldErrorProps(fieldId, error, true)}
         aria-busy={isLoading}
       >
         <option value="">

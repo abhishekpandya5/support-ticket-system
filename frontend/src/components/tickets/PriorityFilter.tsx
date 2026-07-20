@@ -1,7 +1,9 @@
 import type { TicketPriority } from '../../api/types';
-import { formInputClassName } from '../common/FormField';
+import { filterLabelClassName, formInputClassName } from '../common/FormField';
 import { TICKET_PRIORITIES } from '../../utils/ticketListFilters';
 import { formatTicketPriority } from '../../utils/ticketDisplay';
+
+const PRIORITY_FILTER_ID = 'ticket-priority-filter';
 
 type PriorityFilterProps = {
   value: TicketPriority | '';
@@ -15,18 +17,18 @@ export function PriorityFilter({
   disabled = false,
 }: PriorityFilterProps) {
   return (
-    <label className="block w-full min-w-0">
-      <span className="mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500">
+    <div className="block w-full min-w-0">
+      <label htmlFor={PRIORITY_FILTER_ID} className={filterLabelClassName}>
         Priority
-      </span>
+      </label>
       <select
+        id={PRIORITY_FILTER_ID}
         value={value}
         onChange={(event) =>
           onChange(event.target.value as TicketPriority | '')
         }
         disabled={disabled}
         className={formInputClassName}
-        aria-label="Filter by priority"
       >
         <option value="">All priorities</option>
         {TICKET_PRIORITIES.map((priority) => (
@@ -35,6 +37,6 @@ export function PriorityFilter({
           </option>
         ))}
       </select>
-    </label>
+    </div>
   );
 }

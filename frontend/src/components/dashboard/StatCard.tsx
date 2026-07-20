@@ -52,6 +52,7 @@ export function StatCard({ label, value, to, tone = 'default' }: StatCardProps) 
   return (
     <Link
       to={to}
+      aria-label={`${value} ${label}`}
       className="block rounded-lg transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
     >
       <StatCardContent label={label} value={value} tone={tone} />

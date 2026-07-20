@@ -33,7 +33,15 @@ export function FilterPanel({
   usersLoading = false,
 }: FilterPanelProps) {
   return (
-    <Card padding="sm" className="mb-6 space-y-4">
+    <Card
+      as="section"
+      padding="sm"
+      aria-labelledby="ticket-filters-heading"
+      className="mb-6 space-y-4"
+    >
+      <h2 id="ticket-filters-heading" className="sr-only">
+        Filter tickets
+      </h2>
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end">
         <SearchBar
           value={filters.search}

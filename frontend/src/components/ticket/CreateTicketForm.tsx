@@ -77,6 +77,7 @@ export function CreateTicketForm({
           {...getFieldErrorProps(
             titleId,
             errors.title?.message ?? fieldErrors?.title,
+            true,
           )}
         />
       </FormField>
@@ -96,6 +97,7 @@ export function CreateTicketForm({
           {...getFieldErrorProps(
             descriptionId,
             errors.description?.message ?? fieldErrors?.description,
+            true,
           )}
         />
       </FormField>
@@ -141,7 +143,12 @@ export function CreateTicketForm({
         >
           {isSubmitting ? (
             <>
-              <LoadingSpinner size="sm" tone="inverted" label="Creating ticket" />
+              <LoadingSpinner
+                size="sm"
+                tone="inverted"
+                label="Creating ticket"
+                decorative
+              />
               Creating...
             </>
           ) : (

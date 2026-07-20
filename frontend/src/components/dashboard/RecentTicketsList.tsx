@@ -9,9 +9,11 @@ type RecentTicketsListProps = {
 
 export function RecentTicketsList({ tickets }: RecentTicketsListProps) {
   return (
-    <section className="mt-8">
+    <section className="mt-8" aria-labelledby="recent-tickets-heading">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-lg font-semibold text-slate-900">Recent Tickets</h2>
+        <h2 id="recent-tickets-heading" className="text-lg font-semibold text-slate-900">
+          Recent Tickets
+        </h2>
         <TextLink to={ROUTES.tickets}>View all</TextLink>
       </div>
 

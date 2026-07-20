@@ -9,14 +9,18 @@ export const tableBodyCellClass =
 type TableProps = {
   children: ReactNode;
   className?: string;
+  caption?: string;
 };
 
-export function Table({ children, className = '' }: TableProps) {
+export function Table({ children, className = '', caption }: TableProps) {
   return (
     <div
       className={`max-w-full overflow-x-auto overscroll-x-contain rounded-lg border border-slate-200 bg-white ${className}`.trim()}
     >
-      <table className="min-w-full divide-y divide-slate-200">{children}</table>
+      <table className="min-w-full divide-y divide-slate-200">
+        {caption ? <caption className="sr-only">{caption}</caption> : null}
+        {children}
+      </table>
     </div>
   );
 }
@@ -49,7 +53,9 @@ type TableCellProps = {
 
 export function TableHead({ children, className = '' }: TableCellProps) {
   return (
-    <th className={`${tableHeaderCellClass} ${className}`.trim()}>{children}</th>
+    <th scope="col" className={`${tableHeaderCellClass} ${className}`.trim()}>
+      {children}
+    </th>
   );
 }
 

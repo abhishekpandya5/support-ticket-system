@@ -30,7 +30,8 @@ export function StatusFeedbackBanner({
           <button
             type="button"
             onClick={onDismiss}
-            className="shrink-0 text-xs font-medium underline hover:no-underline"
+            aria-label="Dismiss message"
+            className="shrink-0 rounded text-xs font-medium underline hover:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
           >
             Dismiss
           </button>

@@ -57,8 +57,11 @@ export default function TicketDetailPage() {
       {!queryState.isLoading && !queryState.error && ticket ? (
         <div className="space-y-6">
           <TicketDetailsCard ticket={ticket} />
-          <Card as="section" className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+          <Card as="section" aria-labelledby="status-workflow-heading" className="space-y-4">
+            <h3
+              id="status-workflow-heading"
+              className="text-sm font-semibold uppercase tracking-wide text-slate-600"
+            >
               Status Workflow
             </h3>
             <StatusTimeline currentStatus={ticket.status} />
@@ -73,14 +76,19 @@ export default function TicketDetailPage() {
               onDismiss={workflow.clearFeedback}
             />
           </Card>
-          <Card as="section">
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
+          <Card as="section" aria-labelledby="ticket-metadata-heading">
+            <h3
+              id="ticket-metadata-heading"
+              className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-600"
+            >
               Details
             </h3>
             <TicketMetadata ticket={ticket} />
           </Card>
-          <section className="space-y-4">
-            <h3 className="text-lg font-semibold text-slate-900">Comments</h3>
+          <section className="space-y-4" aria-labelledby="comments-heading">
+            <h3 id="comments-heading" className="text-lg font-semibold text-slate-900">
+              Comments
+            </h3>
             <CommentForm
               ticketId={ticket.id}
               createdById={ticket.createdBy.id}

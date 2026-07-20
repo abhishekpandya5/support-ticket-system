@@ -16,8 +16,8 @@ const stepCircleClass: Record<
 > = {
   complete: 'border-slate-900 bg-slate-900 text-white',
   current: 'border-slate-900 bg-white text-slate-900 ring-2 ring-slate-900',
-  upcoming: 'border-slate-300 bg-white text-slate-400',
-  cancelled: 'border-slate-300 bg-slate-100 text-slate-400',
+  upcoming: 'border-slate-400 bg-white text-slate-500',
+  cancelled: 'border-slate-300 bg-slate-100 text-slate-500',
 };
 
 export function StatusTimeline({ currentStatus }: StatusTimelineProps) {
@@ -25,18 +25,25 @@ export function StatusTimeline({ currentStatus }: StatusTimelineProps) {
 
   return (
     <div className="space-y-3">
-      <ol className="flex flex-wrap items-start gap-3 sm:items-center sm:gap-2">
+      <ol
+        aria-label="Ticket status progress"
+        className="flex flex-wrap items-start gap-3 sm:items-center sm:gap-2"
+      >
         {STATUS_TIMELINE_STEPS.map((step, index) => {
           const state = isCancelled
             ? 'cancelled'
             : getTimelineStepState(step, currentStatus);
 
           return (
-            <li key={step} className="flex items-center">
+            <li
+              key={step}
+              className="flex items-center"
+              aria-current={state === 'current' ? 'step' : undefined}
+            >
               <div className="flex flex-col items-center gap-1">
                 <span
                   className={`flex h-8 w-8 items-center justify-center rounded-full border text-xs font-semibold ${stepCircleClass[state]}`}
-                  aria-current={state === 'current' ? 'step' : undefined}
+                  aria-hidden="true"
                 >
                   {index + 1}
                 </span>
@@ -46,7 +53,7 @@ export function StatusTimeline({ currentStatus }: StatusTimelineProps) {
                       ? 'text-slate-900'
                       : state === 'complete'
                         ? 'text-slate-700'
-                        : 'text-slate-400'
+                        : 'text-slate-500'
                   }`}
                 >
                   {formatTicketStatus(step)}

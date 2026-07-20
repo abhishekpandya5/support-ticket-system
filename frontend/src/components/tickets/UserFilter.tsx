@@ -1,6 +1,9 @@
 import type { UserSummary } from '../../api/types';
-import { formInputClassName } from '../common/FormField';
+import { filterLabelClassName, formInputClassName } from '../common/FormField';
 import { ASSIGNED_TO_UNASSIGNED } from '../../utils/ticketListFilters';
+
+const USER_FILTER_ID = 'ticket-assigned-user-filter';
+const USER_FILTER_LOADING_ID = 'ticket-assigned-user-filter-loading';
 
 type UserFilterProps = {
   value: string;
@@ -20,18 +23,27 @@ export function UserFilter({
   const isDisabled = disabled || isLoading;
 
   return (
-    <label className="block w-full min-w-0">
-      <span className="mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500">
+    <div className="block w-full min-w-0">
+      <label htmlFor={USER_FILTER_ID} className={filterLabelClassName}>
         Assigned User
-      </span>
+      </label>
+      {isLoading ? (
+        <p id={USER_FILTER_LOADING_ID} className="sr-only">
+          Loading users
+        </p>
+      ) : null}
       <select
+        id={USER_FILTER_ID}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         disabled={isDisabled}
         className={formInputClassName}
-        aria-label="Filter by assigned user"
+        aria-busy={isLoading}
+        aria-describedby={isLoading ? USER_FILTER_LOADING_ID : undefined}
       >
-        <option value="">All users</option>
+        <option value="">
+          {isLoading ? 'Loading users...' : 'All users'}
+        </option>
         <option value={ASSIGNED_TO_UNASSIGNED}>Unassigned</option>
         {users.map((user) => (
           <option key={user.id} value={user.id}>
@@ -39,6 +51,6 @@ export function UserFilter({
           </option>
         ))}
       </select>
-    </label>
+    </div>
   );
 }

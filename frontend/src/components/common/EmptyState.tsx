@@ -20,13 +20,13 @@ export function EmptyState({
       }`}
       role="status"
     >
-      <p
-        className={`font-medium text-slate-900 ${
+      <h2
+        className={`font-semibold text-slate-900 ${
           compact ? 'text-base' : 'text-lg'
         }`}
       >
         {title}
-      </p>
+      </h2>
       {message ? (
         <p className="mt-2 text-sm text-slate-600">{message}</p>
       ) : null}

@@ -35,6 +35,7 @@ export function StatusActions({
             variant="secondary"
             size="sm"
             disabled={isPending}
+            aria-busy={isLoading}
             onClick={() => onTransition(status)}
           >
             {isLoading

@@ -6,6 +6,8 @@ type LoadingSpinnerProps = {
   tone?: SpinnerTone;
   label?: string;
   className?: string;
+  /** Use inside buttons or when parent already announces loading state. */
+  decorative?: boolean;
 };
 
 const SIZE_CLASSES: Record<SpinnerSize, string> = {
@@ -24,7 +26,21 @@ export function LoadingSpinner({
   tone = 'default',
   label = 'Loading',
   className = '',
+  decorative = false,
 }: LoadingSpinnerProps) {
+  if (decorative) {
+    return (
+      <span
+        aria-hidden="true"
+        className={`inline-flex items-center justify-center ${className}`.trim()}
+      >
+        <span
+          className={`animate-spin rounded-full ${SIZE_CLASSES[size]} ${TONE_CLASSES[tone]}`}
+        />
+      </span>
+    );
+  }
+
   return (
     <span
       role="status"

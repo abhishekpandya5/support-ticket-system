@@ -1,7 +1,9 @@
 import type { TicketStatus } from '../../api/types';
-import { formInputClassName } from '../common/FormField';
+import { filterLabelClassName, formInputClassName } from '../common/FormField';
 import { TICKET_STATUSES } from '../../utils/ticketListFilters';
 import { formatTicketStatus } from '../../utils/ticketDisplay';
+
+const STATUS_FILTER_ID = 'ticket-status-filter';
 
 type StatusFilterProps = {
   value: TicketStatus | '';
@@ -15,18 +17,18 @@ export function StatusFilter({
   disabled = false,
 }: StatusFilterProps) {
   return (
-    <label className="block w-full min-w-0">
-      <span className="mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500">
+    <div className="block w-full min-w-0">
+      <label htmlFor={STATUS_FILTER_ID} className={filterLabelClassName}>
         Status
-      </span>
+      </label>
       <select
+        id={STATUS_FILTER_ID}
         value={value}
         onChange={(event) =>
           onChange(event.target.value as TicketStatus | '')
         }
         disabled={disabled}
         className={formInputClassName}
-        aria-label="Filter by status"
       >
         <option value="">All statuses</option>
         {TICKET_STATUSES.map((status) => (
@@ -35,6 +37,6 @@ export function StatusFilter({
           </option>
         ))}
       </select>
-    </label>
+    </div>
   );
 }

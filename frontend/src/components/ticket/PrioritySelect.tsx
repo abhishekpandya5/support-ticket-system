@@ -36,7 +36,7 @@ export function PrioritySelect({
         disabled={disabled}
         className={formInputClassName}
         {...register('priority')}
-        {...getFieldErrorProps(fieldId, error)}
+        {...getFieldErrorProps(fieldId, error, true)}
       >
         {PRIORITIES.map((priority) => (
           <option key={priority} value={priority}>

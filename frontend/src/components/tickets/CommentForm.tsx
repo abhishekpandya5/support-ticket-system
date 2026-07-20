@@ -45,6 +45,9 @@ export function CommentForm({ ticketId, createdById }: CommentFormProps) {
 
   const apiFieldError = mutationState.error?.fieldErrors?.message;
   const isDisabled = isPending || !createdById;
+  const validationError = errors.message?.message;
+  const errorMessage = validationError ?? apiFieldError;
+  const errorId = errorMessage ? 'comment-message-error' : undefined;
 
   return (
     <Card
@@ -62,17 +65,20 @@ export function CommentForm({ ticketId, createdById }: CommentFormProps) {
         placeholder="Write a comment..."
         disabled={isDisabled}
         className={formInputClassName}
+        aria-invalid={errorMessage ? true : undefined}
+        aria-describedby={errorId}
+        aria-required
         {...register('message')}
       />
 
-      {errors.message ? (
-        <p className="mt-2 text-sm text-red-600" role="alert">
-          {errors.message.message}
+      {validationError ? (
+        <p id={errorId} className="mt-2 text-sm text-red-600" role="alert">
+          {validationError}
         </p>
       ) : null}
 
-      {apiFieldError ? (
-        <p className="mt-2 text-sm text-red-600" role="alert">
+      {apiFieldError && !validationError ? (
+        <p id={errorId} className="mt-2 text-sm text-red-600" role="alert">
           {apiFieldError}
         </p>
       ) : null}
@@ -92,7 +98,12 @@ export function CommentForm({ ticketId, createdById }: CommentFormProps) {
         >
           {isPending ? (
             <>
-              <LoadingSpinner size="sm" tone="inverted" label="Posting comment" />
+              <LoadingSpinner
+                size="sm"
+                tone="inverted"
+                label="Posting comment"
+                decorative
+              />
               Posting...
             </>
           ) : (
