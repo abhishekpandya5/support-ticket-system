@@ -40,6 +40,7 @@ npm run dev            # http://localhost:5173
 | [`acceptance-criteria.md`](acceptance-criteria.md) | Verification checklist |
 | [`implementation-plan.md`](implementation-plan.md) | Task breakdown |
 | [`design-notes.md`](design-notes.md) | Architecture & design |
+| [`docs/architecture.md`](docs/architecture.md) | Architecture diagrams (submission) |
 | [`api-contract.md`](api-contract.md) | REST API contract |
 | [`data-model.md`](data-model.md) | MongoDB design |
 | [`ui-flow.md`](ui-flow.md) | UI screens & flows |
@@ -52,6 +53,16 @@ Base path: `/api` — see [`api-contract.md`](api-contract.md)
 
 ## Testing
 
-<!-- TODO: Document npm test once integration suite is configured. -->
+Requires **Node.js 18+** (Node 20+ recommended for frontend Vitest).
+
+```bash
+# Backend — integration + unit tests
+cd backend && npm test
+
+# Frontend — unit tests
+cd frontend && npm test
+```
+
+The frontend dev server proxies API requests to the backend (default `http://localhost:3001`). Override with `VITE_API_PROXY_TARGET` in `frontend/.env` if your API runs on another port (e.g. `5000`).
 
 See [`test-strategy.md`](test-strategy.md) and [`test-results.md`](test-results.md).

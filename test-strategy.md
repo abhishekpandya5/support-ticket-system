@@ -290,8 +290,7 @@ Ticket 1──* Comment (ticketId)
 | Area | Status | Reason |
 |------|--------|--------|
 | Full E2E browser automation | Not implemented | Stretch / time-boxed Core |
-| Frontend component unit tests | Not implemented | Core gate is API integration + manual UI |
+| Frontend component unit tests | Partial | Utility/schema/filter unit tests in `frontend/src/**/*.test.ts` |
+| State machine unit tests | Implemented | `backend/tests/unit/ticketStateMachine.test.ts` |
 | Load/performance testing | Not implemented | Out of Core NFR scope |
 | CI pipeline | Not implemented | Stretch tier |
-
-<!-- TODO: Update when integration tests are implemented. -->

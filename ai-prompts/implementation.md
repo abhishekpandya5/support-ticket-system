@@ -538,7 +538,7 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 
 **Accepted:** Shared button, card, table, and form field primitives applied across pages.
 
-**Modified:** Kept existing `Badge`, `PageHeader`, `EmptyState`, `ErrorState`; domain skeletons compose `Card` + `SkeletonLoader`.
+**Modified:** Kept existing `Badge`, `PageHeader`, `EmptyState`, `ErrorState`; domain skeletons compose `Card` + `SkeletonLoader`; no visual redesign.
 
 **Rejected:** Modal component; generic layout abstractions beyond Card/Table.
 
@@ -574,11 +574,11 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 
 **Accepted:** Accessibility fixes across layout, forms, filters, tables, dashboard, and ticket detail.
 
-**Modified:** TODO
+**Modified:** Kept existing visual design; strengthened focus rings without changing color palette beyond contrast fixes.
 
-**Rejected:** TODO
+**Rejected:** Changing workflow or removing status color coding.
 
-**Reason:** TODO
+**Reason:** Assessment scope is accessibility fixes without functional changes.
 
 ---
 
@@ -597,3 +597,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Backend dashboard aggregation endpoint; optimistic updates.
 
 **Reason:** Out of scope for no-behavior-change frontend refactor.
+
+---
+
+## 2026-07-20 — Submission
+
+**Objective:** Address assessment reviewer gaps (acting-as UI, docs, tests, submission artifacts).
+
+**Prompt:** Fix all assessment issues one by one.
+
+**AI Response Summary:** Added `ActingAsSelector` in app header with `localStorage` persistence; comments and creates use acting-as user; post-create redirect to ticket detail; created `docs/architecture.md`; updated `reflection.md`, `pr-description.md`, `final-ai-usage-summary.md`, README testing section, `.gitignore` for `dist/`; corrected `test-results.md` PATCH verb; added `backend/tests/unit/ticketStateMachine.test.ts`; updated `test-strategy.md` coverage table.
+
+**Accepted:** Submission readiness fixes across frontend, backend tests, and documentation.
+
+**Modified:** Acting-as moved from create-page-only text to global header selector.
+
+**Rejected:** Full E2E automation and new auth layer (out of Core scope).
+
+**Reason:** Closes high-priority assessment gaps without expanding scope beyond Core tier.

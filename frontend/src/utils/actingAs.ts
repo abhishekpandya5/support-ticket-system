@@ -1,6 +1,10 @@
 import type { UserSummary } from '../api/types';
 
-const ACTING_AS_STORAGE_KEY = 'actingAsUserId';
+export const ACTING_AS_STORAGE_KEY = 'actingAsUserId';
+
+export function setActingAsUserId(userId: string): void {
+  localStorage.setItem(ACTING_AS_STORAGE_KEY, userId);
+}
 
 export function getActingAsUserId(users: UserSummary[]): string | null {
   const storedUserId = localStorage.getItem(ACTING_AS_STORAGE_KEY);
@@ -23,11 +27,12 @@ export function getActingAsUser(users: UserSummary[]): UserSummary | null {
 }
 
 /**
- * Resolves the user ID for new comments.
- * Uses the ticket creator until an acting-as selector UI is available.
+ * Resolves the user ID for new comments from the acting-as selection,
+ * falling back to the ticket creator when no user is available.
  */
-export function getCommentAuthorId(ticket: {
-  createdBy: { id: string };
-}): string {
-  return ticket.createdBy.id;
+export function getCommentAuthorId(
+  users: UserSummary[],
+  ticket: { createdBy: { id: string } },
+): string {
+  return getActingAsUserId(users) ?? ticket.createdBy.id;
 }

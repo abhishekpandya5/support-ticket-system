@@ -52,7 +52,7 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 
 **Accepted:** Review notes and finding classifications stored in `code-review-notes.md`.
 
-**Modified:** TODO
+**Modified:** Findings later addressed in maintainability refactor (`review-fixes.md`).
 
 **Rejected:** Rewriting code during review.
 

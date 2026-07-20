@@ -1,21 +1,27 @@
 # Final AI Usage Summary
 
-**Tool:** Cursor | **Period:** 2026-07-10 — present
+**Tool:** Cursor | **Period:** 2026-07-10 — 2026-07-20
 
 | Activity | File | Entries |
 |----------|------|---------|
-| Planning | `ai-prompts/planning.md` | 5 |
+| Planning | `ai-prompts/planning.md` | 4 |
 | Design | `ai-prompts/design.md` | 3 |
-| Implementation | `ai-prompts/implementation.md` | 14 |
-| Testing | `ai-prompts/testing.md` | 0 |
-| Debugging | `ai-prompts/debugging.md` | 1 |
-| Code review | `ai-prompts/code-review.md` | 1 |
-| Documentation | `ai-prompts/documentation.md` | 5 |
+| Implementation | `ai-prompts/implementation.md` | 33 |
+| Testing | `ai-prompts/testing.md` | 1 |
+| Debugging | `ai-prompts/debugging.md` | 2 |
+| Code review | `ai-prompts/code-review.md` | 3 |
+| Documentation | `ai-prompts/documentation.md` | 8 |
 
-**Total:** 28 major tasks (27 from legacy `docs/prompt-history.md` + 1 documentation migration entry).
+**Total:** 54 major logged tasks in `ai-prompts/` (append-only history).
 
 ## Practices
 
-Context-first specs; stack-constrained prompts; review before accept; append-only prompt log; no secrets in prompts.
+- Context-first specs (`spec.md`, `api-contract.md`, `acceptance-criteria.md`) before implementation prompts
+- Stack-constrained prompts (no new frameworks without justification)
+- Review AI output against contract and acceptance criteria before accepting
+- Append-only prompt log in `ai-prompts/` by activity type
+- No secrets in prompts or generated code
 
-<!-- TODO: Update at submission. -->
+## Outcomes
+
+AI accelerated scaffolding and documentation; human review caught dev-script issues, state machine naming drift, and assessment gaps (acting-as UI, architecture doc, test evidence). Final submission includes review fixes, accessibility improvements, and maintainability refactors documented in [`review-fixes.md`](review-fixes.md).

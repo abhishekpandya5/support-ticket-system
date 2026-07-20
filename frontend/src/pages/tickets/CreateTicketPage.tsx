@@ -10,7 +10,6 @@ export default function CreateTicketPage() {
     usersLoading,
     isSubmitting,
     apiError,
-    actingAsUser,
     actingAsWarning,
     handleSubmit,
     handleCancel,
@@ -22,13 +21,6 @@ export default function CreateTicketPage() {
         title="Create Ticket"
         action={<TextLink to={ROUTES.tickets}>Back to Tickets</TextLink>}
       />
-
-      {actingAsUser ? (
-        <p className="mb-4 text-sm text-slate-600">
-          Creating as:{' '}
-          <span className="font-medium text-slate-900">{actingAsUser.name}</span>
-        </p>
-      ) : null}
 
       {usersLoading ? (
         <div className="flex justify-center py-12">

@@ -35,9 +35,18 @@ describe('actingAs', () => {
     expect(getActingAsUserId(users)).toBe('user-2');
   });
 
-  it('resolves comment author from ticket creator', () => {
+  it('resolves comment author from acting-as selection', () => {
+    localStorage.setItem('actingAsUserId', 'user-1');
     expect(
-      getCommentAuthorId({
+      getCommentAuthorId(users, {
+        createdBy: { id: 'user-2' },
+      }),
+    ).toBe('user-1');
+  });
+
+  it('falls back to ticket creator when acting-as is unavailable', () => {
+    expect(
+      getCommentAuthorId([], {
         createdBy: { id: 'user-2' },
       }),
     ).toBe('user-2');

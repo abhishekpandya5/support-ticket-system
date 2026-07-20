@@ -5,6 +5,7 @@
 
 | Item           | Value                                                                                                                                   |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Node.js        | 18+ required (20+ recommended for frontend Vitest)                                                                                      |
 | Backend        | Node.js + Express + TypeScript                                                                                                          |
 | Frontend       | React + Vite + TypeScript                                                                                                               |
 | Database       | MongoDB                                                                                                                                 |
@@ -31,7 +32,7 @@ Manual verification of the React SPA against acceptance criteria. Screenshots ca
 | Filter by status (desktop) | URL-synced status filter | `desktop-view/desktop-view-ticket-filter-by-status.png` | ✅ Pass |
 | Filter by priority (desktop) | Priority filter applied | `desktop-view/desktop-view-ticket-filter-by-priority.png` | ✅ Pass |
 | Filter by user (desktop) | Assigned-user filter applied | `desktop-view/desktop-view-ticket-filter-by-user.png` | ✅ Pass |
-| Create ticket (desktop) | Form with validation and acting-as display | `desktop-view/desktop-view-ticket-creation.png` | ✅ Pass |
+| Create ticket (desktop) | Form with validation; acting-as selector in header | `desktop-view/desktop-view-ticket-creation.png` | ✅ Pass |
 | Create ticket (mobile) | Responsive create ticket form | `mobile-view/mobile-view-ticket-creation.png` | ✅ Pass |
 
 
@@ -91,7 +92,7 @@ Manual verification of the React SPA against acceptance criteria. Screenshots ca
 | POST /tickets               | Create ticket with valid data | Ticket created            | Ticket created successfully | ✅ Pass |
 | GET /tickets                | Retrieve all tickets          | Ticket list returned      | Ticket list returned        | ✅ Pass |
 | GET /tickets/:id            | Retrieve ticket details       | Ticket returned           | Correct ticket returned     | ✅ Pass |
-| PUT /tickets/:id            | Update ticket details         | Ticket updated            | Ticket updated successfully | ✅ Pass |
+| PATCH /tickets/:id          | Update ticket details         | Ticket updated            | Ticket updated successfully | ✅ Pass |
 | PATCH /tickets/:id/status   | Valid status transition       | Status updated            | Status updated successfully | ✅ Pass |
 | PATCH /tickets/:id/status   | Invalid status transition     | 400 Bad Request           | Correctly rejected          | ✅ Pass |
 | POST /tickets/:id/comments  | Add comment                   | Comment added             | Comment added successfully  | ✅ Pass |
@@ -196,8 +197,15 @@ Executed using **Vitest** and **Supertest** (`backend/`).
 | Validation    | ✅ Passed |
 | Comments      | ✅ Passed |
 
+## Backend Unit Tests
 
-Backend integration test output — 21 tests passed
+Executed using **Vitest** (`backend/tests/unit/`).
+
+| Test File | Coverage | Result |
+| --------- | -------- | ------ |
+| `ticketStateMachine.test.ts` | Transition matrix, terminal states, `InvalidTransitionError` | ✅ Passed |
+
+Backend integration test output — 47 tests passed (integration + unit)
 
 ## Frontend Unit Tests
 
@@ -212,7 +220,7 @@ Executed using **Vitest** (`frontend/`).
 | `ticketSchemas.test.ts`     | Create/edit Zod schema validation        | ✅ Passed |
 
 
-Frontend unit test output — 12 tests passed
+Frontend unit test output — 13 tests passed
 
 ---
 
@@ -226,8 +234,9 @@ Frontend unit test output — 12 tests passed
 | Total APIs Verified       | 11                  |
 | Frontend Screens Verified | 10 |
 | Manual UI Verification    | ✅ Completed         |
-| Backend Integration Tests | ✅ Passed (21 tests) |
-| Frontend Unit Tests       | ✅ Passed (12 tests) |
+| Backend Integration Tests | ✅ Passed (47 tests total) |
+| Backend Unit Tests        | ✅ Passed (state machine) |
+| Frontend Unit Tests       | ✅ Passed (13 tests) |
 | Critical Issues Found     | 0                   |
 | Blocking Defects          | 0                   |
 

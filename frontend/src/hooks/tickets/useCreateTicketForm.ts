@@ -29,9 +29,9 @@ export function useCreateTicketForm() {
   });
 
   const { mutate, mutationState, isPending } = useCreateTicket({
-    onSuccess: () => {
+    onSuccess: (data) => {
       form.reset(CREATE_TICKET_DEFAULT_VALUES);
-      navigate(ROUTES.tickets);
+      navigate(ROUTES.ticketDetail(data.ticket.id));
     },
   });
 

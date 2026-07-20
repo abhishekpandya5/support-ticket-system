@@ -12,9 +12,9 @@ import {
   TicketMetadata,
 } from '../../components/tickets';
 import { useTicket, useTicketStatusWorkflow } from '../../hooks/tickets';
+import { useActingAsUser } from '../../hooks/users';
 import { ROUTES } from '../../routes/paths';
 import { getAllowedTransitionsFromError } from '../../utils/statusErrors';
-import { getCommentAuthorId } from '../../utils/actingAs';
 import { getTicketErrorTitle, isNotFoundError } from '../../utils/ticketErrors';
 
 export default function TicketDetailPage() {
@@ -22,6 +22,7 @@ export default function TicketDetailPage() {
   const { ticket, comments, allowedTransitions, queryState, refetch } =
     useTicket(id);
   const workflow = useTicketStatusWorkflow(id);
+  const { actingAsUserId } = useActingAsUser();
 
   const transitionsFromError = workflow.error
     ? getAllowedTransitionsFromError(workflow.error)
@@ -92,7 +93,7 @@ export default function TicketDetailPage() {
             </h3>
             <CommentForm
               ticketId={ticket.id}
-              createdById={getCommentAuthorId(ticket)}
+              createdById={actingAsUserId ?? ticket.createdBy.id}
             />
             <CommentList comments={comments ?? []} />
           </section>

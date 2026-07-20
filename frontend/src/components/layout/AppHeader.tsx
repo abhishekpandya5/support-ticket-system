@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { AppNavigation } from './AppNavigation';
+import { ActingAsSelector } from './ActingAsSelector';
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -56,7 +57,8 @@ export function AppHeader() {
           </div>
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden shrink-0 items-center gap-4 lg:gap-6 md:flex">
+          <ActingAsSelector layout="inline" />
           <AppNavigation />
         </div>
 
@@ -75,8 +77,9 @@ export function AppHeader() {
       {mobileMenuOpen ? (
         <div
           id="mobile-navigation"
-          className="border-t border-slate-200 bg-white px-4 py-3 md:hidden"
+          className="space-y-4 border-t border-slate-200 bg-white px-4 py-3 md:hidden"
         >
+          <ActingAsSelector layout="stacked" />
           <AppNavigation onNavigate={closeMobileMenu} />
         </div>
       ) : null}
