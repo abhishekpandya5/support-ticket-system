@@ -7,7 +7,7 @@ import {
   FormField,
   formInputClassName,
   getFieldErrorProps,
-} from './FormField';
+} from '../common/FormField';
 
 const PRIORITIES: TicketPriority[] = ['low', 'medium', 'high', 'critical'];
 

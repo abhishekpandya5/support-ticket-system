@@ -3,13 +3,15 @@ import type { UseFormReturn } from 'react-hook-form';
 import type { ApiError } from '../../api/errors';
 import type { UserSummary } from '../../api/types';
 import type { CreateTicketFormValues } from '../../schemas/createTicketFormSchema';
-import { LoadingSpinner } from '../common/LoadingSpinner';
-import { AssignedUserSelect } from './AssignedUserSelect';
+import { Button } from '../common/Button';
+import { Card } from '../common/Card';
 import {
   FormField,
   formInputClassName,
   getFieldErrorProps,
-} from './FormField';
+} from '../common/FormField';
+import { LoadingSpinner } from '../common/LoadingSpinner';
+import { AssignedUserSelect } from './AssignedUserSelect';
 import { PrioritySelect } from './PrioritySelect';
 
 type CreateTicketFormProps = {
@@ -45,13 +47,17 @@ export function CreateTicketForm({
   const descriptionId = 'create-ticket-description';
 
   return (
-    <form
+    <Card
+      as="form"
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto w-full max-w-2xl space-y-5 rounded-lg border border-slate-200 bg-white p-6"
+      className="mx-auto w-full max-w-2xl space-y-5"
       noValidate
     >
       {actingAsWarning ? (
-        <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900" role="alert">
+        <p
+          className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900"
+          role="alert"
+        >
           {actingAsWarning}
         </p>
       ) : null}
@@ -117,21 +123,16 @@ export function CreateTicketForm({
 
       <div className="flex flex-wrap justify-end gap-3 pt-2">
         {onCancel ? (
-          <button
+          <Button
             type="button"
+            variant="secondary"
             onClick={onCancel}
             disabled={isSubmitting}
-            className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Cancel
-          </button>
+          </Button>
         ) : null}
-        <button
-          type="submit"
-          disabled={isDisabled}
-          aria-busy={isSubmitting}
-          className="inline-flex items-center justify-center gap-2 rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:cursor-not-allowed disabled:bg-slate-400"
-        >
+        <Button type="submit" disabled={isDisabled} aria-busy={isSubmitting}>
           {isSubmitting ? (
             <>
               <LoadingSpinner size="sm" tone="inverted" label="Creating ticket" />
@@ -140,8 +141,8 @@ export function CreateTicketForm({
           ) : (
             'Create Ticket'
           )}
-        </button>
+        </Button>
       </div>
-    </form>
+    </Card>
   );
 }

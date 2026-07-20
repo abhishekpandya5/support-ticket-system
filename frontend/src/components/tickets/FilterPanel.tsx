@@ -1,4 +1,6 @@
 import type { UserSummary } from '../../api/types';
+import { Button } from '../common/Button';
+import { Card } from '../common/Card';
 import type { TicketListFilterValues } from '../../utils/ticketListFilters';
 import { PriorityFilter } from './PriorityFilter';
 import { SearchBar } from './SearchBar';
@@ -31,7 +33,7 @@ export function FilterPanel({
   usersLoading = false,
 }: FilterPanelProps) {
   return (
-    <div className="mb-6 space-y-4 rounded-lg border border-slate-200 bg-white p-4">
+    <Card padding="sm" className="mb-6 space-y-4">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end">
         <SearchBar
           value={filters.search}
@@ -60,16 +62,16 @@ export function FilterPanel({
         </div>
 
         {hasActiveFilters ? (
-          <button
+          <Button
             type="button"
+            variant="secondary"
             onClick={onClearFilters}
             disabled={disabled}
-            className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Clear filters
-          </button>
+          </Button>
         ) : null}
       </div>
-    </div>
+    </Card>
   );
 }

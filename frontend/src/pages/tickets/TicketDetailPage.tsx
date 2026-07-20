@@ -1,6 +1,6 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { ErrorState, PageHeader } from '../../components/common';
+import { Card, ErrorState, PageHeader, TextLink } from '../../components/common';
 import {
   CommentForm,
   CommentList,
@@ -35,19 +35,9 @@ export default function TicketDetailPage() {
         action={
           <div className="flex items-center gap-4">
             {ticket ? (
-              <Link
-                to={ROUTES.ticketEdit(ticket.id)}
-                className="text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline"
-              >
-                Edit
-              </Link>
+              <TextLink to={ROUTES.ticketEdit(ticket.id)}>Edit</TextLink>
             ) : null}
-            <Link
-              to={ROUTES.tickets}
-              className="text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline"
-            >
-              Back to tickets
-            </Link>
+            <TextLink to={ROUTES.tickets}>Back to tickets</TextLink>
           </div>
         }
       />
@@ -67,7 +57,7 @@ export default function TicketDetailPage() {
       {!queryState.isLoading && !queryState.error && ticket ? (
         <div className="space-y-6">
           <TicketDetailsCard ticket={ticket} />
-          <section className="space-y-4 rounded-lg border border-slate-200 bg-white p-6">
+          <Card as="section" className="space-y-4">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
               Status Workflow
             </h3>
@@ -82,13 +72,13 @@ export default function TicketDetailPage() {
               feedback={workflow.feedback}
               onDismiss={workflow.clearFeedback}
             />
-          </section>
-          <section className="rounded-lg border border-slate-200 bg-white p-6">
+          </Card>
+          <Card as="section">
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
               Details
             </h3>
             <TicketMetadata ticket={ticket} />
-          </section>
+          </Card>
           <section className="space-y-4">
             <h3 className="text-lg font-semibold text-slate-900">Comments</h3>
             <CommentForm

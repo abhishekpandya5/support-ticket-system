@@ -1,4 +1,5 @@
 import type { ApiError } from '../../api/errors';
+import { Button } from './Button';
 
 type ErrorStateProps = {
   error: ApiError;
@@ -23,13 +24,9 @@ export function ErrorState({
           <p className="mt-1 text-sm text-red-700">{error.message}</p>
         </div>
         {onRetry ? (
-          <button
-            type="button"
-            onClick={onRetry}
-            className="rounded-md border border-red-300 bg-white px-3 py-1.5 text-sm font-medium text-red-800 hover:bg-red-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
-          >
+          <Button type="button" variant="danger" size="sm" onClick={onRetry}>
             Retry
-          </button>
+          </Button>
         ) : null}
       </div>
     </div>

@@ -1,4 +1,5 @@
 import type { TicketStatus } from '../../api/types';
+import { Button } from '../common/Button';
 import { formatTicketStatus } from '../../utils/ticketDisplay';
 
 type StatusActionsProps = {
@@ -28,17 +29,18 @@ export function StatusActions({
         const isLoading = isPending && pendingStatus === status;
 
         return (
-          <button
+          <Button
             key={status}
             type="button"
+            variant="secondary"
+            size="sm"
             disabled={isPending}
             onClick={() => onTransition(status)}
-            className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading
               ? 'Updating...'
               : `Mark as ${formatTicketStatus(status)}`}
-          </button>
+          </Button>
         );
       })}
     </div>

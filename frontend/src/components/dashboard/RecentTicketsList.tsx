@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom';
-
 import type { Ticket } from '../../api/types';
-import { EmptyState } from '../common';
+import { EmptyState, TextLink } from '../common';
 import { ROUTES } from '../../routes/paths';
 import { RecentTicketItem } from './RecentTicketItem';
 
@@ -14,12 +12,7 @@ export function RecentTicketsList({ tickets }: RecentTicketsListProps) {
     <section className="mt-8">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-lg font-semibold text-slate-900">Recent Tickets</h2>
-        <Link
-          to={ROUTES.tickets}
-          className="text-sm font-medium text-slate-700 hover:text-slate-900 hover:underline"
-        >
-          View all
-        </Link>
+        <TextLink to={ROUTES.tickets}>View all</TextLink>
       </div>
 
       {tickets.length === 0 ? (
@@ -27,14 +20,7 @@ export function RecentTicketsList({ tickets }: RecentTicketsListProps) {
           title="No recent activity"
           message="Tickets updated recently will appear here."
           compact
-          action={
-            <Link
-              to={ROUTES.tickets}
-              className="text-sm font-medium text-slate-700 hover:text-slate-900 hover:underline"
-            >
-              View all tickets
-            </Link>
-          }
+          action={<TextLink to={ROUTES.tickets}>View all tickets</TextLink>}
         />
       ) : (
         <div className="space-y-3">

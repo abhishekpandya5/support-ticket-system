@@ -1,51 +1,50 @@
 import { SkeletonContainer, SkeletonLoader } from '../common/SkeletonLoader';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../common/Table';
 
 const SKELETON_ROWS = 5;
 
 const COLUMNS = ['Title', 'Priority', 'Status', 'Assigned To', 'Created'] as const;
 
-const headerCellClass =
-  'px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-600';
-const bodyCellClass = 'px-4 py-3';
-
 export function TicketTableSkeleton() {
   return (
-    <SkeletonContainer
-      label="Loading tickets"
-      className="overflow-x-auto rounded-lg border border-slate-200 bg-white"
-    >
-      <table className="min-w-full divide-y divide-slate-200">
-        <thead className="bg-slate-50">
-          <tr>
+    <SkeletonContainer label="Loading tickets">
+      <Table>
+        <TableHeader>
+          <TableRow>
             {COLUMNS.map((column) => (
-              <th key={column} className={headerCellClass}>
-                {column}
-              </th>
+              <TableHead key={column}>{column}</TableHead>
             ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-200">
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {Array.from({ length: SKELETON_ROWS }, (_, index) => (
-            <tr key={index}>
-              <td className={bodyCellClass}>
+            <TableRow key={index}>
+              <TableCell>
                 <SkeletonLoader className="h-4 w-48 max-w-full" />
-              </td>
-              <td className={bodyCellClass}>
+              </TableCell>
+              <TableCell>
                 <SkeletonLoader className="h-6 w-16 rounded-full" />
-              </td>
-              <td className={bodyCellClass}>
+              </TableCell>
+              <TableCell>
                 <SkeletonLoader className="h-6 w-24 rounded-full" />
-              </td>
-              <td className={bodyCellClass}>
+              </TableCell>
+              <TableCell>
                 <SkeletonLoader className="h-4 w-32 max-w-full" />
-              </td>
-              <td className={bodyCellClass}>
+              </TableCell>
+              <TableCell>
                 <SkeletonLoader className="h-4 w-36 max-w-full" />
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </SkeletonContainer>
   );
 }

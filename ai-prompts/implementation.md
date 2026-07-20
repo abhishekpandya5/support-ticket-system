@@ -525,3 +525,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Inline spinners, pulse bars, and one-off empty/error markup in pages.
 
 **Reason:** Single source of truth for loading and feedback UI improves consistency and accessibility.
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Extract reusable UI components and remove duplicated JSX across the frontend.
+
+**Prompt:** Review frontend; identify duplicated JSX; create reusable Card, Button, Table, Badge, PageHeader, etc.; avoid over-abstraction; Tailwind; summarize refactoring.
+
+**AI Response Summary:** Added `Button`/`ButtonLink`, `Card`, `Table` primitives, `TextLink`, and moved `FormField` to `components/common`. Refactored pages, forms, filters, skeletons, and lists to use shared components; removed duplicate `FormField` from `components/ticket`. No Modal added (unused in app).
+
+**Accepted:** Shared button, card, table, and form field primitives applied across pages.
+
+**Modified:** Kept existing `Badge`, `PageHeader`, `EmptyState`, `ErrorState`; domain skeletons compose `Card` + `SkeletonLoader`.
+
+**Rejected:** Modal component; generic layout abstractions beyond Card/Table.
+
+**Reason:** Modal has no use case yet; targeted extraction removes duplication without hurting readability.

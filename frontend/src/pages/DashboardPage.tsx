@@ -1,11 +1,14 @@
-import { Link } from 'react-router-dom';
-
 import {
   DashboardSkeleton,
   RecentTicketsList,
   TicketStatsGrid,
 } from '../components/dashboard';
-import { EmptyState, ErrorState, PageHeader } from '../components/common';
+import {
+  ButtonLink,
+  EmptyState,
+  ErrorState,
+  PageHeader,
+} from '../components/common';
 import { useTickets } from '../hooks/tickets';
 import { ROUTES } from '../routes/paths';
 import {
@@ -25,12 +28,7 @@ export default function DashboardPage() {
       <PageHeader
         title="Dashboard"
         action={
-          <Link
-            to={ROUTES.ticketCreate}
-            className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
-          >
-            Create Ticket
-          </Link>
+          <ButtonLink to={ROUTES.ticketCreate}>Create Ticket</ButtonLink>
         }
       />
 
@@ -49,12 +47,7 @@ export default function DashboardPage() {
           title="No tickets yet"
           message="Create your first support ticket to get started."
           action={
-            <Link
-              to={ROUTES.ticketCreate}
-              className="inline-flex rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
-            >
-              Create Ticket
-            </Link>
+            <ButtonLink to={ROUTES.ticketCreate}>Create Ticket</ButtonLink>
           }
         />
       ) : null}

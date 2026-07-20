@@ -1,4 +1,5 @@
 import type { Comment } from '../../api/types';
+import { Card } from '../common/Card';
 import { EmptyState } from '../common';
 import { sortCommentsChronologically } from '../../utils/ticketComments';
 import { CommentItem } from './CommentItem';
@@ -21,10 +22,10 @@ export function CommentList({ comments }: CommentListProps) {
   }
 
   return (
-    <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
+    <Card as="ul" padding="none" className="divide-y divide-slate-200">
       {sortedComments.map((comment) => (
         <CommentItem key={comment.id} comment={comment} />
       ))}
-    </ul>
+    </Card>
   );
 }

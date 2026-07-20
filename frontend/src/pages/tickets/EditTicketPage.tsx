@@ -1,6 +1,6 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { ErrorState, PageHeader } from '../../components/common';
+import { ErrorState, PageHeader, TextLink } from '../../components/common';
 import { TicketDetailSkeleton, TicketForm } from '../../components/tickets';
 import { useUsers } from '../../hooks/users';
 import { useTicket, useUpdateTicket } from '../../hooks/tickets';
@@ -35,14 +35,7 @@ export default function EditTicketPage() {
     <section>
       <PageHeader
         title="Edit Ticket"
-        action={
-          <Link
-            to={ROUTES.ticketDetail(id)}
-            className="text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline"
-          >
-            Cancel
-          </Link>
-        }
+        action={<TextLink to={ROUTES.ticketDetail(id)}>Cancel</TextLink>}
       />
 
       {queryState.isLoading ? <TicketDetailSkeleton /> : null}

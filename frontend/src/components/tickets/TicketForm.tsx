@@ -1,9 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 
 import type { ApiError } from '../../api/errors';
 import type { TicketPriority, UserSummary } from '../../api/types';
+import { Button } from '../common/Button';
+import { Card } from '../common/Card';
+import {
+  FormField,
+  formInputClassName,
+  getFieldErrorProps,
+} from '../common/FormField';
 import { LoadingSpinner } from '../common/LoadingSpinner';
 import {
   ticketFormSchema,
@@ -12,34 +18,6 @@ import {
 import { formatTicketPriority } from '../../utils/ticketDisplay';
 
 const PRIORITIES: TicketPriority[] = ['low', 'medium', 'high', 'critical'];
-
-const inputClassName =
-  'w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 disabled:cursor-not-allowed disabled:bg-slate-50';
-
-const labelClassName = 'block text-sm font-medium text-slate-700';
-
-type FormFieldProps = {
-  label: string;
-  htmlFor: string;
-  error?: string;
-  children: ReactNode;
-};
-
-function FormField({ label, htmlFor, error, children }: FormFieldProps) {
-  return (
-    <div>
-      <label htmlFor={htmlFor} className={labelClassName}>
-        {label}
-      </label>
-      <div className="mt-1">{children}</div>
-      {error ? (
-        <p className="mt-1 text-sm text-red-600" role="alert">
-          {error}
-        </p>
-      ) : null}
-    </div>
-  );
-}
 
 type TicketFormProps = {
   defaultValues: TicketFormValues;
@@ -78,9 +56,10 @@ export function TicketForm({
   const isDisabled = isSubmitting || usersLoading;
 
   return (
-    <form
+    <Card
+      as="form"
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-5 rounded-lg border border-slate-200 bg-white p-6"
+      className="space-y-5"
       noValidate
     >
       <FormField
@@ -92,8 +71,12 @@ export function TicketForm({
           id="ticket-title"
           type="text"
           disabled={isDisabled}
-          className={inputClassName}
+          className={formInputClassName}
           {...register('title')}
+          {...getFieldErrorProps(
+            'ticket-title',
+            errors.title?.message ?? fieldErrors?.title,
+          )}
         />
       </FormField>
 
@@ -106,8 +89,12 @@ export function TicketForm({
           id="ticket-description"
           rows={6}
           disabled={isDisabled}
-          className={inputClassName}
+          className={formInputClassName}
           {...register('description')}
+          {...getFieldErrorProps(
+            'ticket-description',
+            errors.description?.message ?? fieldErrors?.description,
+          )}
         />
       </FormField>
 
@@ -119,8 +106,12 @@ export function TicketForm({
         <select
           id="ticket-priority"
           disabled={isDisabled}
-          className={inputClassName}
+          className={formInputClassName}
           {...register('priority')}
+          {...getFieldErrorProps(
+            'ticket-priority',
+            errors.priority?.message ?? fieldErrors?.priority,
+          )}
         >
           {PRIORITIES.map((priority) => (
             <option key={priority} value={priority}>
@@ -138,8 +129,12 @@ export function TicketForm({
         <select
           id="ticket-assigned-to"
           disabled={isDisabled}
-          className={inputClassName}
+          className={formInputClassName}
           {...register('assignedTo')}
+          {...getFieldErrorProps(
+            'ticket-assigned-to',
+            errors.assignedTo?.message ?? fieldErrors?.assignedTo,
+          )}
         >
           <option value="">Unassigned</option>
           {users.map((user) => (
@@ -159,20 +154,19 @@ export function TicketForm({
 
       <div className="flex flex-wrap justify-end gap-3 pt-2">
         {onCancel ? (
-          <button
+          <Button
             type="button"
+            variant="secondary"
             onClick={onCancel}
             disabled={isSubmitting}
-            className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {cancelLabel}
-          </button>
+          </Button>
         ) : null}
-        <button
+        <Button
           type="submit"
           disabled={isDisabled}
           aria-busy={isSubmitting}
-          className="inline-flex items-center justify-center gap-2 rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:cursor-not-allowed disabled:bg-slate-400"
         >
           {isSubmitting ? (
             <>
@@ -182,8 +176,8 @@ export function TicketForm({
           ) : (
             submitLabel
           )}
-        </button>
+        </Button>
       </div>
-    </form>
+    </Card>
   );
 }

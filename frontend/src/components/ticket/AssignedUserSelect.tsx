@@ -6,7 +6,7 @@ import {
   FormField,
   formInputClassName,
   getFieldErrorProps,
-} from './FormField';
+} from '../common/FormField';
 
 type AssignedUserSelectProps = {
   register: UseFormRegister<CreateTicketFormValues>;

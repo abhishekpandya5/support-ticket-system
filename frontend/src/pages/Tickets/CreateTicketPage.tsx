@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom';
-
-import { LoadingSpinner, PageHeader } from '../../components/common';
+import { LoadingSpinner, PageHeader, TextLink } from '../../components/common';
 import { CreateTicketForm } from '../../components/ticket';
 import { useCreateTicketForm } from '../../hooks/tickets/useCreateTicketForm';
 import { ROUTES } from '../../routes/paths';
@@ -22,14 +20,7 @@ export default function CreateTicketPage() {
     <section>
       <PageHeader
         title="Create Ticket"
-        action={
-          <Link
-            to={ROUTES.tickets}
-            className="text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline"
-          >
-            Back to Tickets
-          </Link>
-        }
+        action={<TextLink to={ROUTES.tickets}>Back to Tickets</TextLink>}
       />
 
       {actingAsUser ? (

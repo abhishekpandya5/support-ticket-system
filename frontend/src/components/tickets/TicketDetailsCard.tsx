@@ -1,4 +1,5 @@
 import type { Ticket } from '../../api/types';
+import { Card } from '../common/Card';
 import { PriorityBadge } from './PriorityBadge';
 import { StatusBadge } from './StatusBadge';
 
@@ -8,7 +9,7 @@ type TicketDetailsCardProps = {
 
 export function TicketDetailsCard({ ticket }: TicketDetailsCardProps) {
   return (
-    <article className="rounded-lg border border-slate-200 bg-white p-6">
+    <Card as="article">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <h2 className="text-xl font-semibold text-slate-900">{ticket.title}</h2>
         <div className="flex flex-wrap gap-2">
@@ -19,6 +20,6 @@ export function TicketDetailsCard({ ticket }: TicketDetailsCardProps) {
       <p className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
         {ticket.description}
       </p>
-    </article>
+    </Card>
   );
 }

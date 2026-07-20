@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
-
 import {
+  ButtonLink,
   EmptyState,
   ErrorState,
   PageHeader,
@@ -34,12 +33,7 @@ export default function TicketListPage() {
       <PageHeader
         title="Tickets"
         action={
-          <Link
-            to={ROUTES.ticketCreate}
-            className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
-          >
-            Create Ticket
-          </Link>
+          <ButtonLink to={ROUTES.ticketCreate}>Create Ticket</ButtonLink>
         }
       />
 
@@ -78,12 +72,7 @@ export default function TicketListPage() {
           }
           action={
             hasActiveFilters ? undefined : (
-              <Link
-                to={ROUTES.ticketCreate}
-                className="inline-flex rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
-              >
-                Create Ticket
-              </Link>
+              <ButtonLink to={ROUTES.ticketCreate}>Create Ticket</ButtonLink>
             )
           }
         />
