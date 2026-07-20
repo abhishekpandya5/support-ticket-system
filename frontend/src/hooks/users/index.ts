@@ -1,2 +1,3 @@
 export { userKeys } from './keys';
-export { useActingAsUser, useUsers } from './useUsers';
+export { useUsers } from './useUsers';
+export { useActingAsUser } from '../../providers/ActingAsProvider';

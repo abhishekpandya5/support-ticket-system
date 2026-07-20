@@ -1,6 +1,9 @@
 import { useActingAsUser } from '../../hooks/users';
 
-const ACTING_AS_SELECT_ID = 'acting-as-user';
+const ACTING_AS_SELECT_IDS = {
+  inline: 'acting-as-user-header',
+  stacked: 'acting-as-user-mobile',
+} as const;
 
 const headerSelectClassName =
   'max-w-[11rem] min-w-0 rounded-md border border-slate-300 bg-white py-1.5 pl-2.5 pr-8 text-sm text-slate-900 focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:bg-slate-50 sm:max-w-[12rem]';
@@ -21,9 +24,11 @@ export function ActingAsSelector({ layout = 'inline' }: ActingAsSelectorProps) {
     selectActingAsUser,
   } = useActingAsUser();
 
+  const selectId = ACTING_AS_SELECT_IDS[layout];
+
   const select = (
     <select
-      id={ACTING_AS_SELECT_ID}
+      id={selectId}
       value={actingAsUserId ?? ''}
       onChange={(event) => selectActingAsUser(event.target.value)}
       disabled={usersLoading || users.length === 0}
@@ -47,7 +52,7 @@ export function ActingAsSelector({ layout = 'inline' }: ActingAsSelectorProps) {
     return (
       <div>
         <label
-          htmlFor={ACTING_AS_SELECT_ID}
+          htmlFor={selectId}
           className="mb-1 block text-sm font-medium text-slate-700"
         >
           Acting as
@@ -60,7 +65,7 @@ export function ActingAsSelector({ layout = 'inline' }: ActingAsSelectorProps) {
   return (
     <div className="flex shrink-0 items-center gap-2">
       <label
-        htmlFor={ACTING_AS_SELECT_ID}
+        htmlFor={selectId}
         className="shrink-0 text-sm font-medium text-slate-600"
       >
         Acting as
