@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { ErrorState, PageHeader } from '../../components/common';
 import {
+  CommentForm,
   CommentList,
   TicketDetailSkeleton,
   TicketDetailsCard,
@@ -50,10 +51,12 @@ export default function TicketDetailPage() {
             </h3>
             <TicketMetadata ticket={ticket} />
           </section>
-          <section>
-            <h3 className="mb-4 text-lg font-semibold text-slate-900">
-              Comments
-            </h3>
+          <section className="space-y-4">
+            <h3 className="text-lg font-semibold text-slate-900">Comments</h3>
+            <CommentForm
+              ticketId={ticket.id}
+              createdById={ticket.createdBy.id}
+            />
             <CommentList comments={comments ?? []} />
           </section>
         </div>

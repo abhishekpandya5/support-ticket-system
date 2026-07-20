@@ -399,3 +399,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Direct Axios calls; status actions and edit mode deferred.
 
 **Reason:** Matches existing routing and architecture; detail view only per prompt scope.
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Implement Add Comment on the ticket detail page.
+
+**Prompt:** Implement Add Comment: use existing API layer and `useAddComment` mutation, reusable `CommentForm`/`CommentItem`/`CommentList`, RHF + Zod validation, disable submit while loading, show API errors, reset on success, cache invalidation via React Query.
+
+**AI Response Summary:** Added `CommentForm` (RHF + Zod), extracted `CommentItem`, updated `CommentList`, and `schemas/commentFormSchema.ts`. Wired form into `TicketDetailPage` with `useAddComment`; comments refresh via existing detail cache invalidation. Build passes.
+
+**Accepted:** Comment form with validation, loading state, API errors, and form reset on success.
+
+**Modified:** `CommentList` refactored to use `CommentItem`.
+
+**Rejected:** Direct Axios calls; acting-as selector deferred.
+
+**Reason:** Reuses existing mutation and invalidation; `createdBy` passed from page until acting-as is built.
