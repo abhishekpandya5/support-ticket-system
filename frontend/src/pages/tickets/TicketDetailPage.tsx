@@ -4,17 +4,29 @@ import { ErrorState, PageHeader } from '../../components/common';
 import {
   CommentForm,
   CommentList,
+  StatusActions,
+  StatusFeedbackBanner,
+  StatusTimeline,
   TicketDetailSkeleton,
   TicketDetailsCard,
   TicketMetadata,
 } from '../../components/tickets';
-import { useTicket } from '../../hooks/tickets';
+import { useTicket, useTicketStatusWorkflow } from '../../hooks/tickets';
 import { ROUTES } from '../../routes/paths';
+import { getAllowedTransitionsFromError } from '../../utils/statusErrors';
 import { getTicketErrorTitle, isNotFoundError } from '../../utils/ticketErrors';
 
 export default function TicketDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
-  const { ticket, comments, queryState, refetch } = useTicket(id);
+  const { ticket, comments, allowedTransitions, queryState, refetch } =
+    useTicket(id);
+  const workflow = useTicketStatusWorkflow(id);
+
+  const transitionsFromError = workflow.error
+    ? getAllowedTransitionsFromError(workflow.error)
+    : null;
+  const availableTransitions =
+    transitionsFromError ?? allowedTransitions ?? [];
 
   return (
     <section>
@@ -55,6 +67,22 @@ export default function TicketDetailPage() {
       {!queryState.isLoading && !queryState.error && ticket ? (
         <div className="space-y-6">
           <TicketDetailsCard ticket={ticket} />
+          <section className="space-y-4 rounded-lg border border-slate-200 bg-white p-6">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              Status Workflow
+            </h3>
+            <StatusTimeline currentStatus={ticket.status} />
+            <StatusActions
+              allowedTransitions={availableTransitions}
+              pendingStatus={workflow.pendingStatus}
+              isPending={workflow.isPending}
+              onTransition={workflow.changeStatus}
+            />
+            <StatusFeedbackBanner
+              feedback={workflow.feedback}
+              onDismiss={workflow.clearFeedback}
+            />
+          </section>
           <section className="rounded-lg border border-slate-200 bg-white p-6">
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
               Details

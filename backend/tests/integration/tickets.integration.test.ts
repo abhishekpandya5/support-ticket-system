@@ -247,6 +247,12 @@ describe('Tickets API integration', () => {
 
       expect(detail.body.comments).toHaveLength(1);
       expect(detail.body.comments[0].message).toBe('Investigating the issue now');
+      expect(detail.body.allowedTransitions).toEqual(
+        expect.arrayContaining([
+          TICKET_STATUS.IN_PROGRESS,
+          TICKET_STATUS.CANCELLED,
+        ]),
+      );
     });
 
     it('returns 404 when commenting on a missing ticket', async () => {

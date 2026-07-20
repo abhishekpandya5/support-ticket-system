@@ -8,6 +8,7 @@ import {
   type TicketService,
   type UpdateTicketInput,
 } from '../services/TicketService.js';
+import { ticketStateMachine } from '../stateMachine/index.js';
 import {
   serializeComment,
   serializeTicket,
@@ -46,9 +47,14 @@ export class TicketController {
       req.params.id as string,
     );
 
+    const serializedTicket = serializeTicket(ticket);
+
     res.status(200).json({
-      ticket: serializeTicket(ticket),
+      ticket: serializedTicket,
       comments: comments.map((comment) => serializeComment(comment)),
+      allowedTransitions: ticketStateMachine.getAllowedTransitions(
+        serializedTicket.status,
+      ),
     });
   });
 

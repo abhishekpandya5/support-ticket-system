@@ -3,6 +3,7 @@
  */
 
 import type { Comment, Ticket, User } from './entities';
+import type { TicketStatus } from './enums';
 
 /** `GET /api/tickets` — `200 OK` */
 export interface ListTicketsResponse {
@@ -13,6 +14,8 @@ export interface ListTicketsResponse {
 export interface GetTicketResponse {
   ticket: Ticket;
   comments: Comment[];
+  /** Allowed next statuses from the backend state machine. */
+  allowedTransitions: TicketStatus[];
 }
 
 /** `POST /api/tickets` — `201 Created` */

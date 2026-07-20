@@ -1,3 +1,6 @@
+export { StatusActions } from './StatusActions';
+export { StatusFeedbackBanner } from './StatusFeedbackBanner';
+export { StatusTimeline } from './StatusTimeline';
 export { TicketForm } from './TicketForm';
 export { CommentForm } from './CommentForm';
 export { CommentItem } from './CommentItem';

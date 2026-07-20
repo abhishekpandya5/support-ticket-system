@@ -58,6 +58,7 @@ type UseTicketOptions = Omit<
 export type UseTicketResult = UseQueryResult<GetTicketResponse, ApiError> & {
   ticket: GetTicketResponse['ticket'] | undefined;
   comments: GetTicketResponse['comments'] | undefined;
+  allowedTransitions: GetTicketResponse['allowedTransitions'] | undefined;
   queryState: ReturnType<typeof getTicketQueryState>;
 };
 
@@ -78,6 +79,7 @@ export function useTicket(
     ...query,
     ticket: query.data?.ticket,
     comments: query.data?.comments,
+    allowedTransitions: query.data?.allowedTransitions,
     queryState: getTicketQueryState(
       query.isLoading,
       query.isFetching,

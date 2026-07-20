@@ -435,3 +435,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Editing status or createdBy; inline edit mode on detail page.
 
 **Reason:** Status changes use a separate endpoint; dedicated edit route matches the prompt.
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Implement Ticket Status Workflow UI driven by the backend state machine.
+
+**Prompt:** Build status workflow on ticket detail: display available actions from backend, call status mutation, handle validation errors, loading/disabled buttons, success/error feedback. Reusable `StatusActions`, `StatusTimeline`, `StatusBadge`; Tailwind; layered architecture; do not duplicate transition rules on frontend.
+
+**AI Response Summary:** Backend `GET /api/tickets/:id` now returns `allowedTransitions` from `ticketStateMachine`. Frontend adds `useTicketStatusWorkflow`, `StatusActions`, `StatusTimeline`, `StatusFeedbackBanner`, and utils for timeline display and parsing `allowedTransitions` from API errors. Wired into `TicketDetailPage`; types and `useTicket` updated. Build passes.
+
+**Accepted:** Backend-driven transitions, mutation hook with feedback, reusable status components.
+
+**Modified:** `StatusBadge` already existed; extended rather than recreated.
+
+**Rejected:** Hardcoded transition rules on the frontend.
+
+**Reason:** Single source of truth in backend state machine; frontend only renders what the API provides.
