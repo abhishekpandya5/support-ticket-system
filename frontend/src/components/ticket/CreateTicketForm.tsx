@@ -3,6 +3,7 @@ import type { UseFormReturn } from 'react-hook-form';
 import type { ApiError } from '../../api/errors';
 import type { UserSummary } from '../../api/types';
 import type { CreateTicketFormValues } from '../../schemas/createTicketFormSchema';
+import { LoadingSpinner } from '../common/LoadingSpinner';
 import { AssignedUserSelect } from './AssignedUserSelect';
 import {
   FormField,
@@ -133,10 +134,7 @@ export function CreateTicketForm({
         >
           {isSubmitting ? (
             <>
-              <span
-                className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
-                aria-hidden="true"
-              />
+              <LoadingSpinner size="sm" tone="inverted" label="Creating ticket" />
               Creating...
             </>
           ) : (

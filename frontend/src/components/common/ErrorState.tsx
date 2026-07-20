@@ -9,11 +9,12 @@ type ErrorStateProps = {
 export function ErrorState({
   error,
   onRetry,
-  title = 'Unable to load tickets',
+  title = 'Something went wrong',
 }: ErrorStateProps) {
   return (
     <div
       role="alert"
+      aria-live="assertive"
       className="rounded-lg border border-red-200 bg-red-50 p-4"
     >
       <div className="flex flex-wrap items-start justify-between gap-4">

@@ -5,6 +5,7 @@ import {
   commentFormSchema,
   type CommentFormValues,
 } from '../../schemas/commentFormSchema';
+import { LoadingSpinner } from '../common/LoadingSpinner';
 import { useAddComment } from '../../hooks/tickets';
 
 type CommentFormProps = {
@@ -82,9 +83,17 @@ export function CommentForm({ ticketId, createdById }: CommentFormProps) {
         <button
           type="submit"
           disabled={isDisabled}
-          className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:cursor-not-allowed disabled:bg-slate-400"
+          aria-busy={isPending}
+          className="inline-flex items-center justify-center gap-2 rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:cursor-not-allowed disabled:bg-slate-400"
         >
-          {isPending ? 'Posting...' : 'Post comment'}
+          {isPending ? (
+            <>
+              <LoadingSpinner size="sm" tone="inverted" label="Posting comment" />
+              Posting...
+            </>
+          ) : (
+            'Post comment'
+          )}
         </button>
       </div>
     </form>

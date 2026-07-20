@@ -1,5 +1,5 @@
 import type { Comment } from '../../api/types';
-import { EmptyState } from '../common/EmptyState';
+import { EmptyState } from '../common';
 import { sortCommentsChronologically } from '../../utils/ticketComments';
 import { CommentItem } from './CommentItem';
 
@@ -15,6 +15,7 @@ export function CommentList({ comments }: CommentListProps) {
       <EmptyState
         title="No comments yet"
         message="Comments added to this ticket will appear here."
+        compact
       />
     );
   }

@@ -48,6 +48,14 @@ export default function DashboardPage() {
         <EmptyState
           title="No tickets yet"
           message="Create your first support ticket to get started."
+          action={
+            <Link
+              to={ROUTES.ticketCreate}
+              className="inline-flex rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+            >
+              Create Ticket
+            </Link>
+          }
         />
       ) : null}
 

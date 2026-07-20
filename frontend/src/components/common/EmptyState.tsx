@@ -1,18 +1,36 @@
+import type { ReactNode } from 'react';
+
 type EmptyStateProps = {
   title: string;
   message?: string;
+  action?: ReactNode;
+  compact?: boolean;
 };
 
-export function EmptyState({ title, message }: EmptyStateProps) {
+export function EmptyState({
+  title,
+  message,
+  action,
+  compact = false,
+}: EmptyStateProps) {
   return (
     <div
-      className="rounded-lg border border-slate-200 bg-white px-4 py-12 text-center"
+      className={`rounded-lg border border-slate-200 bg-white text-center ${
+        compact ? 'px-4 py-8' : 'px-4 py-12'
+      }`}
       role="status"
     >
-      <p className="text-lg font-medium text-slate-900">{title}</p>
+      <p
+        className={`font-medium text-slate-900 ${
+          compact ? 'text-base' : 'text-lg'
+        }`}
+      >
+        {title}
+      </p>
       {message ? (
         <p className="mt-2 text-sm text-slate-600">{message}</p>
       ) : null}
+      {action ? <div className="mt-4">{action}</div> : null}
     </div>
   );
 }

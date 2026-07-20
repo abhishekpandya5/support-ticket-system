@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { PageHeader } from '../../components/common';
+import { LoadingSpinner, PageHeader } from '../../components/common';
 import { CreateTicketForm } from '../../components/ticket';
 import { useCreateTicketForm } from '../../hooks/tickets/useCreateTicketForm';
 import { ROUTES } from '../../routes/paths';
@@ -39,16 +39,22 @@ export default function CreateTicketPage() {
         </p>
       ) : null}
 
-      <CreateTicketForm
-        form={form}
-        users={users}
-        usersLoading={usersLoading}
-        isSubmitting={isSubmitting}
-        apiError={apiError}
-        actingAsWarning={actingAsWarning}
-        onSubmit={handleSubmit}
-        onCancel={handleCancel}
-      />
+      {usersLoading ? (
+        <div className="flex justify-center py-12">
+          <LoadingSpinner label="Loading users" />
+        </div>
+      ) : (
+        <CreateTicketForm
+          form={form}
+          users={users}
+          usersLoading={usersLoading}
+          isSubmitting={isSubmitting}
+          apiError={apiError}
+          actingAsWarning={actingAsWarning}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+        />
+      )}
     </section>
   );
 }

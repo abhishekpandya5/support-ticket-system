@@ -59,7 +59,11 @@ export default function TicketListPage() {
       {isListLoading ? <TicketTableSkeleton /> : null}
 
       {queryState.error ? (
-        <ErrorState error={queryState.error} onRetry={() => refetch()} />
+        <ErrorState
+          error={queryState.error}
+          title="Unable to load tickets"
+          onRetry={() => refetch()}
+        />
       ) : null}
 
       {!isListLoading && !queryState.error && tickets?.length === 0 ? (
@@ -71,6 +75,16 @@ export default function TicketListPage() {
             hasActiveFilters
               ? 'Try adjusting your search or filters.'
               : 'Create a ticket to get started.'
+          }
+          action={
+            hasActiveFilters ? undefined : (
+              <Link
+                to={ROUTES.ticketCreate}
+                className="inline-flex rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+              >
+                Create Ticket
+              </Link>
+            )
           }
         />
       ) : null}

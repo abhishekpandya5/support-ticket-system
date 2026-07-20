@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import type { ApiError } from '../../api/errors';
 import type { TicketPriority, UserSummary } from '../../api/types';
+import { LoadingSpinner } from '../common/LoadingSpinner';
 import {
   ticketFormSchema,
   type TicketFormValues,
@@ -170,9 +171,17 @@ export function TicketForm({
         <button
           type="submit"
           disabled={isDisabled}
-          className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:cursor-not-allowed disabled:bg-slate-400"
+          aria-busy={isSubmitting}
+          className="inline-flex items-center justify-center gap-2 rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:cursor-not-allowed disabled:bg-slate-400"
         >
-          {isSubmitting ? 'Saving...' : submitLabel}
+          {isSubmitting ? (
+            <>
+              <LoadingSpinner size="sm" tone="inverted" label="Saving ticket" />
+              Saving...
+            </>
+          ) : (
+            submitLabel
+          )}
         </button>
       </div>
     </form>

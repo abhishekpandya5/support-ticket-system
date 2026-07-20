@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import type { Ticket } from '../../api/types';
+import { EmptyState } from '../common';
 import { ROUTES } from '../../routes/paths';
 import { RecentTicketItem } from './RecentTicketItem';
 
@@ -22,9 +23,19 @@ export function RecentTicketsList({ tickets }: RecentTicketsListProps) {
       </div>
 
       {tickets.length === 0 ? (
-        <div className="rounded-lg border border-slate-200 bg-white px-4 py-8 text-center">
-          <p className="text-sm text-slate-600">No recent activity.</p>
-        </div>
+        <EmptyState
+          title="No recent activity"
+          message="Tickets updated recently will appear here."
+          compact
+          action={
+            <Link
+              to={ROUTES.tickets}
+              className="text-sm font-medium text-slate-700 hover:text-slate-900 hover:underline"
+            >
+              View all tickets
+            </Link>
+          }
+        />
       ) : (
         <div className="space-y-3">
           {tickets.map((ticket) => (

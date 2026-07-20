@@ -507,3 +507,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Axios calls inside the page; optional assigned user on create.
 
 **Reason:** Requirements mandate required assignee and hook-only API access; edit and create forms have different validation rules.
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Improve UX with reusable loading, skeleton, empty, and error state components used consistently across pages.
+
+**Prompt:** Implement `LoadingSpinner`, `SkeletonLoader`, `EmptyState`, `ErrorState`; use consistently on all pages; accessible; Tailwind; no duplicated implementations.
+
+**AI Response Summary:** Added `LoadingSpinner` and `SkeletonLoader`/`SkeletonContainer` in `components/common`; enhanced `EmptyState` (action slot, compact variant) and `ErrorState` (assertive live region). Refactored page-specific skeletons, route fallback, and submit buttons to use shared components; updated Dashboard, Ticket List, Not Found, comments, and forms.
+
+**Accepted:** Shared UX primitives and consistent usage across list, detail, dashboard, create, and not-found flows.
+
+**Modified:** Existing `EmptyState` and `ErrorState` extended rather than replaced; domain skeletons (`TicketTableSkeleton`, etc.) kept as layout compositions over `SkeletonLoader`.
+
+**Rejected:** Inline spinners, pulse bars, and one-off empty/error markup in pages.
+
+**Reason:** Single source of truth for loading and feedback UI improves consistency and accessibility.
