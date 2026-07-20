@@ -3,15 +3,83 @@
 ## Test Environment
 
 
-| Item           | Value                                                                              |
-| -------------- | ---------------------------------------------------------------------------------- |
-| Backend        | Node.js + Express + TypeScript                                                     |
-| Database       | MongoDB                                                                            |
-| Testing Method | Manual API Verification using Postman + Integration Tests using Vitest & Supertest |
-| Test Date      | 19 July 2026                                                                       |
+| Item           | Value                                                                                                                                   |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Backend        | Node.js + Express + TypeScript                                                                                                          |
+| Frontend       | React + Vite + TypeScript                                                                                                               |
+| Database       | MongoDB                                                                                                                                 |
+| Testing Method | Manual UI verification, Manual API verification (browser/Postman), Integration tests (Vitest + Supertest), Frontend unit tests (Vitest) |
+| Test Date      | 20 July 2026                                                                                                                            |
 
 
 ---
+
+
+
+# Frontend UI Verification
+
+Manual verification of the React SPA against acceptance criteria. Screenshots captured from `http://localhost:5173` with backend running on port 5000.
+
+
+| Screen | Scenario | Screenshot | Status |
+|--------|----------|------------|--------|
+| Dashboard (desktop) | Ticket stats grid and recent tickets | `desktop-view/desktop-view-dashboard.png` | ✅ Pass |
+| Dashboard (mobile) | Responsive dashboard layout | `mobile-view/mobile-view-dashboard.png` | ✅ Pass |
+| Ticket list (desktop) | Table with title, priority, status, assignee | `desktop-view/desktop-view-ticket-listing.png` | ✅ Pass |
+| Ticket list (mobile) | Responsive ticket list layout | `mobile-view/mobile-view-ticket-listing.png` | ✅ Pass |
+| Ticket filtering (desktop) | Search and combined filters | `desktop-view/desktop-view-ticket-filtering.png` | ✅ Pass |
+| Filter by status (desktop) | URL-synced status filter | `desktop-view/desktop-view-ticket-filter-by-status.png` | ✅ Pass |
+| Filter by priority (desktop) | Priority filter applied | `desktop-view/desktop-view-ticket-filter-by-priority.png` | ✅ Pass |
+| Filter by user (desktop) | Assigned-user filter applied | `desktop-view/desktop-view-ticket-filter-by-user.png` | ✅ Pass |
+| Create ticket (desktop) | Form with validation and acting-as display | `desktop-view/desktop-view-ticket-creation.png` | ✅ Pass |
+| Create ticket (mobile) | Responsive create ticket form | `mobile-view/mobile-view-ticket-creation.png` | ✅ Pass |
+
+
+
+
+### Desktop — Dashboard
+
+![Desktop dashboard showing ticket statistics and recent tickets](docs/screenshots/desktop-view/desktop-view-dashboard.png)
+
+### Desktop — Ticket List
+
+![Desktop ticket list with search and filter panel](docs/screenshots/desktop-view/desktop-view-ticket-listing.png)
+
+### Desktop — Ticket Filtering
+
+![Desktop ticket list with search and combined filters](docs/screenshots/desktop-view/desktop-view-ticket-filtering.png)
+
+### Desktop — Filter by Status
+
+![Desktop ticket list filtered by status](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-status.png)
+
+### Desktop — Filter by Priority
+
+![Desktop ticket list filtered by priority](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-priority.png)
+
+### Desktop — Filter by Assigned User
+
+![Desktop ticket list filtered by assigned user](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-user.png)
+
+### Desktop — Create Ticket
+
+![Desktop create ticket form](docs/screenshots/desktop-view/desktop-view-ticket-creation.png)
+
+### Mobile — Dashboard
+
+![Mobile responsive dashboard layout](docs/screenshots/mobile-view/mobile-view-dashboard.png)
+
+### Mobile — Ticket List
+
+![Mobile responsive ticket list layout](docs/screenshots/mobile-view/mobile-view-ticket-listing.png)
+
+### Mobile — Create Ticket
+
+![Mobile responsive create ticket form](docs/screenshots/mobile-view/mobile-view-ticket-creation.png)
+
+---
+
+
 
 # API Verification Results
 
@@ -28,8 +96,18 @@
 | PATCH /tickets/:id/status   | Invalid status transition     | 400 Bad Request           | Correctly rejected          | ✅ Pass |
 | POST /tickets/:id/comments  | Add comment                   | Comment added             | Comment added successfully  | ✅ Pass |
 | GET /tickets?search=payment | Search tickets                | Matching tickets returned | Matching tickets returned   | ✅ Pass |
-| GET /tickets?status=OPEN    | Filter by status              | Open tickets returned     | Open tickets returned       | ✅ Pass |
+| GET /tickets?status=open    | Filter by status              | Open tickets returned     | Open tickets returned       | ✅ Pass |
 
+
+
+
+### Health Check
+
+GET /health response showing status ok and database connected
+
+### Users API
+
+GET /api/users response showing seeded users
 
 ---
 
@@ -104,7 +182,11 @@ The following error scenarios were verified:
 
 # Automated Test Results
 
-Integration tests were executed using **Vitest** and **Supertest**.
+
+
+## Backend Integration Tests
+
+Executed using **Vitest** and **Supertest** (`backend/`).
 
 
 | Test Category | Result   |
@@ -115,16 +197,70 @@ Integration tests were executed using **Vitest** and **Supertest**.
 | Comments      | ✅ Passed |
 
 
+Backend integration test output — 21 tests passed
+
+## Frontend Unit Tests
+
+Executed using **Vitest** (`frontend/`).
+
+
+| Test File                   | Coverage                                 | Result   |
+| --------------------------- | ---------------------------------------- | -------- |
+| `ticketListFilters.test.ts` | URL filter parsing and API param mapping | ✅ Passed |
+| `filterSelect.test.ts`      | Status/priority select value parsing     | ✅ Passed |
+| `actingAs.test.ts`          | Acting-as user resolution                | ✅ Passed |
+| `ticketSchemas.test.ts`     | Create/edit Zod schema validation        | ✅ Passed |
+
+
+Frontend unit test output — 12 tests passed
+
 ---
 
 
 
 # Summary
 
-- Total APIs Verified: 11
-- Manual Verification: ✅ Completed
-- Integration Tests: ✅ Passed
-- Critical Issues Found: 0
-- Blocking Defects: 0
 
-The backend implementation satisfies the required functional requirements for CRUD operations, validation, ticket workflow, search/filtering, error handling, and data persistence.
+| Area                      | Result              |
+| ------------------------- | ------------------- |
+| Total APIs Verified       | 11                  |
+| Frontend Screens Verified | 10 |
+| Manual UI Verification    | ✅ Completed         |
+| Backend Integration Tests | ✅ Passed (21 tests) |
+| Frontend Unit Tests       | ✅ Passed (12 tests) |
+| Critical Issues Found     | 0                   |
+| Blocking Defects          | 0                   |
+
+
+The implementation satisfies the required functional requirements for CRUD operations, validation, ticket workflow, search/filtering, error handling, data persistence, and frontend user flows.
+
+---
+
+
+
+## Screenshot Index
+
+All screenshots are stored in [`docs/screenshots/`](docs/screenshots/).
+
+### Desktop view (`docs/screenshots/desktop-view/`)
+
+| File | Screen | Description |
+|------|--------|-------------|
+| [`desktop-view-dashboard.png`](docs/screenshots/desktop-view/desktop-view-dashboard.png) | Dashboard | Ticket statistics grid and recent tickets list |
+| [`desktop-view-ticket-listing.png`](docs/screenshots/desktop-view/desktop-view-ticket-listing.png) | Ticket list | Full ticket table with search and filter panel |
+| [`desktop-view-ticket-filtering.png`](docs/screenshots/desktop-view/desktop-view-ticket-filtering.png) | Ticket filtering | Search and combined filter controls |
+| [`desktop-view-ticket-filter-by-status.png`](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-status.png) | Filter by status | Ticket list filtered by status |
+| [`desktop-view-ticket-filter-by-priority.png`](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-priority.png) | Filter by priority | Ticket list filtered by priority |
+| [`desktop-view-ticket-filter-by-user.png`](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-user.png) | Filter by user | Ticket list filtered by assigned user |
+| [`desktop-view-ticket-creation.png`](docs/screenshots/desktop-view/desktop-view-ticket-creation.png) | Create ticket | Create ticket form with validation fields |
+
+### Mobile view (`docs/screenshots/mobile-view/`)
+
+| File | Screen | Description |
+|------|--------|-------------|
+| [`mobile-view-dashboard.png`](docs/screenshots/mobile-view/mobile-view-dashboard.png) | Dashboard | Responsive dashboard with stacked stat cards |
+| [`mobile-view-ticket-listing.png`](docs/screenshots/mobile-view/mobile-view-ticket-listing.png) | Ticket list | Responsive ticket list layout |
+| [`mobile-view-ticket-creation.png`](docs/screenshots/mobile-view/mobile-view-ticket-creation.png) | Create ticket | Responsive create ticket form |
+
+*Screenshots captured 20 July 2026 from `http://localhost:5173` with backend on port 5000.*
+

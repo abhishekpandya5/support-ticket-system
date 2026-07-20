@@ -2,13 +2,13 @@
 
 | Field | Value |
 |-------|-------|
-| **Name** | [To complete] |
-| **Role** | [To complete] |
+| **Name** | Abhishek Pandya |
+| **Role** | Senior Software Engineer |
 | **Primary Technology Stack** | React, Node.js, Express, MongoDB, TypeScript |
 | **Primary AI Tool Used** | Cursor |
 | **Project Option Selected** | Support Ticket Management System (Core) |
 | **Assessment Start Date** | 2026-07-10 |
-| **Submission Date** | [To complete] |
+| **Submission Date** | 2026-07-20 |
 
 ## Project Summary
 
