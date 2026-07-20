@@ -29,7 +29,7 @@ export default function TicketListPage() {
   const isListLoading = queryState.isLoading || queryState.isFetching;
 
   return (
-    <section>
+    <section className="min-w-0">
       <PageHeader
         title="Tickets"
         action={

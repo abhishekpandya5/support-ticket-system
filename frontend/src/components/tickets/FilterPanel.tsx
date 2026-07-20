@@ -41,7 +41,7 @@ export function FilterPanel({
           disabled={disabled}
         />
 
-        <div className="grid flex-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid min-w-0 flex-1 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <StatusFilter
             value={filters.status}
             onChange={onStatusChange}
@@ -67,6 +67,7 @@ export function FilterPanel({
             variant="secondary"
             onClick={onClearFilters}
             disabled={disabled}
+            className="w-full sm:w-auto"
           >
             Clear filters
           </Button>

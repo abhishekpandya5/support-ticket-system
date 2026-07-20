@@ -5,7 +5,7 @@ import { MainContent } from './MainContent';
 
 export function MainLayout() {
   return (
-    <div className="flex min-h-svh flex-col">
+    <div className="flex min-h-svh min-w-0 flex-col overflow-x-clip">
       <AppHeader />
       <MainContent>
         <Outlet />

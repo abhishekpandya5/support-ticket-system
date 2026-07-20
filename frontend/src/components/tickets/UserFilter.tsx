@@ -20,7 +20,7 @@ export function UserFilter({
   const isDisabled = disabled || isLoading;
 
   return (
-    <label className="block min-w-[12rem]">
+    <label className="block w-full min-w-0">
       <span className="mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500">
         Assigned User
       </span>

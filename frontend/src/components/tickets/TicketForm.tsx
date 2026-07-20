@@ -152,13 +152,14 @@ export function TicketForm({
         </p>
       ) : null}
 
-      <div className="flex flex-wrap justify-end gap-3 pt-2">
+      <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
         {onCancel ? (
           <Button
             type="button"
             variant="secondary"
             onClick={onCancel}
             disabled={isSubmitting}
+            className="w-full sm:w-auto"
           >
             {cancelLabel}
           </Button>
@@ -167,6 +168,7 @@ export function TicketForm({
           type="submit"
           disabled={isDisabled}
           aria-busy={isSubmitting}
+          className="w-full sm:w-auto"
         >
           {isSubmitting ? (
             <>

@@ -121,18 +121,24 @@ export function CreateTicketForm({
         </p>
       ) : null}
 
-      <div className="flex flex-wrap justify-end gap-3 pt-2">
+      <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
         {onCancel ? (
           <Button
             type="button"
             variant="secondary"
             onClick={onCancel}
             disabled={isSubmitting}
+            className="w-full sm:w-auto"
           >
             Cancel
           </Button>
         ) : null}
-        <Button type="submit" disabled={isDisabled} aria-busy={isSubmitting}>
+        <Button
+          type="submit"
+          disabled={isDisabled}
+          aria-busy={isSubmitting}
+          className="w-full sm:w-auto"
+        >
           {isSubmitting ? (
             <>
               <LoadingSpinner size="sm" tone="inverted" label="Creating ticket" />

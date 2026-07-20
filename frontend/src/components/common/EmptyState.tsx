@@ -15,7 +15,7 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div
-      className={`rounded-lg border border-slate-200 bg-white text-center ${
+      className={`min-w-0 rounded-lg border border-slate-200 bg-white text-center ${
         compact ? 'px-4 py-8' : 'px-4 py-12'
       }`}
       role="status"

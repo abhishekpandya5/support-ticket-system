@@ -84,7 +84,12 @@ export function CommentForm({ ticketId, createdById }: CommentFormProps) {
       ) : null}
 
       <div className="mt-3 flex justify-end">
-        <Button type="submit" disabled={isDisabled} aria-busy={isPending}>
+        <Button
+          type="submit"
+          disabled={isDisabled}
+          aria-busy={isPending}
+          className="w-full sm:w-auto"
+        >
           {isPending ? (
             <>
               <LoadingSpinner size="sm" tone="inverted" label="Posting comment" />

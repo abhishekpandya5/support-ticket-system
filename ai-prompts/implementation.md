@@ -543,3 +543,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** Modal component; generic layout abstractions beyond Card/Table.
 
 **Reason:** Modal has no use case yet; targeted extraction removes duplication without hurting readability.
+
+---
+
+## 2026-07-20 — Frontend
+
+**Objective:** Improve responsive behavior across desktop, tablet, and mobile without changing functionality.
+
+**Prompt:** Review entire frontend for responsive behavior; improve layouts with Tailwind; avoid horizontal scrolling; keep forms and tables usable.
+
+**AI Response Summary:** Added overflow containment at layout root; responsive page headers and card padding; ticket table column hiding on small screens with contained horizontal scroll; filter grid and form button stacking on mobile; dashboard stat grid breakpoints for tablet; word-breaking on long titles and error text.
+
+**Accepted:** Mobile-first layout fixes for tables, filters, forms, and page shells.
+
+**Modified:** Table shows fewer columns on small viewports; horizontal scroll limited to table container only.
+
+**Rejected:** Separate mobile card list for tickets (would change presentation scope).
+
+**Reason:** Progressive column hiding plus contained table scroll preserves functionality while improving mobile usability.

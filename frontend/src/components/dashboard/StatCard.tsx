@@ -34,9 +34,9 @@ function StatCardContent({
     <div
       className={`rounded-lg border p-4 shadow-sm ${TONE_CLASSES[tone]}`}
     >
-      <p className="text-sm font-medium text-slate-600">{label}</p>
+      <p className="text-sm leading-snug font-medium text-slate-600">{label}</p>
       <p
-        className={`mt-2 text-3xl font-semibold tabular-nums ${VALUE_TONE_CLASSES[tone]}`}
+        className={`mt-2 text-2xl font-semibold tabular-nums sm:text-3xl ${VALUE_TONE_CLASSES[tone]}`}
       >
         {value}
       </p>

@@ -32,7 +32,7 @@ export default function EditTicketPage() {
   };
 
   return (
-    <section>
+    <section className="min-w-0">
       <PageHeader
         title="Edit Ticket"
         action={<TextLink to={ROUTES.ticketDetail(id)}>Cancel</TextLink>}

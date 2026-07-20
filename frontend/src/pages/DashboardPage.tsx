@@ -24,7 +24,7 @@ export default function DashboardPage() {
   const recentTickets = getRecentTickets(tickets ?? []);
 
   return (
-    <section>
+    <section className="min-w-0">
       <PageHeader
         title="Dashboard"
         action={

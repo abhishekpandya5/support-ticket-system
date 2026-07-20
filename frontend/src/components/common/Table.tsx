@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
 
 export const tableHeaderCellClass =
-  'px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-600';
+  'px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-600 sm:px-4 sm:py-3';
 
-export const tableBodyCellClass = 'px-4 py-3 text-sm text-slate-700';
+export const tableBodyCellClass =
+  'px-3 py-2 text-sm text-slate-700 sm:px-4 sm:py-3';
 
 type TableProps = {
   children: ReactNode;
@@ -13,7 +14,7 @@ type TableProps = {
 export function Table({ children, className = '' }: TableProps) {
   return (
     <div
-      className={`overflow-x-auto rounded-lg border border-slate-200 bg-white ${className}`.trim()}
+      className={`max-w-full overflow-x-auto overscroll-x-contain rounded-lg border border-slate-200 bg-white ${className}`.trim()}
     >
       <table className="min-w-full divide-y divide-slate-200">{children}</table>
     </div>

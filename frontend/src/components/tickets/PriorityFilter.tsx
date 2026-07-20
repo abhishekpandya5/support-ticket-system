@@ -15,7 +15,7 @@ export function PriorityFilter({
   disabled = false,
 }: PriorityFilterProps) {
   return (
-    <label className="block min-w-[10rem]">
+    <label className="block w-full min-w-0">
       <span className="mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500">
         Priority
       </span>

@@ -23,41 +23,49 @@ type TicketTableProps = {
   tickets: Ticket[];
 };
 
+const HIDDEN_MD = 'hidden md:table-cell';
+const HIDDEN_LG = 'hidden lg:table-cell';
+
 export function TicketTable({ tickets }: TicketTableProps) {
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead>Title</TableHead>
-          <TableHead>Priority</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Assigned To</TableHead>
-          <TableHead>Created</TableHead>
+          <TableHead className="whitespace-nowrap">Priority</TableHead>
+          <TableHead className="whitespace-nowrap">Status</TableHead>
+          <TableHead className={HIDDEN_MD}>Assigned To</TableHead>
+          <TableHead className={HIDDEN_LG}>Created</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {tickets.map((ticket) => (
           <TableRow key={ticket.id} className="hover:bg-slate-50">
-            <TableCell>
+            <TableCell className="max-w-[10rem] sm:max-w-xs lg:max-w-md">
               <Link
                 to={ROUTES.ticketDetail(ticket.id)}
-                className="font-medium text-slate-900 hover:text-slate-700 hover:underline"
+                className="block truncate font-medium text-slate-900 hover:text-slate-700 hover:underline"
+                title={ticket.title}
               >
                 {ticket.title}
               </Link>
             </TableCell>
-            <TableCell>
+            <TableCell className="whitespace-nowrap">
               <Badge className={getTicketPriorityClassName(ticket.priority)}>
                 {formatTicketPriority(ticket.priority)}
               </Badge>
             </TableCell>
-            <TableCell>
+            <TableCell className="whitespace-nowrap">
               <Badge className={getTicketStatusClassName(ticket.status)}>
                 {formatTicketStatus(ticket.status)}
               </Badge>
             </TableCell>
-            <TableCell>{ticket.assignedTo?.name ?? 'Unassigned'}</TableCell>
-            <TableCell>{formatDateTime(ticket.createdAt)}</TableCell>
+            <TableCell className={`${HIDDEN_MD} max-w-[8rem] truncate sm:max-w-none`}>
+              {ticket.assignedTo?.name ?? 'Unassigned'}
+            </TableCell>
+            <TableCell className={`${HIDDEN_LG} whitespace-nowrap`}>
+              {formatDateTime(ticket.createdAt)}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

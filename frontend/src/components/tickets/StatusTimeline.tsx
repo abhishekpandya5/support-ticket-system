@@ -25,7 +25,7 @@ export function StatusTimeline({ currentStatus }: StatusTimelineProps) {
 
   return (
     <div className="space-y-3">
-      <ol className="flex flex-wrap items-center gap-2 sm:gap-0">
+      <ol className="flex flex-wrap items-start gap-3 sm:items-center sm:gap-2">
         {STATUS_TIMELINE_STEPS.map((step, index) => {
           const state = isCancelled
             ? 'cancelled'

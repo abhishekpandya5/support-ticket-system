@@ -17,7 +17,7 @@ export default function CreateTicketPage() {
   } = useCreateTicketForm();
 
   return (
-    <section>
+    <section className="min-w-0">
       <PageHeader
         title="Create Ticket"
         action={<TextLink to={ROUTES.tickets}>Back to Tickets</TextLink>}
