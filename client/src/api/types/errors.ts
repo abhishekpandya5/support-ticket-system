@@ -1,8 +1,8 @@
 /**
- * Error envelope from `api-contract.md` §3 and `backend/src/utils/errorResponse.ts`.
+ * Error envelope from `api-contract.md` §3 and `server/src/utils/errorResponse.ts`.
  */
 
-/** `backend/src/constants/errorCodes.ts` */
+/** `server/src/constants/errorCodes.ts` */
 export type ApiErrorCode =
   | 'VALIDATION_ERROR'
   | 'INVALID_STATUS_TRANSITION'

@@ -1,6 +1,6 @@
 /**
  * Captures ticket detail, status workflow, and edit screenshots.
- * Requires frontend (5173) and backend API running.
+ * Requires client (5173) and server API running.
  *
  *   npx playwright install chromium
  *   node scripts/capture-screenshots.mjs

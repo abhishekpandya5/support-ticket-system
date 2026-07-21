@@ -633,3 +633,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** None.
 
 **Reason:** Addresses db-init, documentation consistency, test coverage, and submission gate sign-off from reviewer report.
+
+---
+
+## 2026-07-21 — Folder rename
+
+**Objective:** Rename `backend/` → `server/` and `frontend/` → `client/` without breaking functionality.
+
+**Prompt:** Change folder name from frontend to client and backend folder name to server. Make sure no functionality gets hampered and update path if anywhere used.
+
+**AI Response Summary:** `git mv` for both directories; updated `package.json` names, `package-lock.json`, `.gitignore`, `scripts/db-init.js`, `scripts/capture-screenshots.mjs`, README, assessment docs, database READMEs, and API type comment paths. Verified 52 server + 13 client tests pass on Node 20.
+
+**Accepted:** TODO
+
+**Modified:** TODO
+
+**Rejected:** TODO
+
+**Reason:** Assessment template layout alignment; historical `ai-prompts/` entries left unchanged per append-only policy.

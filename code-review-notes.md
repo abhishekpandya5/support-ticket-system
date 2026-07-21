@@ -3,7 +3,7 @@
 > **Remediation note (2026-07-20):** Frontend findings F-C-01, F-C-02, and most F-M / F-N items were addressed. See [`review-fixes.md`](review-fixes.md). The frontend section below reflects the pre-remediation review snapshot.
 
 **Reviewer role:** Senior Staff Engineer (PR review)  
-**Scope:** Entire `backend/src` implementation + `backend/tests`  
+**Scope:** Entire `server/src` implementation + `server/tests`  
 **Date:** 2026-07-19  
 **Verdict:** **Approve with comments** — solid layered MVP with strong error/validation foundations; address concurrency, validation duplication, and scalability gaps before production or high-volume use.
 
@@ -28,7 +28,7 @@ Main concerns for a staff-level review: **non-atomic status updates** (race risk
 | **Error handling** | Central `errorHandler` + `mapErrorToResponse`; stable `{ requestId, error: { code, message, details? } }` envelope; sensible mapping for Zod, Mongoose, and domain errors. |
 | **Validation** | Zod schemas with ObjectId refinement, enum constraints, and field-length limits; `escapeRegex` on search mitigates regex injection. |
 | **MongoDB modeling** | Sensible schemas, refs, compound comment index (`ticketId + createdAt`), status/assignee indexes on tickets, unique email on users. |
-| **TypeScript** | Strict mode; no `any` in `backend/src`; `satisfies` on enum arrays; Mongoose `InferSchemaType` for model types. |
+| **TypeScript** | Strict mode; no `any` in `server/src`; `satisfies` on enum arrays; Mongoose `InferSchemaType` for model types. |
 | **Testing** | Isolated integration suite with per-test DB reset; state transition matrix exercised end-to-end. |
 | **Ops** | Graceful shutdown in `index.ts`; health endpoint with DB check; env validated via Zod in `config/env.ts`. |
 
@@ -70,7 +70,7 @@ Main concerns for a staff-level review: **non-atomic status updates** (race risk
 
 | ID | Area | Finding | Location / Evidence |
 |----|------|---------|---------------------|
-| N-01 | Architecture | **Incomplete domain-folder migration.** Flat `*Controller.ts` / `*Service.ts` files coexist with empty stub barrels (`controllers/tickets/index.ts`, `services/tickets/index.ts`, etc. exporting `{}`). Confusing navigation. | `backend/src/controllers/*/index.ts`, `services/*/index.ts`, `repositories/*/index.ts` |
+| N-01 | Architecture | **Incomplete domain-folder migration.** Flat `*Controller.ts` / `*Service.ts` files coexist with empty stub barrels (`controllers/tickets/index.ts`, `services/tickets/index.ts`, etc. exporting `{}`). Confusing navigation. | `server/src/controllers/*/index.ts`, `services/*/index.ts`, `repositories/*/index.ts` |
 | N-02 | Code duplication | **`assertValidObjectId` duplicated** identically in `TicketService`, `UserService`, and `CommentService`. | Private 4-line methods in each service |
 | N-03 | Code duplication | **`USER_SUMMARY_FIELDS` constant duplicated** in `TicketRepository` and `CommentRepository`. | Both repository files |
 | N-04 | Code duplication | **`ListTicketsQuery` type duplicated** — manual type in `TicketService` vs `z.infer` in `validators/shared.ts`. | `TicketService.ts`, `validators/shared.ts` |
@@ -261,14 +261,14 @@ Good documentation in JSDoc on key modules. Error envelope and enum centralizati
 
 ---
 
-*This review covers `backend/src` and `backend/tests` as of 2026-07-19. No application code was modified during this review.*
+*This review covers `server/src` and `server/tests` as of 2026-07-19. No application code was modified during this review.*
 
 ---
 
 # Frontend Code Review Notes
 
 **Reviewer role:** Senior Staff Frontend Engineer (PR review)  
-**Scope:** Entire `frontend/src` implementation  
+**Scope:** Entire `client/src` implementation  
 **Date:** 2026-07-20  
 **Verdict:** **Request changes** — solid layered MVP with strong API/hook foundations and intentional a11y work; fix mutation cache invalidation and path casing before merge; address schema drift and loading UX immediately after.
 
@@ -315,14 +315,14 @@ Main concerns: **mutation `onSuccess` composition likely breaks cache invalidati
 
 | ID | Area | Finding | Location / Evidence |
 |----|------|---------|---------------------|
-| F-M-01 | React Hook Form | **Create vs edit validation diverges from each other and backend.** Create: title max 100/min 5, description min 10, `assignedTo` required. Edit: title max 200/min 1, description max 5000, `assignedTo` optional. Backend create: title max 200, description max 5000, `assignedTo` optional. | `schemas/createTicketFormSchema.ts`, `schemas/ticketFormSchema.ts`, `backend/validators/tickets/schemas.ts` |
+| F-M-01 | React Hook Form | **Create vs edit validation diverges from each other and backend.** Create: title max 100/min 5, description min 10, `assignedTo` required. Edit: title max 200/min 1, description max 5000, `assignedTo` optional. Backend create: title max 200, description max 5000, `assignedTo` optional. | `schemas/createTicketFormSchema.ts`, `schemas/ticketFormSchema.ts`, `server/validators/tickets/schemas.ts` |
 | F-M-02 | React Query / Performance | **`isFetching` drives full loading UI.** `isLoading \|\| isFetching` shows skeletons and disables filters on background refetches. | `pages/tickets/TicketListPage.tsx:29`, `pages/DashboardPage.tsx:21` |
 | F-M-03 | React Query | **No `placeholderData` / `keepPreviousData` on filtered list.** Filter changes create new query keys; table disappears on every change. | `pages/tickets/TicketListPage.tsx`, `hooks/tickets/useTicketQueries.ts` |
 | F-M-04 | Architecture / Performance | **Dashboard aggregates client-side from full ticket list.** No server-side aggregation or pagination strategy. | `pages/DashboardPage.tsx`, `utils/dashboard.ts` |
 | F-M-05 | Component structure | **Duplicated form UIs with different contracts.** Create (`CreateTicketForm`, `PrioritySelect`, `AssignedUserSelect`) vs edit (`TicketForm`) duplicate fields with different schemas, IDs, and required semantics. | `components/ticket/`, `components/tickets/TicketForm.tsx` |
 | F-M-06 | Architecture | **Acting-as user is half-implemented and inconsistent.** Reads `localStorage` key `actingAsUserId` but nothing writes it; falls back to `users[0]`. Create uses `getActingAsUserId`; comment form uses `ticket.createdBy.id`. | `utils/actingAs.ts`, `useCreateTicketForm.ts`, `TicketDetailPage.tsx:94` |
 | F-M-07 | TypeScript | **`strict` mode not enabled.** No `strict`, `noImplicitAny`, or `strictNullChecks` in `tsconfig.app.json`. | `tsconfig.app.json` |
-| F-M-08 | Maintainability | **Zero frontend tests.** No test script in `package.json`; no `*.test.ts` or `*.spec.ts` files. High-risk areas (filter URL sync, schemas, mutation invalidation, `actingAs`) untested. | `frontend/package.json`, `frontend/src/` |
+| F-M-08 | Maintainability | **Zero frontend tests.** No test script in `package.json`; no `*.test.ts` or `*.spec.ts` files. High-risk areas (filter URL sync, schemas, mutation invalidation, `actingAs`) untested. | `client/package.json`, `client/src/` |
 | F-M-09 | Architecture | **No router error boundary.** No `errorElement` or React error boundary; unhandled render errors white-screen the app. | `routes/router.tsx`, `App.tsx` |
 | F-M-10 | Architecture / Naming | **Router bypasses `ROUTES` for dynamic paths.** Hardcoded `'/tickets/:id/edit'` and `'/tickets/:id'` instead of `ROUTES.ticketEdit(':id')` / `ROUTES.ticketDetail(':id')`. | `routes/router.tsx:37-41`, `routes/paths.ts` |
 
@@ -456,4 +456,4 @@ Good inline API type docs. **Risks:** zero tests; validation drift; acting-as in
 
 ---
 
-*This review covers `frontend/src` as of 2026-07-20. No application code was modified during this review.*
+*This review covers `client/src` as of 2026-07-20. No application code was modified during this review.*

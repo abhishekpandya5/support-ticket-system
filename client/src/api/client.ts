@@ -41,7 +41,7 @@ function toApiError(error: AxiosError): ApiError {
     return new ApiError(status, {
       code: 'INTERNAL_ERROR',
       message:
-        'API server unavailable. Start the backend (npm run dev in backend/) and ensure VITE_API_PROXY_TARGET in frontend/.env.local matches its port.',
+        'API server unavailable. Start the server (npm run dev in server/) and ensure VITE_API_PROXY_TARGET in client/.env.local matches its port.',
     });
   }
 

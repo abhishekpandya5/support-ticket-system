@@ -2,7 +2,7 @@
 
 AI Capability Assessment — Core tier full-stack project (React SPA + Node.js REST API + MongoDB).
 
-> **Layout note:** Assessment template uses root `src/` and `tests/`. This repo uses `backend/` and `frontend/` — see [`src/README.md`](src/README.md) and [`tests/README.md`](tests/README.md).
+> **Layout note:** Application code lives in `server/` and `client/` per the assessment template.
 
 ## Prerequisites
 
@@ -12,10 +12,10 @@ AI Capability Assessment — Core tier full-stack project (React SPA + Node.js R
 
 ## Quick Start
 
-### Backend
+### Server
 
 ```bash
-cd backend
+cd server
 cp .env.example .env   # set MONGODB_URI
 npm install
 node ../scripts/db-init.js   # sync MongoDB indexes
@@ -23,10 +23,10 @@ npm run seed
 npm run dev            # http://localhost:3001
 ```
 
-### Frontend
+### Client
 
 ```bash
-cd frontend
+cd client
 npm install
 npm run dev            # http://localhost:5173
 ```
@@ -62,16 +62,16 @@ Base path: `/api` — see [`api-contract.md`](api-contract.md)
 
 ## Testing
 
-Requires **Node.js 18+** (Node 20+ recommended for frontend Vitest).
+Requires **Node.js 18+** (Node 20+ recommended for client Vitest).
 
 ```bash
-# Backend — integration + unit tests
-cd backend && npm test
+# Server — integration + unit tests
+cd server && npm test
 
-# Frontend — unit tests
-cd frontend && npm test
+# Client — unit tests
+cd client && npm test
 ```
 
-The frontend dev server proxies API requests to the backend (default `http://localhost:3001`). Override with `VITE_API_PROXY_TARGET` in `frontend/.env` if your API runs on another port (e.g. `5000`).
+The client dev server proxies API requests to the server (default `http://localhost:3001`). Override with `VITE_API_PROXY_TARGET` in `client/.env` if your API runs on another port (e.g. `5000`).
 
 See [`test-strategy.md`](test-strategy.md) and [`test-results.md`](test-results.md).

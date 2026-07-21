@@ -32,7 +32,7 @@ See [`ai-prompts/`](ai-prompts/) for append-only prompt history by activity.
 ## How I Validated AI Output
 
 - TypeScript strict builds for backend and frontend
-- `npm test` in backend (integration + unit) and frontend (Vitest)
+- `npm test` in server (integration + unit) and client (Vitest)
 - Manual UI verification with screenshots in [`test-results.md`](test-results.md)
 - Cross-check against [`acceptance-criteria.md`](acceptance-criteria.md) and [`api-contract.md`](api-contract.md)
 

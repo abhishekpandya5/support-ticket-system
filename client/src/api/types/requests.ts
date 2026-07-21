@@ -1,6 +1,6 @@
 /**
  * Request payloads and query params from `api-contract.md` §5–§7
- * and `backend/src/validators/`.
+ * and `server/src/validators/`.
  */
 
 import type { TicketPriority, TicketStatus } from './enums';

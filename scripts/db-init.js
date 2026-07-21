@@ -9,14 +9,14 @@ import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const backendDir = path.resolve(
+const serverDir = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   '..',
-  'backend',
+  'server',
 );
 
 const result = spawnSync('npm', ['run', 'db:init'], {
-  cwd: backendDir,
+  cwd: serverDir,
   stdio: 'inherit',
   shell: true,
 });

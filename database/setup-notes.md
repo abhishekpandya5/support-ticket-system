@@ -9,9 +9,9 @@
 | `MONGODB_URI` | Required MongoDB connection string |
 | `NODE_ENV` | `development` \| `test` \| `production` |
 
-Copy `backend/.env.example` → `backend/.env`.
+Copy `server/.env.example` → `server/.env`.
 
-**Code:** `backend/src/config/env.ts`, `backend/src/config/database.ts`
+**Code:** `server/src/config/env.ts`, `server/src/config/database.ts`
 
 ## Initialize indexes
 
@@ -21,20 +21,20 @@ Sync Mongoose indexes (users, tickets, comments):
 node scripts/db-init.js
 ```
 
-Or from the backend package:
+Or from the server package:
 
 ```bash
-cd backend && npm run db:init
+cd server && npm run db:init
 ```
 
 ## Seed
 
 ```bash
-cd backend && npm run seed
+cd server && npm run seed
 ```
 
 Users only (idempotent). See [`seed-data/README.md`](../seed-data/README.md).
 
 ## Schema
 
-Mongoose models in `backend/src/models/` — see [`schema-or-migrations/README.md`](../schema-or-migrations/README.md).
+Mongoose models in `server/src/models/` — see [`schema-or-migrations/README.md`](../schema-or-migrations/README.md).

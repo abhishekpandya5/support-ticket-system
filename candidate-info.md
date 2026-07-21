@@ -26,5 +26,5 @@ Support ticket application with ticket CRUD, enforced status state machine, comm
 
 ## Setup Summary
 
-1. Clone repo → configure `backend/.env` → `node scripts/db-init.js` → `npm run seed` → `npm run dev` in backend and frontend
+1. Clone repo → configure `server/.env` → `node scripts/db-init.js` → `npm run seed` → `npm run dev` in server and client
 2. See [`README.md`](README.md) and [`database/setup-notes.md`](database/setup-notes.md)

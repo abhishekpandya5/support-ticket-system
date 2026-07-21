@@ -207,7 +207,7 @@ The following error scenarios were verified:
 
 ## Backend Integration Tests
 
-Executed using **Vitest** and **Supertest** (`backend/`).
+Executed using **Vitest** and **Supertest** (`server/`).
 
 
 | Test Category | Result   |
@@ -220,7 +220,7 @@ Executed using **Vitest** and **Supertest** (`backend/`).
 
 ## Backend Unit Tests
 
-Executed using **Vitest** (`backend/tests/unit/`).
+Executed using **Vitest** (`server/tests/unit/`).
 
 | Test File | Coverage | Result |
 | --------- | -------- | ------ |
@@ -230,7 +230,7 @@ Backend test output — **52 tests passed** (integration + unit)
 
 ## Frontend Unit Tests
 
-Executed using **Vitest** (`frontend/`).
+Executed using **Vitest** (`client/`).
 
 
 | Test File                   | Coverage                                 | Result   |

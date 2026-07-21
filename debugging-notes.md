@@ -8,7 +8,7 @@ Real issues encountered during development, how they were investigated, and how 
 
 ### Problem
 
-`npm run dev` in `backend/` did not start the server.
+`npm run dev` in `server/` did not start the server.
 
 ### How I Investigated
 
@@ -24,7 +24,7 @@ Server starts on Node 24; MongoDB connects with valid `MONGODB_URI`.
 
 ### Final Fix
 
-`backend/package.json`: dev script → `tsx watch src/index.ts`; added `tsx` devDependency.
+`server/package.json`: dev script → `tsx watch src/index.ts`; added `tsx` devDependency.
 
 *From `ai-prompts/debugging.md` (2026-07-12).*
 
@@ -39,8 +39,8 @@ The ticket list showed **"Unable to load tickets — Network Error"**. Browser D
 ### How I Investigated
 
 1. Confirmed the Vite dev server was running on port 5173.
-2. Checked the API base URL in `frontend/src/api/env.ts` and the Vite proxy in `vite.config.ts`.
-3. Found the frontend proxy defaulted to `http://localhost:3001` while the backend was listening on **port 5000** (from `backend/.env`).
+2. Checked the API base URL in `client/src/api/env.ts` and the Vite proxy in `vite.config.ts`.
+3. Found the frontend proxy defaulted to `http://localhost:3001` while the backend was listening on **port 5000** (from `server/.env`).
 4. Verified the backend was not running when MongoDB connection failed on startup.
 
 ### How AI Helped
@@ -49,14 +49,14 @@ Traced the request path (browser → Vite proxy → backend) and identified the 
 
 ### What I Validated
 
-- With `frontend/.env.local` set to `VITE_API_PROXY_TARGET=http://localhost:5000`, tickets load correctly.
+- With `client/.env.local` set to `VITE_API_PROXY_TARGET=http://localhost:5000`, tickets load correctly.
 - With the backend stopped, the UI shows a clear connection error instead of a generic failure.
 - No CORS issues when using the Vite proxy (same-origin `/api` requests).
 
 ### Final Fix
 
-- Added Vite dev proxy for `/api` in `frontend/vite.config.ts`.
-- Documented `VITE_API_PROXY_TARGET` in `frontend/.env.example`.
+- Added Vite dev proxy for `/api` in `client/vite.config.ts`.
+- Documented `VITE_API_PROXY_TARGET` in `client/.env.example`.
 - Improved `api/client.ts` error message when the backend is unreachable.
 
 *From `ai-prompts/debugging.md` (2026-07-20).*
@@ -87,7 +87,7 @@ Suggested mutating the existing query object in place (`delete` unknown keys, th
 
 ### Final Fix
 
-Updated `applyParsedTarget` in `backend/src/middleware/validate.ts` to merge parsed query fields into the existing `req.query` object rather than replacing it.
+Updated `applyParsedTarget` in `server/src/middleware/validate.ts` to merge parsed query fields into the existing `req.query` object rather than replacing it.
 
 *From `ai-prompts/testing.md` and `implementation.md` (2026-07-18).*
 
@@ -191,7 +191,7 @@ Flagged as F-C-02 in frontend code review. Recommended normalizing to lowercase 
 
 ### Final Fix
 
-Moved `CreateTicketPage.tsx` to `frontend/src/pages/tickets/CreateTicketPage.tsx` and updated the router import.
+Moved `CreateTicketPage.tsx` to `client/src/pages/tickets/CreateTicketPage.tsx` and updated the router import.
 
 *From `code-review-notes.md` F-C-02; fixed in maintainability refactor (2026-07-20).*
 
@@ -201,7 +201,7 @@ Moved `CreateTicketPage.tsx` to `frontend/src/pages/tickets/CreateTicketPage.tsx
 
 | Issue | Symptom | Root cause | Key file(s) |
 |-------|---------|------------|-------------|
-| 1 | `npm run dev` fails | `ts-node-dev` + TS 7 incompatibility | `backend/package.json` |
+| 1 | `npm run dev` fails | `ts-node-dev` + TS 7 incompatibility | `server/package.json` |
 | 2 | Network Error / 502 | Proxy port mismatch (3001 vs 5000) | `vite.config.ts`, `.env.local` |
 | 3 | Search/filter API broken | Express 5 read-only `req.query` | `middleware/validate.ts` |
 | 4 | Stale list after mutation | `onSuccess` overridden by spread | `useTicketMutations.ts` |

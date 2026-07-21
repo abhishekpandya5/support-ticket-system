@@ -1,5 +1,5 @@
 /**
- * Shared resource shapes from `api-contract.md` §2 and `backend/src/utils/serializers.ts`.
+ * Shared resource shapes from `api-contract.md` §2 and `server/src/utils/serializers.ts`.
  */
 
 import type { TicketPriority, TicketStatus, UserRole } from './enums';

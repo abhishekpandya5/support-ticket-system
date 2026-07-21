@@ -18,21 +18,21 @@ Support Ticket Management System — full-stack Core implementation with REST AP
 
 | Area | Notes |
 |------|-------|
-| `backend/src/` | Layered Express API, `TicketStateMachine`, Mongoose models |
-| `frontend/src/` | React Router, React Query, RHF + Zod, Tailwind UI |
+| `server/src/` | Layered Express API, `TicketStateMachine`, Mongoose models |
+| `client/src/` | React Router, React Query, RHF + Zod, Tailwind UI |
 | `docs/architecture.md` | System, layer, ERD, and state machine diagrams |
 | `scripts/db-init.js` | MongoDB index sync entry point |
-| Tests | `backend/tests/integration/`, `backend/tests/unit/`, `frontend/src/**/*.test.ts` |
+| Tests | `server/tests/integration/`, `server/tests/unit/`, `client/src/**/*.test.ts` |
 
 ## Database Changes
 
-See [`data-model.md`](data-model.md). Seed: `npm run seed` in `backend/`.
+See [`data-model.md`](data-model.md). Seed: `npm run seed` in `server/`.
 
 ## Testing Done
 
 ```bash
-cd backend && npm test
-cd frontend && npm test
+cd server && npm test
+cd client && npm test
 ```
 
 Evidence: [`test-results.md`](test-results.md), [`test-strategy.md`](test-strategy.md).

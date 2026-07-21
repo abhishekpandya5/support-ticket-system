@@ -34,7 +34,7 @@ flowchart TB
         COMMENTS[("comments")]
     end
 
-    subgraph Scripts["backend/src/scripts/"]
+    subgraph Scripts["server/src/scripts/"]
         SEED["seed.ts"]
     end
 
