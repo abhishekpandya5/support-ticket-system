@@ -1,5 +1,0 @@
-/**
- * Comment persistence operations.
- */
-
-export {};

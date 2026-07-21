@@ -28,10 +28,7 @@ Manual verification of the React SPA against acceptance criteria. Screenshots ca
 | Dashboard (mobile) | Responsive dashboard layout | `mobile-view/mobile-view-dashboard.png` | ✅ Pass |
 | Ticket list (desktop) | Table with title, priority, status, assignee | `desktop-view/desktop-view-ticket-listing.png` | ✅ Pass |
 | Ticket list (mobile) | Responsive ticket list layout | `mobile-view/mobile-view-ticket-listing.png` | ✅ Pass |
-| Ticket filtering (desktop) | Search and combined filters | `desktop-view/desktop-view-ticket-filtering.png` | ✅ Pass |
-| Filter by status (desktop) | URL-synced status filter | `desktop-view/desktop-view-ticket-filter-by-status.png` | ✅ Pass |
-| Filter by priority (desktop) | Priority filter applied | `desktop-view/desktop-view-ticket-filter-by-priority.png` | ✅ Pass |
-| Filter by user (desktop) | Assigned-user filter applied | `desktop-view/desktop-view-ticket-filter-by-user.png` | ✅ Pass |
+| Ticket filtering (desktop) | Search, status, priority, and user filters (URL-synced) | `desktop-view/desktop-view-ticket-filtering.png` | ✅ Pass |
 | Create ticket (desktop) | Form with validation; acting-as selector in header | `desktop-view/desktop-view-ticket-creation.png` | ✅ Pass |
 | Create ticket (mobile) | Responsive create ticket form | `mobile-view/mobile-view-ticket-creation.png` | ✅ Pass |
 | Ticket detail (desktop) | Detail view with metadata and comments | Manual verification (see § Acting-as) | ✅ Pass |
@@ -53,17 +50,7 @@ Manual verification of the React SPA against acceptance criteria. Screenshots ca
 
 ![Desktop ticket list with search and combined filters](docs/screenshots/desktop-view/desktop-view-ticket-filtering.png)
 
-### Desktop — Filter by Status
-
-![Desktop ticket list filtered by status](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-status.png)
-
-### Desktop — Filter by Priority
-
-![Desktop ticket list filtered by priority](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-priority.png)
-
-### Desktop — Filter by Assigned User
-
-![Desktop ticket list filtered by assigned user](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-user.png)
+Status, priority, and assigned-user filters use the same filter panel (see screenshot above).
 
 ### Desktop — Create Ticket
 
@@ -278,10 +265,7 @@ All screenshots are stored in [`docs/screenshots/`](docs/screenshots/).
 |------|--------|-------------|
 | [`desktop-view-dashboard.png`](docs/screenshots/desktop-view/desktop-view-dashboard.png) | Dashboard | Ticket statistics grid and recent tickets list |
 | [`desktop-view-ticket-listing.png`](docs/screenshots/desktop-view/desktop-view-ticket-listing.png) | Ticket list | Full ticket table with search and filter panel |
-| [`desktop-view-ticket-filtering.png`](docs/screenshots/desktop-view/desktop-view-ticket-filtering.png) | Ticket filtering | Search and combined filter controls |
-| [`desktop-view-ticket-filter-by-status.png`](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-status.png) | Filter by status | Ticket list filtered by status |
-| [`desktop-view-ticket-filter-by-priority.png`](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-priority.png) | Filter by priority | Ticket list filtered by priority |
-| [`desktop-view-ticket-filter-by-user.png`](docs/screenshots/desktop-view/desktop-view-ticket-filter-by-user.png) | Filter by user | Ticket list filtered by assigned user |
+| [`desktop-view-ticket-filtering.png`](docs/screenshots/desktop-view/desktop-view-ticket-filtering.png) | Ticket filtering | Search and combined filter controls (status, priority, user) |
 | [`desktop-view-ticket-creation.png`](docs/screenshots/desktop-view/desktop-view-ticket-creation.png) | Create ticket | Create ticket form with validation fields |
 | [`desktop-view-edit-ticket.png`](docs/screenshots/desktop-view/desktop-view-edit-ticket.png) | Edit ticket | Edit form for ticket fields |
 

@@ -1,5 +1,0 @@
-/**
- * User persistence operations.
- */
-
-export {};

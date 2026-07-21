@@ -651,3 +651,21 @@ Each entry uses: Objective, Prompt, AI Response Summary, Accepted, Modified, Rej
 **Rejected:** TODO
 
 **Reason:** Assessment template layout alignment; historical `ai-prompts/` entries left unchanged per append-only policy.
+
+---
+
+## 2026-07-21 — Repository size reduction
+
+**Objective:** Smaller git-tracked repository without changing application behavior.
+
+**Prompt:** Goal = smaller repo. Now reduce the code size.
+
+**AI Response Summary:** Removed 26 `.gitkeep` scaffold files, 9 empty server domain `index.ts` stubs, unused client assets and Vite README, duplicate root `seed-data/` and `schema-or-migrations/` READMEs, `docs/prompt-history.md` stub, unused `ts-node-dev` dependency; condensed `code-review-notes.md`; removed three redundant filter screenshots (~244 KB); updated `test-results.md` and `database/setup-notes.md` links.
+
+**Accepted:** TODO
+
+**Modified:** TODO
+
+**Rejected:** TODO
+
+**Reason:** Reduce tracked file count and documentation bulk while preserving tests and assessment-required artifacts.

@@ -1,6 +1,6 @@
 # Review Fixes
 
-Tracked fixes from code review findings in `code-review-notes.md`.
+Tracked fixes from the staff code review (summary in `code-review-notes.md`).
 
 ---
 

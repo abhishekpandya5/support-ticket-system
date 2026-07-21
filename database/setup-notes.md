@@ -33,8 +33,8 @@ cd server && npm run db:init
 cd server && npm run seed
 ```
 
-Users only (idempotent). See [`seed-data/README.md`](../seed-data/README.md).
+Users only (idempotent). See [`database/seed-data/README.md`](seed-data/README.md).
 
 ## Schema
 
-Mongoose models in `server/src/models/` — see [`schema-or-migrations/README.md`](../schema-or-migrations/README.md).
+Mongoose models in `server/src/models/` — see [`database/schema-or-migrations/README.md`](schema-or-migrations/README.md).

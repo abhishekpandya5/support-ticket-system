@@ -1,5 +1,0 @@
-/**
- * Ticket persistence operations.
- */
-
-export {};
